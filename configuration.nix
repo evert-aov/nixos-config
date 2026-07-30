@@ -9,10 +9,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      <home-manager/nixos>
     ];
-
-  home-manager.backupFileExtension = "backup";
 
   # System packages
   environment.systemPackages = with pkgs; [
@@ -52,7 +49,7 @@
     p7zip
     papers
     fastfetch
-    jetbrains.idea-community
+    jetbrains.idea
     quickshell
     gnome-shell-extensions
     grim
@@ -109,7 +106,7 @@
   # Program configurations
   programs.zsh.enable = true;
 
-  programs.adb.enable = true;
+  # programs.adb no longer needed (systemd 258 handles uaccess rules)
 
   # Install firefox.
   programs.firefox.enable = true;
@@ -124,14 +121,6 @@
     dedicatedServer.openFirewall = true; 
   };
   programs.gamemode.enable = true;
-
-  # Home manager
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true; 
-  
-  home-manager.users.evert = {
-    imports = [ ./home.nix ];
-  };
 
   # Desktop environment, window managers and theme
   services.xserver.enable = true;
@@ -239,7 +228,7 @@
           version = "1.0";
           
           # CHANGE THIS to the actual path of your custom theme folder
-          src = /etc/nixos/config/programs/plymouth/simple; 
+          src = ./config/programs/plymouth/simple; 
 
           installPhase = ''
             mkdir -p $out/share/plymouth/themes/simple

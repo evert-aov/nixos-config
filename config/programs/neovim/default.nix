@@ -43,5 +43,5 @@
   };
 
   # Target only the specific file so the parent directory remains writable
-  xdg.configFile."nvim/init.lua".source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/config/programs/neovim/nvim/init.lua";
+  xdg.configFile."nvim/init.lua".source = ./nvim/init.lua;
 }

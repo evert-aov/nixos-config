@@ -16,9 +16,9 @@
     shellAliases = {
       edit = "sudo -E nvim -n";
       gitavail = "ssh-add $HOME/Documents/Важное/recovery_keys/GitHub/github_remote_keys/key";
-      update = "sudo nixos-rebuild switch";
+      update = "sudo nixos-rebuild switch --flake /home/evert/nixos-configuration";
       stop = "shutdown now";
-      edconf = "sudo -E nvim /etc/nixos/configuration.nix";
+      edconf = "sudo -E nvim /home/evert/nixos-configuration/configuration.nix";
       out = "loginctl terminate-user evert";  
     };
     
@@ -33,8 +33,8 @@
     };
 
   home.sessionVariables = {
-      hypr = "/etc/nixos/config/sessions/hyprland/";  
-      programs = "/etc/nixos/config/programs";
+      hypr = "/home/evert/nixos-configuration/config/sessions/hyprland/";  
+      programs = "/home/evert/nixos-configuration/config/programs";
     };
 
 }

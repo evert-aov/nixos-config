@@ -18,5 +18,5 @@ in
   ];
 
   # Symlink the base config. Adjust the path if your dotfiles are elsewhere.
-  xdg.configFile."cava/config_base".source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/config/programs/cava/config";
+  xdg.configFile."cava/config_base".source = ./config;
 }
