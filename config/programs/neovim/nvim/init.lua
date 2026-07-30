@@ -97,7 +97,7 @@ end
 _G.reload_matugen_colors()
 
 -- PLUGIN CONFIGURATIONS
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter.config').setup {
   highlight = { enable = true },
   indent = { enable = true },
 }
