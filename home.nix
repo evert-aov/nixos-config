@@ -65,6 +65,11 @@ in
     };
   };
   
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "$HOME/.opencode/bin"
+  ];
+
   home.sessionVariables = {
     TERMINAL = "kitty";
   };
@@ -135,6 +140,13 @@ in
     ".local/share/fonts/" = {
       source = config/fonts;
       recursive = true;
+    };
+    ".local/bin/opencode" = {
+      executable = true;
+      text = ''
+        #!${pkgs.bash}/bin/bash
+        exec ${pkgs.steam-run}/bin/steam-run "$HOME/.opencode/bin/opencode" "$@"
+      '';
     };
     ".config/dolphinrc" = {
       text = ''
