@@ -142,6 +142,7 @@
   services.power-profiles-daemon.enable = true;
 
   programs.firefox.enable = true;
+  programs.vscode.enable = true;
   programs.dconf.enable = true;
 
   services.logind.settings.Login = {
@@ -332,8 +333,11 @@
 
     # ---- GTK/Qt Theming ----
     gtk3
-    # libsForQt5.qt5ct
-    # nwg-look
+    libsForQt5.qt5ct
+    qt6Packages.qt6ct
+    libsForQt5.qtstyleplugin-kvantum
+    kdePackages.qtstyleplugin-kvantum
+    nwg-look
 
     # ---- Gaming ----
     steam-run

@@ -27,9 +27,11 @@ in
   
   home.packages = with pkgs; [
       adwaita-icon-theme
-      adw-gtk3 
-      libsForQt5.qt5ct      
+      adw-gtk3
+      libsForQt5.qt5ct
       qt6Packages.qt6ct
+      libsForQt5.qtstyleplugin-kvantum
+      kdePackages.qtstyleplugin-kvantum
   ];
 
   # set cursor 
@@ -99,6 +101,30 @@ in
       xdg-desktop-portal-gtk
     ];
     config.common.default = "*";
+  };
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/plain" = "code.desktop";
+      "text/x-python" = "code.desktop";
+      "text/javascript" = "code.desktop";
+      "text/html" = "code.desktop";
+      "text/x-java" = "code.desktop";
+      "text/x-kotlin" = "code.desktop";
+      "text/x-rust" = "code.desktop";
+      "text/x-c" = "code.desktop";
+      "text/x-c++" = "code.desktop";
+      "text/x-markdown" = "code.desktop";
+      "text/css" = "code.desktop";
+      "text/x-json" = "code.desktop";
+      "text/x-yaml" = "code.desktop";
+      "text/x-toml" = "code.desktop";
+      "text/x-nix" = "code.desktop";
+      "text/xml" = "code.desktop";
+      "application/json" = "code.desktop";
+      "inode/directory" = "dolphin.desktop";
+    };
   };
 
   programs.home-manager.enable = true;
