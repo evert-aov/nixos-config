@@ -66,7 +66,7 @@ in
   };
   
   home.sessionVariables = {
-    # Left intentionally blank to prevent GTK variable overrides
+    TERMINAL = "kitty";
   };
 
   services.easyeffects.enable = true;  
@@ -133,8 +133,28 @@ in
   
   home.file = {
     ".local/share/fonts/" = {
-      source = config/fonts; 
+      source = config/fonts;
       recursive = true;
+    };
+    ".config/dolphinrc" = {
+      text = ''
+        [General]
+        RememberOpenedTabs=false
+
+        [KFileDialog Settings]
+        Recent Files=
+        Recent URLs=
+
+        [PreviewSettings]
+        Plugins=
+
+        [Version]
+        version=200
+
+        [KDE]
+        TerminalApplication=kitty
+        TerminalService=kitty.desktop
+      '';
     };
   };
 }

@@ -311,6 +311,7 @@
     cliphist
     gpu-screen-recorder
     kdePackages.dolphin
+    yazi
 
     # ---- Customization ----
     pipes
