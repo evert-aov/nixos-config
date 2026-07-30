@@ -21,8 +21,8 @@ in
     ./config/sessions/hyprland/default.nix
   ] ++ programImports; 
 
-  home.username = "ilyamiro";
-  home.homeDirectory = "/home/ilyamiro";
+  home.username = "evert";
+  home.homeDirectory = "/home/evert";
   home.stateVersion = "25.11"; 
   
   home.packages = with pkgs; [
@@ -73,8 +73,8 @@ in
     enable = true;
     
     # IMPORT DYNAMIC MATUGEN COLORS 
-    gtk3.extraCss = ''@import url("file:///home/ilyamiro/.cache/matugen/colors-gtk.css");'';
-    gtk4.extraCss = ''@import url("file:///home/ilyamiro/.cache/matugen/colors-gtk.css");'';
+    gtk3.extraCss = ''@import url("file:///home/evert/.cache/matugen/colors-gtk.css");'';
+    gtk4.extraCss = ''@import url("file:///home/evert/.cache/matugen/colors-gtk.css");'';
     
     # Target GTK3 specifically
     gtk3.extraConfig = {
