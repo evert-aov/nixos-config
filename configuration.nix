@@ -274,9 +274,26 @@
 
     # ---- Development ----
     python3
-    jdk8
-    (jetbrains.idea.override { })
+    nodejs_latest
+    vite
+    typescript
+    typescript-language-server
+    eslint
+    prettier
+    jdk25
+    maven
+    gradle_9
+    flutter
+    dart
+    dart-sass
+    android-tools
+    dotnet-sdk
     jetbrains-toolbox
+    jetbrains.idea
+    vscode
+    postgresql
+    postman
+    insomnia
 
     # ---- Desktop ----
     quickshell
@@ -292,6 +309,7 @@
     wl-clipboard
     cliphist
     gpu-screen-recorder
+    kdePackages.dolphin
 
     # ---- Customization ----
     pipes
@@ -329,25 +347,25 @@
   # ============================================================================
   # FILESYSTEMS (Mounts)
   # ============================================================================
-  # fileSystems."/mnt/datos" = {
-  #   device = "/dev/disk/by-uuid/bfcecd32-0eef-43df-afe9-3adb96680981";
-  #   fsType = "ext4";
-  #   options = [ "defaults" "noatime" ];
-  # };
+  fileSystems."/mnt/datos" = {
+    device = "/dev/disk/by-uuid/bfcecd32-0eef-43df-afe9-3adb96680981";
+    fsType = "ext4";
+    options = [ "defaults" "noatime" ];
+  };
 
   # ============================================================================
   # DATABASES
   # ============================================================================
-  # services.postgresql = {
-  #   enable = true;
-  #   ensureDatabases = [ "evert" ];
-  #   ensureUsers = [
-  #     {
-  #       name = "evert";
-  #       ensureDBOwnership = true;
-  #     }
-  #   ];
-  # };
+  services.postgresql = {
+    enable = true;
+    ensureDatabases = [ "evert" ];
+    ensureUsers = [
+      {
+        name = "evert";
+        ensureDBOwnership = true;
+      }
+    ];
+  };
 
   # ============================================================================
   # SYSTEM STATE VERSION
