@@ -1,5 +1,5 @@
 { config, ... }:
 
 {
-  xdg.configFile."kitty".source = ./kitty;
+  xdg.configFile."kitty/kitty.conf".source = ./kitty.conf;
 }
