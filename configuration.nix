@@ -341,7 +341,8 @@ in
 
     # ---- Customization ----
     pipes
-    glaxnimate
+    krita
+    #glaxnimate
     clock-rs
     cbonsai
     lavat
@@ -353,7 +354,7 @@ in
     hunspellDicts.ru_RU
     hunspellDicts.en_US
     obs-studio
-    inkscape
+    #inkscape
     #  rofi
     networkmanagerapplet
     xdg-desktop-portal-gtk
