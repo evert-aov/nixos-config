@@ -1,5 +1,25 @@
 { config, pkgs, lib, ... }:
 
+let
+  # vivaldi-ffmpeg-codecs de nixpkgs está pinnado a Chromium 123 (123075), pero Vivaldi 8.1
+  # es Chromium 150 y crashea con "undefined symbol: av_dynamic_hdr_smpte2094_app5_to_t35".
+  # Usamos el libffmpeg.so oficial para Vivaldi 8.1 (8.1-150-S-20260618, el snap que instala update-ffmpeg).
+  vivaldi-ffmpeg-codecs = pkgs.stdenv.mkDerivation {
+    pname = "vivaldi-ffmpeg-codecs";
+    version = "8.1-150-S-20260618";
+    src = pkgs.fetchurl {
+      url = "https://api.snapcraft.io/api/v1/snaps/download/XXzVIXswXKHqlUATPqGCj2w2l7BxosS8_117.snap";
+      hash = "sha256-YEE7oF8NLGDCQ3gpY5z6B+7xDxcOumjOzwUztJUM+/s=";
+    };
+    nativeBuildInputs = [ pkgs.squashfsTools ];
+    unpackPhase = ''
+      unsquashfs -dest . $src
+    '';
+    installPhase = ''
+      install -vD chromium-ffmpeg-git-2026-05-18/chromium-ffmpeg/libffmpeg.so $out/lib/libffmpeg.so
+    '';
+  };
+in
 {
   # ============================================================================
   # IMPORTS
@@ -272,11 +292,11 @@
     # ---- Terminal & Apps ----
     kitty
     (wrapFirefox (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) {})
-    (vivaldi.override { proprietaryCodecs = true; enableWidevine = true; })
+    (vivaldi.override { proprietaryCodecs = true; enableWidevine = true; inherit vivaldi-ffmpeg-codecs; })
     telegram-desktop
     obsidian
     qbittorrent
-    bottles
+    (bottles.override { removeWarningPopup = true; })
 
     # ---- Development ----
     python3
