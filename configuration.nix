@@ -251,6 +251,7 @@ in
     nerd-fonts.jetbrains-mono
     nerd-fonts.caskaydia-cove
     corefonts
+    vista-fonts
   ];
 
   fonts.fontconfig = {
