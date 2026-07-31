@@ -117,12 +117,17 @@ PanelWindow {
         if (widgetCache[name]) return;
         let t = getLayout(name);
         if (!t || !t.comp) return;
-        let obj = t.comp.createObject(preloaderContainer, {
-            "notifModel": masterWindow.notifModel,
-            "liveNotifs": masterWindow.liveNotifs,
-            "visible": false
-        });
-        if (obj) widgetCache[name] = obj;
+        let comp = Qt.createComponent(t.comp);
+        if (comp.status === Component.Ready) {
+            let obj = comp.createObject(preloaderContainer, {
+                "notifModel": masterWindow.notifModel,
+                "liveNotifs": masterWindow.liveNotifs,
+                "visible": false
+            });
+            if (obj) widgetCache[name] = obj;
+        } else {
+            console.warn("Failed to preload widget:", name, comp.errorString());
+        }
     }
 
     Component.onCompleted: {
@@ -137,6 +142,7 @@ PanelWindow {
         onTriggered: {
             preloadWidget("search");
             preloadWidget("help");
+            preloadWidget("sysmon");
         }
     }
 

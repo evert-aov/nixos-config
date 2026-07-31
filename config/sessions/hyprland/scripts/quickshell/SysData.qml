@@ -12,9 +12,11 @@ Item {
     property int cpu: 0
     property int ramPercent: 0
     property real ramGb: 0.0
+    property real ramTotalGb: 0.0
     property int temp: 0
     property real netRx: 0
     property real netTx: 0
+    property var coreCpu: [0, 0, 0, 0]
     
     // --- Lifecycle Management ---
     property int subscribers: 0
@@ -58,13 +60,15 @@ Item {
                 if (!text) return;
                 
                 let p = text.split("|");
-                if (p.length >= 6) {
+                if (p.length >= 8) {
                     root.cpu = parseInt(p[0]);
                     root.ramPercent = parseInt(p[1]);
                     root.ramGb = parseFloat(p[2]);
                     root.temp = parseInt(p[3]);
                     root.netRx = parseFloat(p[4]);
                     root.netTx = parseFloat(p[5]);
+                    root.ramTotalGb = parseFloat(p[6]);
+                    root.coreCpu = p[7].split(",").map(x => parseInt(x));
                 }
             }
         }

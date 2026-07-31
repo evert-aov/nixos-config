@@ -66,6 +66,7 @@ function getLayout(name, mx, my, mw, mh, userScale) {
         "settings":  { w: s(450, scale), h: mh - s(0, scale), rx: s(0, scale), ry: s(0, scale), comp: "settings/SettingsPopup.qml" },
         
         // --- Utility ---
+        "sysmon":    { w: s(900, scale), h: s(700, scale), rx: mw - s(904, scale), ry: s(60, scale), comp: "sysmon/SystemMonitorPopup.qml" },
         "hidden":    { w: 1, h: 1, rx: -5000 - mx, ry: -5000 - my, comp: "" } 
     };
 
