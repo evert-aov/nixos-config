@@ -228,6 +228,9 @@
     udev-gothic-nf
     noto-fonts
     liberation_ttf
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.caskaydia-cove
+    corefonts
   ];
 
   fonts.fontconfig = {
@@ -269,6 +272,7 @@
     # ---- Terminal & Apps ----
     kitty
     (wrapFirefox (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) {})
+    (vivaldi.override { proprietaryCodecs = true; enableWidevine = true; })
     telegram-desktop
     obsidian
     qbittorrent
