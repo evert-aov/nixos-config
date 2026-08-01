@@ -109,6 +109,17 @@ in
   # ============================================================================
   services.xserver.enable = true;
   services.displayManager.gdm.enable = true;
+  services.displayManager.gdm.banner = "Bienvenido";
+
+  # Fondo y opciones del login screen de GDM (vía dconf del perfil gdm)
+  programs.dconf.profiles.gdm.databases = lib.mkAfter [
+    {
+      settings."org/gnome/login-screen" = {
+        picture-uri = "file://${builtins.path { name = "gdm-wallpaper"; path = ./wallpapers/gdm-login.jpg; }}";
+        picture-uri-dark = "file://${builtins.path { name = "gdm-wallpaper"; path = ./wallpapers/gdm-login.jpg; }}";
+      };
+    }
+  ];
 
   programs.hyprland.enable = true;
 
