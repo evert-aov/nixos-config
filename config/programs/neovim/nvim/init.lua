@@ -19,7 +19,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
-vim.opt.expandtab = 4
+vim.opt.expandtab = true
 
 -- DYNAMIC THEME LOGIC
 _G.reload_matugen_colors = function()
