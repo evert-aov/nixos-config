@@ -838,6 +838,15 @@ vim.keymap.set("n", "<leader>t", function()
   vim.cmd("tabnew term://" .. vim.o.shell)
 end, { desc = "Open Terminal in new tab" })
 
+-- Cerrar la pestaña actual con C-q
+local function close_current_tab()
+  if vim.fn.tabpagenr("$") > 1 then
+    vim.cmd("tabclose")
+  end
+end
+vim.keymap.set("t", "<C-q>", close_current_tab, { desc = "Close current tab" })
+vim.keymap.set("n", "<C-q>", close_current_tab, { desc = "Close current tab" })
+
 -- Markdown preview (navegador)
 vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Toggle Markdown Preview" })
 
