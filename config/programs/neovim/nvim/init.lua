@@ -436,14 +436,13 @@ null_ls.setup({
     -- Python
     null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.isort,
-    null_ls.builtins.diagnostics.flake8,
+    null_ls.builtins.diagnostics.pylint,
     
     -- Java
     null_ls.builtins.formatting.google_java_format,
     
     -- JavaScript/TypeScript
     null_ls.builtins.formatting.prettierd,
-    null_ls.builtins.diagnostics.eslint_d,
     
     -- Dart
     null_ls.builtins.formatting.dart_format,
@@ -453,9 +452,6 @@ null_ls.setup({
     
     -- Nix
     null_ls.builtins.formatting.nixpkgs_fmt,
-    
-    -- Shell
-    null_ls.builtins.diagnostics.shellcheck,
     
     -- Markdown
     null_ls.builtins.diagnostics.markdownlint,
@@ -711,13 +707,13 @@ local function rename_nvimtree_node()
 end
 
 -- Keymaps para F2
-vim.keymap.set("n", "<F2>", rename_current_file, { desc = "Rename current file" })
-vim.keymap.set("n", "<F2>", rename_nvimtree_node, { 
-  desc = "Rename file in NvimTree",
-  buffer = function()
-    return vim.bo.filetype == "NvimTree"
+vim.keymap.set("n", "<F2>", function()
+  if vim.bo.filetype == "NvimTree" then
+    rename_nvimtree_node()
+  else
+    rename_current_file()
   end
-})
+end, { desc = "Rename file/folder" })
 
 -- ============================================
 -- NAVEGACIÓN ENTRE EDITOR Y EXPLORADOR
