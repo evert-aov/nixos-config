@@ -586,9 +586,9 @@ vim.api.nvim_create_autocmd("Signal", {
 -- Cerrar ventana con Ctrl+W
 vim.keymap.set("n", "<C-w>", "<C-w>", { desc = "Window commands (native)" })
 
--- Alternar entre ventanas con Ctrl+Tab
-vim.keymap.set("n", "<C-Tab>", "<C-w>w", { desc = "Next window" })
-vim.keymap.set("n", "<C-S-Tab>", "<C-w>W", { desc = "Previous window" })
+-- Navegar entre archivos (buffers) con Ctrl+Tab
+vim.keymap.set("n", "<C-Tab>", ":bnext<CR>", { desc = "Next buffer (file)" })
+vim.keymap.set("n", "<C-S-Tab>", ":bprev<CR>", { desc = "Previous buffer (file)" })
 
 -- Navegación horizontal entre ventanas
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Focus left window" })
@@ -767,6 +767,7 @@ end
 
 vim.keymap.set("n", "<C-e>", toggle_explorer_focus, { desc = "Toggle explorer focus" })
 vim.keymap.set("n", "<leader>e", toggle_explorer_focus, { desc = "Toggle explorer focus" })
+vim.keymap.set("n", "<C-n>", toggle_explorer_focus, { desc = "Toggle explorer focus" })
 
 -- Atajos para el explorador
 vim.api.nvim_create_autocmd("FileType", {
@@ -835,6 +836,9 @@ vim.keymap.set("n", "<leader>t", function()
   vim.cmd("belowright split term://" .. vim.o.shell)
   vim.cmd("resize 15")
 end, { desc = "Open Terminal" })
+
+-- Markdown preview (navegador)
+vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Toggle Markdown Preview" })
 
 -- Crear nuevas ventanas
 vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Split vertical" })

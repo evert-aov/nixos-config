@@ -32,6 +32,7 @@ in
       qt6Packages.qt6ct
       libsForQt5.qtstyleplugin-kvantum
       kdePackages.qtstyleplugin-kvantum
+      glow              # preview de markdown en la terminal (yazi)
   ];
 
   # set cursor 

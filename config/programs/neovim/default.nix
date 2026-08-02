@@ -8,9 +8,10 @@
     vimAlias = true;
 
     extraPackages = with pkgs; [
-      # Herramientas base
+      # General
       ripgrep
       fd
+      nodejs          # servidor de markdown-preview.nvim
       
       # LSP Servers para tu stack
       lua-language-server
@@ -91,6 +92,7 @@
       nvim-dap-virtual-text # Virtual text para debugging
       nvim-treesitter-context # Contexto visual
       trouble-nvim        # Mejor visualización de diagnostics
+      markdown-preview-nvim # Preview de markdown en el navegador
     ];
   };
 
