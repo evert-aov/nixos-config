@@ -261,7 +261,7 @@ cmp.setup {
 }
 
 -- ============================================
--- LSP CONFIGURACIÓN
+-- LSP CONFIGURACIÓN (nvim 0.11+ / lspconfig 2.x)
 -- ============================================
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.foldingRange = {
@@ -269,28 +269,13 @@ capabilities.textDocument.foldingRange = {
   lineFoldingOnly = true
 }
 
+require('lspconfig')
+
 local function setup_server(server_name, config)
-  local ok, server_config = pcall(require, "lspconfig.server_configurations." .. server_name)
-  if not ok then return end
-  
-  local default_config = server_config.default_config
-  local final_config = vim.tbl_deep_extend("force", default_config, config or {})
-  final_config.capabilities = vim.tbl_deep_extend("force", final_config.capabilities or {}, capabilities)
-
-  vim.api.nvim_create_autocmd("FileType", {
-     pattern = final_config.filetypes,
-     callback = function(args)
-    local instance_config = vim.tbl_deep_extend("force", {}, final_config)
-
-    local root_dir = final_config.root_dir
-    if type(root_dir) == "function" then
-      root_dir = root_dir(args.file)
-      end
-      instance_config.root_dir = root_dir or vim.fs.dirname(args.file)
-
-      vim.lsp.start(instance_config)
-     end,
-  })
+  config = config or {}
+  config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
+  pcall(vim.lsp.config, server_name, config)
+  pcall(vim.lsp.enable, server_name)
 end
 
 -- Configurar cada LSP
