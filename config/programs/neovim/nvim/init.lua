@@ -767,7 +767,9 @@ end
 
 vim.keymap.set("n", "<C-e>", toggle_explorer_focus, { desc = "Toggle explorer focus" })
 vim.keymap.set("n", "<leader>e", toggle_explorer_focus, { desc = "Toggle explorer focus" })
-vim.keymap.set("n", "<C-n>", toggle_explorer_focus, { desc = "Toggle explorer focus" })
+vim.keymap.set("n", "<C-n>", function()
+  vim.cmd("NvimTreeToggle")
+end, { desc = "Open/close file explorer" })
 
 -- Atajos para el explorador
 vim.api.nvim_create_autocmd("FileType", {
@@ -831,11 +833,10 @@ vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<CR>", { desc = "Toggle Tro
 vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<CR>", { desc = "Workspace Diagnostics" })
 vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<CR>", { desc = "Document Diagnostics" })
 
--- Terminal
+-- Terminal (pestaña nueva)
 vim.keymap.set("n", "<leader>t", function()
-  vim.cmd("belowright split term://" .. vim.o.shell)
-  vim.cmd("resize 15")
-end, { desc = "Open Terminal" })
+  vim.cmd("tabnew term://" .. vim.o.shell)
+end, { desc = "Open Terminal in new tab" })
 
 -- Markdown preview (navegador)
 vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Toggle Markdown Preview" })
