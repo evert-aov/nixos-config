@@ -19,7 +19,7 @@
       nixpkgs-fmt
       
       # Java/Kotlin (Spring Boot)
-      jdtls            # Java LSP
+      jdt-language-server
       kotlin-language-server
       
       # Dart/Flutter
@@ -27,10 +27,10 @@
       flutter
       
       # JavaScript/TypeScript (Angular)
-      nodePackages.typescript-language-server
-      nodePackages.angular-language-server
-      nodePackages.eslint
-      nodePackages.prettier
+      typescript-language-server
+      angular-language-server
+      eslint
+      prettier
       
       # PostgreSQL
       sqls             # SQL LSP
@@ -38,12 +38,7 @@
       # Formateadores adicionales
       black            # Python
       google-java-format # Java
-      dartfmt          # Dart
       prettierd        # JS/TS/HTML/CSS
-      
-      # Debuggers
-      vscode-extensions.ms-vscode.js-debug-composed
-      dart-debugger
       
       # Linters
       shellcheck
@@ -89,7 +84,7 @@
       vim-dadbod          # Base de datos
       vim-dadbod-ui       # UI para base de datos
       vim-dadbod-completion # Completado SQL
-      null-ls-nvim        # Formateo y linting
+      none-ls-nvim        # Formateo y linting (fork de null-ls)
       nvim-dap            # Debugging
       nvim-dap-ui         # UI para debugging
       nvim-dap-virtual-text # Virtual text para debugging
