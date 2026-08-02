@@ -8,29 +8,72 @@
     vimAlias = true;
 
     extraPackages = with pkgs; [
+      # Herramientas base
       ripgrep
       fd
+      
+      # LSP Servers para tu stack
       lua-language-server
-      pyright
-      nil
+      pyright          # Python
+      nil              # Nix
       nixpkgs-fmt
+      
+      # Java/Kotlin (Spring Boot)
+      jdtls            # Java LSP
+      kotlin-language-server
+      
+      # Dart/Flutter
+      dart-sass
+      flutter
+      
+      # JavaScript/TypeScript (Angular)
+      nodePackages.typescript-language-server
+      nodePackages.angular-language-server
+      nodePackages.eslint
+      nodePackages.prettier
+      
+      # PostgreSQL
+      sqls             # SQL LSP
+      
+      # Formateadores adicionales
+      black            # Python
+      google-java-format # Java
+      dartfmt          # Dart
+      prettierd        # JS/TS/HTML/CSS
+      
+      # Debuggers
+      vscode-extensions.ms-vscode.js-debug-composed
+      dart-debugger
+      
+      # Linters
+      shellcheck
+      markdownlint-cli
     ];
 
     plugins = with pkgs.vimPlugins; [
+      # Temas
       catppuccin-nvim
       nvim-web-devicons
-      nvim-treesitter.withAllGrammars 
+      
+      # Treesitter (syntax highlighting mejorado)
+      (nvim-treesitter.withAllGrammars)
+      
+      # UI
       lualine-nvim
       bufferline-nvim
       indent-blankline-nvim
       gitsigns-nvim
       which-key-nvim
       nvim-tree-lua
+      
+      # Herramientas de desarrollo
       plenary-nvim
       telescope-nvim
       telescope-ui-select-nvim
       nvim-autopairs
       comment-nvim
+      
+      # LSP y Autocompletado
       nvim-lspconfig
       nvim-cmp
       cmp-nvim-lsp
@@ -40,9 +83,20 @@
       luasnip
       cmp_luasnip
       friendly-snippets
+      
+      # Extensiones específicas para tu stack
+      vim-javacomplete2   # Java completions
+      vim-dadbod          # Base de datos
+      vim-dadbod-ui       # UI para base de datos
+      vim-dadbod-completion # Completado SQL
+      null-ls-nvim        # Formateo y linting
+      nvim-dap            # Debugging
+      nvim-dap-ui         # UI para debugging
+      nvim-dap-virtual-text # Virtual text para debugging
+      nvim-treesitter-context # Contexto visual
+      trouble-nvim        # Mejor visualización de diagnostics
     ];
   };
 
-  # Target only the specific file so the parent directory remains writable
   xdg.configFile."nvim/init.lua".source = ./nvim/init.lua;
 }
