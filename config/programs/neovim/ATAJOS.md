@@ -14,8 +14,9 @@ Configuración en `config/programs/neovim/default.nix` (plugins/paquetes) y
 | `<C-h>` | Enfocar/toggle el explorador (nvim-tree) |
 | `<C-l>` | Enfocar la ventana del editor |
 | `<C-e>` | Alternar foco editor/explorador |
+| `<C-n>` | Abrir/cerrar el explorador de archivos |
+| `<C-Tab>` / `<C-S-Tab>` | Buffer (archivo) siguiente / anterior |
 | `<C-j>` / `<C-k>` | Bajar / subir de ventana |
-| `<C-Tab>` / `<C-S-Tab>` | Ventana siguiente / anterior |
 | `<C-Left>` / `<C-Right>` | Reducir / aumentar ancho |
 | `<C-Up>` / `<C-Down>` | Aumentar / reducir alto |
 | `<leader>sv` | Split vertical |
@@ -99,6 +100,7 @@ Configuraciones incluidas: Java/Spring Boot, Python/FastAPI, Dart/Flutter.
 | Atajo | Acción |
 |-------|--------|
 | `<leader>t` | Abrir terminal (split inferior) |
+| `<leader>mp` | Toggle preview de markdown (navegador) |
 | `<leader>e` | Mostrar diagnóstico flotante |
 | `<F2>` | Renombrar archivo actual |
 
@@ -171,6 +173,7 @@ Configuraciones incluidas: Java/Spring Boot, Python/FastAPI, Dart/Flutter.
 | `vim-javacomplete2` | Completado Java |
 | `vim-dadbod` + `vim-dadbod-ui` + `vim-dadbod-completion` | Bases de datos / SQL |
 | `none-ls-nvim` | Formateo y linting |
+| `markdown-preview-nvim` | Preview de markdown en el navegador |
 | `nvim-treesitter-context` | Cabecera de contexto al scrollear |
 | `trouble-nvim` | Panel de diagnósticos |
 
@@ -185,7 +188,11 @@ Configuraciones incluidas: Java/Spring Boot, Python/FastAPI, Dart/Flutter.
 | Dart / Flutter | `flutter`, `dart-sass` |
 | JS / TS / Angular | `typescript-language-server`, `angular-language-server`, `eslint`, `prettier` |
 | PostgreSQL / SQL | `sqls` |
+| Markdown | `markdown-preview-nvim` (+ `nodejs`) |
 | General | `ripgrep`, `fd`, `shellcheck`, `markdownlint-cli` |
+
+> Para preview de markdown fuera de nvim (p.ej. en yazi): `glow` (en `home.packages`).
+> yazi usa glow automáticamente para `.md`.
 
 ## Lenguajes con resaltado Treesitter
 
