@@ -187,7 +187,7 @@ in
   services.flatpak.enable = true;
   services.power-profiles-daemon.enable = true;
 
-  programs.firefox.enable = true;
+  # programs.firefox.enable = true;
   programs.vscode.enable = true;
   programs.dconf.enable = true;
 
@@ -342,7 +342,7 @@ in
 
     # ---- Terminal & Apps ----
     kitty
-    (wrapFirefox (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { })
+    # (wrapFirefox (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { })
     (vivaldi.override {
       proprietaryCodecs = true;
       enableWidevine = true;

@@ -33,7 +33,7 @@ _G.reload_matugen_colors = function()
   vim.schedule(function()
     local matugen_path = vim.fn.stdpath("config") .. "/matugen_colors.lua"
     local overrides = {}
-    
+
     if vim.fn.filereadable(matugen_path) == 1 then
       local chunk = loadfile(matugen_path)
       if chunk then
@@ -79,14 +79,14 @@ _G.reload_matugen_colors = function()
         },
       },
     })
-    
+
     vim.cmd("colorscheme catppuccin")
 
     local ok_lualine, lualine = pcall(require, "lualine")
     if ok_lualine then
       lualine.setup { options = { theme = 'catppuccin' } }
     end
-    
+
     vim.cmd("redraw!")
     vim.notify("Matugen colors reloaded!", vim.log.levels.INFO)
   end)
@@ -143,7 +143,7 @@ require('which-key').setup()
 -- Nvim Tree
 require("nvim-tree").setup({
   filters = { dotfiles = false },
-  view = { 
+  view = {
     width = 30,
     side = "left",
     preserve_window_proportions = true,
@@ -196,7 +196,7 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find Buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Find Help' })
 
 -- Bufferline
-require("bufferline").setup{
+require("bufferline").setup {
   options = {
     mode = "buffers",
     diagnostics = "nvim_lsp",
@@ -221,7 +221,7 @@ require("bufferline").setup{
 -- ============================================
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
- 
+
 require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./snippets" } })
 
@@ -422,22 +422,22 @@ null_ls.setup({
     null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.isort,
     null_ls.builtins.diagnostics.pylint,
-    
+
     -- Java
     null_ls.builtins.formatting.google_java_format,
-    
+
     -- JavaScript/TypeScript
     null_ls.builtins.formatting.prettierd,
-    
+
     -- Dart
     null_ls.builtins.formatting.dart_format,
-    
+
     -- SQL
     null_ls.builtins.formatting.sql_formatter,
-    
+
     -- Nix
     null_ls.builtins.formatting.nixpkgs_fmt,
-    
+
     -- Markdown
     null_ls.builtins.diagnostics.markdownlint,
   },
@@ -544,7 +544,7 @@ watcher:start(matugen_path, {}, vim.schedule_wrap(function(err, filename, events
       reload_timer:stop()
       reload_timer:close()
     end
-    
+
     reload_timer = uv.new_timer()
     reload_timer:start(100, 0, vim.schedule_wrap(function()
       _G.reload_matugen_colors()
@@ -632,7 +632,7 @@ local function rename_current_file()
       vim.cmd("bdelete!")
       vim.cmd("edit " .. new_path)
       vim.notify("Renamed to: " .. new_name, vim.log.levels.INFO)
-      
+
       pcall(function()
         require("nvim-tree.api").tree.reload()
       end)
@@ -645,7 +645,7 @@ end
 local function rename_nvimtree_node()
   local tree = require("nvim-tree.api")
   local node = tree.node.get_node_under_cursor()
-  
+
   if not node then
     vim.notify("No node selected", vim.log.levels.ERROR)
     return
@@ -679,7 +679,7 @@ local function rename_nvimtree_node()
     if success then
       tree.tree.reload()
       vim.notify("Renamed to: " .. new_name, vim.log.levels.INFO)
-      
+
       local buf = vim.fn.bufnr(old_path)
       if buf ~= -1 then
         vim.cmd("bdelete! " .. buf)
@@ -731,7 +731,7 @@ end, { desc = "Focus editor window" })
 local function toggle_explorer_focus()
   local current_win = vim.api.nvim_get_current_win()
   local current_buf = vim.api.nvim_win_get_buf(current_win)
-  
+
   if vim.bo[current_buf].filetype == "NvimTree" then
     vim.cmd("wincmd p")
   else
@@ -762,23 +762,23 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     vim.keymap.set("n", "h", "NvimTreeClose", { buffer = true, desc = "Close explorer" })
     vim.keymap.set("n", "l", "NvimTreeOpen", { buffer = true, desc = "Open file/folder" })
-    
+
     vim.keymap.set("n", "a", function()
       require("nvim-tree.api").fs.create_file()
     end, { buffer = true, desc = "Create file" })
-    
+
     vim.keymap.set("n", "A", function()
       require("nvim-tree.api").fs.create_directory()
     end, { buffer = true, desc = "Create directory" })
-    
+
     vim.keymap.set("n", "d", function()
       require("nvim-tree.api").fs.trash()
     end, { buffer = true, desc = "Move to trash" })
-    
+
     vim.keymap.set("n", "y", function()
       require("nvim-tree.api").fs.copy.node()
     end, { buffer = true, desc = "Copy file" })
-    
+
     vim.keymap.set("n", "p", function()
       require("nvim-tree.api").fs.paste()
     end, { buffer = true, desc = "Paste file" })
@@ -890,3 +890,4 @@ vim.api.nvim_create_autocmd("FileType", {
 -- ============================================
 
 vim.notify("✅ Neovim configurado para desarrollo completo!", vim.log.levels.INFO)
+
