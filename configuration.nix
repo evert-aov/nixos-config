@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config
+, pkgs
+, lib
+, ...
+}:
 
 let
   # vivaldi-ffmpeg-codecs de nixpkgs está pinnado a Chromium 123 (123075), pero Vivaldi 8.1
@@ -115,8 +119,18 @@ in
   programs.dconf.profiles.gdm.databases = lib.mkAfter [
     {
       settings."org/gnome/login-screen" = {
-        picture-uri = "file://${builtins.path { name = "gdm-wallpaper"; path = ./wallpapers/gdm-login.jpg; }}";
-        picture-uri-dark = "file://${builtins.path { name = "gdm-wallpaper"; path = ./wallpapers/gdm-login.jpg; }}";
+        picture-uri = "file://${
+          builtins.path {
+            name = "gdm-wallpaper";
+            path = ./wallpapers/gdm-login.jpg;
+          }
+        }";
+        picture-uri-dark = "file://${
+          builtins.path {
+            name = "gdm-wallpaper";
+            path = ./wallpapers/gdm-login.jpg;
+          }
+        }";
       };
     }
   ];
@@ -203,7 +217,13 @@ in
     isNormalUser = true;
     description = "evert";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "video" "adbusers" "libvirtd" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+      "adbusers"
+      "libvirtd"
+    ];
   };
 
   users.defaultUserShell = pkgs.zsh;
@@ -226,7 +246,10 @@ in
   # ============================================================================
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   nix.gc = {
     automatic = true;
@@ -315,11 +338,16 @@ in
     ffmpeg
     mpv
     mission-center
+    onlyoffice-desktopeditors
 
     # ---- Terminal & Apps ----
     kitty
     (wrapFirefox (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { })
-    (vivaldi.override { proprietaryCodecs = true; enableWidevine = true; inherit vivaldi-ffmpeg-codecs; })
+    (vivaldi.override {
+      proprietaryCodecs = true;
+      enableWidevine = true;
+      inherit vivaldi-ffmpeg-codecs;
+    })
     telegram-desktop
     obsidian
     qbittorrent
@@ -408,7 +436,10 @@ in
   fileSystems."/mnt/datos" = {
     device = "/dev/disk/by-uuid/bfcecd32-0eef-43df-afe9-3adb96680981";
     fsType = "ext4";
-    options = [ "defaults" "noatime" ];
+    options = [
+      "defaults"
+      "noatime"
+    ];
   };
 
   # ============================================================================
