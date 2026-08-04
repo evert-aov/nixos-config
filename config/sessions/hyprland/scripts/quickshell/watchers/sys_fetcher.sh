@@ -44,7 +44,6 @@ while IFS=":" read -r key val; do
         MemTotal) TOTAL_MEM=$(echo "$val" | awk '{print $1}') ;;
         MemAvailable) AVAIL_MEM=$(echo "$val" | awk '{print $1}') ;;
     esac
-    sleep 1 
 done < /proc/meminfo
 USED_MEM=$((TOTAL_MEM - AVAIL_MEM))
 RAM_PCT=$(( 100 * USED_MEM / TOTAL_MEM ))
