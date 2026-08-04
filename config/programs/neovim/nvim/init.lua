@@ -823,6 +823,10 @@ vim.keymap.set("n", "<leader>t", function()
   vim.cmd("tabnew term://" .. vim.o.shell)
 end, { desc = "Open Terminal in new tab" })
 
+-- Escapar modo terminal a modo normal con Ctrl + Esc
+vim.keymap.set("t", "<C-Esc>", [[<C-\><C-n>]], { desc = "Escape terminal mode" })
+
+
 -- Cerrar la pestaña actual con C-q
 local function close_current_tab()
   if vim.fn.tabpagenr("$") > 1 then

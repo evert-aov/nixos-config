@@ -99,7 +99,8 @@ Configuraciones incluidas: Java/Spring Boot, Python/FastAPI, Dart/Flutter.
 
 | Atajo | Acción |
 |-------|--------|
-| `<leader>t` | Abrir terminal (split inferior) |
+| `<leader>t` | Abrir terminal (pestaña nueva) |
+| `<C-Esc>` | Poner la terminal en modo normal |
 | `<leader>mp` | Toggle preview de markdown (navegador) |
 | `<leader>e` | Mostrar diagnóstico flotante |
 | `<F2>` | Renombrar archivo actual |
