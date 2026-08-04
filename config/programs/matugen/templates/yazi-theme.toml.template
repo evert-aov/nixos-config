@@ -27,11 +27,11 @@ title = { fg = "{{colors.on_surface.default.hex}}" }
 hovered = { fg = "{{colors.on_secondary_container.default.hex}}", bg = "{{colors.secondary_container.default.hex}}" }
 
 [which]
-cols = [
-  { fg = "{{colors.primary.default.hex}}" },
-  { fg = "{{colors.secondary.default.hex}}" },
-  { fg = "{{colors.tertiary.default.hex}}" },
-]
+mask = { bg = "{{colors.surface_container.default.hex}}" }
+cand = { fg = "{{colors.primary.default.hex}}" }
+rest = { fg = "{{colors.secondary.default.hex}}" }
+desc = { fg = "{{colors.tertiary.default.hex}}" }
+cols = 3
 
 [help]
 border = { fg = "{{colors.outline.default.hex}}" }
