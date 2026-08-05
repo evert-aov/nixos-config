@@ -114,7 +114,7 @@ in
   services.xserver.enable = true;
   services.displayManager.gdm.enable = true;
   services.displayManager.gdm.banner = "Bienvenido";
-
+  services.openssh.enable = true;
   # Fondo y opciones del login screen de GDM (vía dconf del perfil gdm)
   programs.dconf.profiles.gdm.databases = lib.mkAfter [
     {
