@@ -173,7 +173,7 @@ in
   # INPUT (Keyboard)
   # ============================================================================
   services.xserver.xkb = {
-    layout = "us,es";
+    layout = "us,latam";
     variant = "";
     options = "grp:alt_shift_toggle";
   };
