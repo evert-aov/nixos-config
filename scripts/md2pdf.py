@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 import os
 import markdown
@@ -10,16 +11,22 @@ def convertir(md_path):
         sys.exit(1)
 
     base_name = os.path.splitext(md_path)[0]
-    html_path = f"{base_name}.html"
     pdf_path = f"{base_name}.pdf"
 
     # Leer Markdown
     with open(md_path, "r", encoding="utf-8") as f:
         text = f.read()
 
-    # Convertir a HTML con extensiones útiles (tablas, bloques de código, etc.)
+    # Convertir a HTML con extensiones útiles (tablas, bloques de código, pygments, etc.)
     html_body = markdown.markdown(
-        text, extensions=["fenced_code", "tables", "sane_lists"]
+        text,
+        extensions=["fenced_code", "tables", "sane_lists", "codehilite"],
+        extension_configs={
+            "codehilite": {
+                "noclasses": True,  # Inserta estilos CSS en línea para el coloreado de código sin necesidad de archivos CSS externos
+                "pygments_style": "default",
+            }
+        }
     )
 
     # Plantilla HTML con estilos CSS embebidos profesionales
@@ -59,6 +66,7 @@ def convertir(md_path):
             border-radius: 5px;
             font-family: monospace;
             font-size: 9pt;
+            overflow: x;
         }}
         code {{
             background-color: #edf2f7;
@@ -95,14 +103,11 @@ def convertir(md_path):
 </html>
 """
 
-    # Escribir HTML temporal y compilar a PDF con WeasyPrint
-    with open(html_path, "w", encoding="utf-8") as f:
-        f.write(html_content)
+    # Obtener el directorio base para resolver imágenes relativas correctamente
+    base_dir = os.path.dirname(os.path.abspath(md_path))
 
-    HTML(html_path).write_pdf(pdf_path)
-
-    # Limpiar archivo HTML temporal
-    os.remove(html_path)
+    # Compilar a PDF con WeasyPrint usando el string directamente
+    HTML(string=html_content, base_url=base_dir).write_pdf(pdf_path)
     print(f"¡PDF generado con éxito: {pdf_path}!")
 
 
