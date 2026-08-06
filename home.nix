@@ -14,6 +14,18 @@ let
 
   # 4. Map the directory names to import paths
   programImports = map (name: programsDir + "/${name}") directories;
+
+  # --- Dynamic Scripts Deployment ---
+  scriptsDir = ./scripts;
+  scriptFiles = if builtins.pathExists scriptsDir then builtins.readDir scriptsDir else {};
+  scriptFileNames = builtins.filter (name: scriptFiles.${name} == "regular") (builtins.attrNames scriptFiles);
+  scriptHomeFiles = builtins.listToAttrs (map (name: {
+    name = ".local/bin/${name}";
+    value = {
+      source = scriptsDir + "/${name}";
+      executable = true;
+    };
+  }) scriptFileNames);
 in
 {
   imports = [
@@ -169,5 +181,5 @@ in
         TerminalService=kitty.desktop
       '';
     };
-  };
+  } // scriptHomeFiles;
 }

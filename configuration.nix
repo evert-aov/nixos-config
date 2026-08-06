@@ -353,7 +353,13 @@ in
     (bottles.override { removeWarningPopup = true; })
 
     # ---- Development ----
-    python3
+    (python3.withPackages (
+      ps: with ps; [
+        markdown
+        weasyprint
+        pygments
+      ]
+    ))
     nodejs_latest
     vite
     typescript
