@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   # 1. Define the path to your programs directory
@@ -20,7 +20,7 @@ let
   scriptFiles = if builtins.pathExists scriptsDir then builtins.readDir scriptsDir else {};
   scriptFileNames = builtins.filter (name: scriptFiles.${name} == "regular") (builtins.attrNames scriptFiles);
   scriptHomeFiles = builtins.listToAttrs (map (name: {
-    name = ".local/bin/${name}";
+    name = ".local/bin/${lib.removeSuffix ".sh" (lib.removeSuffix ".py" name)}";
     value = {
       source = scriptsDir + "/${name}";
       executable = true;
