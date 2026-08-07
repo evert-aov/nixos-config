@@ -35,8 +35,6 @@
   home.sessionVariables = {
       hypr = "/home/evert/nixos-configuration/config/sessions/hyprland/";  
       programs = "/home/evert/nixos-configuration/config/programs";
-      QT_QUICK_BACKEND = "software";
-      LIBGL_ALWAYS_SOFTWARE = "1";
     };
 
 }
