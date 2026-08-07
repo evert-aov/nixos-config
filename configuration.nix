@@ -222,6 +222,7 @@ in
       "video"
       "adbusers"
       "libvirtd"
+      "docker"
     ];
   };
 
