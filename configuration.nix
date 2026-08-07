@@ -400,7 +400,7 @@ in
 
     # ---- Customization ----
     pipes
-    krita
+    #krita
     #glaxnimate
     clock-rs
     cbonsai
