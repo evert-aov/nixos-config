@@ -395,7 +395,7 @@ in
     wl-clipboard
     cliphist
     gpu-screen-recorder
-    kdePackages.dolphin
+    nautilus
     yazi
 
     # ---- Customization ----
@@ -410,7 +410,6 @@ in
     direnv
     zbar
     hunspell
-    hunspellDicts.ru_RU
     hunspellDicts.en_US
     obs-studio
     #inkscape
