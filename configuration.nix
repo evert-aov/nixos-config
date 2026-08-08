@@ -348,7 +348,6 @@ in
       enableWidevine = true;
       inherit vivaldi-ffmpeg-codecs;
     })
-    telegram-desktop
     obsidian
     qbittorrent
     (bottles.override { removeWarningPopup = true; })
@@ -398,6 +397,7 @@ in
     gpu-screen-recorder
     nautilus
     yazi
+    htop
 
     # ---- Customization ----
     pipes
