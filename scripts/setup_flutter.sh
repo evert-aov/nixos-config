@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 read -p "Enter name of the Flutter project (in snake_case, e.g: my_app): " APP_NAME 
 
@@ -81,9 +81,9 @@ FILES=(
   "lib/generated/assets/.gitkeep"
 )
 
-for filepath in "$FILES[@]"
+for filepath in "${FILES[@]}"
 do
-  mkdir -p "$(dirmane "$filepath")"
+  mkdir -p "$(dirname "$filepath")"
   touch "$filepath"
 done
 
