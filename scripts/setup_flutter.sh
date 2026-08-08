@@ -9,6 +9,7 @@ fi
 
 echo "Creating a Flutter project $APP_NAME"
 
+flutter create "$APP_NAME"
 cd "$APP_NAME" || exit
 
 echo "Generating folder and file structure inside lib/..."
