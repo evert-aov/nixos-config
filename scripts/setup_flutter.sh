@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 read -p "Enter name of the Flutter project (in snake_case, e.g: my_app): " APP_NAME 
 
