@@ -88,6 +88,6 @@ do
   touch "$filepath"
 done
 
-echo "Clean architecture successfully generated in '$APP_NAME/lib/'."
+echo "Clean architecture successfully generated in 'lib/'."
 
-tree "$APP_NAME/lib"
+tree lib
