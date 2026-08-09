@@ -203,6 +203,7 @@ in
     dedicatedServer.openFirewall = true;
   };
   programs.gamemode.enable = true;
+  programs.gamescope.enable = true;
 
   # ============================================================================
   # SHELL (ZSH)
@@ -429,6 +430,13 @@ in
 
     # ---- Gaming ----
     steam-run
+    (heroic.override {
+      extraPkgs =
+        pkgs': with pkgs'; [
+          gamescope
+          gamemode
+        ];
+    })
 
     # ---- Cross-compilation ----
     pkgsCross.mingwW64.stdenv.cc
