@@ -328,6 +328,7 @@ in
     jq
     yq-go
     p7zip
+    unrar
     neovim
     fzf
     fd
