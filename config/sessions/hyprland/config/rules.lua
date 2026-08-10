@@ -15,9 +15,9 @@
 
 -- ───────── App Launcher ─────────
 -- windowrule = float on, center on, size 1200 600, match:title ^(app-launcher)$
-hl.window_rule("float", { title = "^(app-launcher)$" })
-hl.window_rule("center", { title = "^(app-launcher)$" })
-hl.window_rule("size 1200 600", { title = "^(app-launcher)$" })
+hl.window_rule({ match = { title = "^(app-launcher)$" }, float = true })
+hl.window_rule({ match = { title = "^(app-launcher)$" }, center = true })
+hl.window_rule({ match = { title = "^(app-launcher)$" }, size = "1200 600" })
 
 --  ───────── MASTER QUICKSHELL CONTAINER ─────────
 -- All widgets now live inside this single, shape-shifting window.

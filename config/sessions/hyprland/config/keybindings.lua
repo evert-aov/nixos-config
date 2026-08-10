@@ -10,22 +10,22 @@ hl.bind(var.mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(var.mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- ───────── Window Management ─────────
-hl.bind(var.mainMod .. " + SHIFT_L + left", hl.dsp.window.resize({ -50, 0 }), { repeating = true })
-hl.bind(var.mainMod .. " + SHIFT_L + right", hl.dsp.window.resize({ 50, 0 }), { repeating = true })
-hl.bind(var.mainMod .. " + SHIFT_L + up", hl.dsp.window.resize({ 0, -50 }), { repeating = true })
-hl.bind(var.mainMod .. " + SHIFT_L + down", hl.dsp.window.resize({ 0, 50 }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT_L + left", hl.dsp.window.resize({ x = -50, y = 0 }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT_L + right", hl.dsp.window.resize({ x = 50, y = 0 }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT_L + up", hl.dsp.window.resize({ x = 0, y = -50 }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT_L + down", hl.dsp.window.resize({ x = 0, y = 50 }), { repeating = true })
 
 
-hl.bind(var.mainMod .. " + CTRL + left", hl.dsp.window.move({ direction = "l" }))
-hl.bind(var.mainMod .. " + CTRL + right", hl.dsp.window.move({ direction = "r" }))
-hl.bind(var.mainMod .. " + CTRL + up", hl.dsp.window.move({ direction = "u" }))
-hl.bind(var.mainMod .. " + CTRL + down", hl.dsp.window.move({ direction = "d" }))
+hl.bind(var.mainMod .. " + CTRL + left", hl.dsp.window.move({ direction = "left" }))
+hl.bind(var.mainMod .. " + CTRL + right", hl.dsp.window.move({ direction = "right" }))
+hl.bind(var.mainMod .. " + CTRL + up", hl.dsp.window.move({ direction = "up" }))
+hl.bind(var.mainMod .. " + CTRL + down", hl.dsp.window.move({ direction = "down" }))
 
 
-hl.bind(var.mainMod .. " + left", hl.dsp.focus({ direction = "l" }))
-hl.bind(var.mainMod .. " + right", hl.dsp.focus({ direction = "r" }))
-hl.bind(var.mainMod .. " + up", hl.dsp.focus({ direction = "u" }))
-hl.bind(var.mainMod .. " + down", hl.dsp.focus({ direction = "d" }))
+hl.bind(var.mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
+hl.bind(var.mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
+hl.bind(var.mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
+hl.bind(var.mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
 hl.bind(var.mainMod .. " + Q", hl.dsp.window.kill())
 hl.bind("ALT + F4", hl.dsp.window.kill())
