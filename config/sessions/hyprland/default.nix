@@ -1,14 +1,20 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   imports = [
-    ./hypridle.nix 
+    ./hypridle.nix
   ];
 
   wayland.windowManager.hyprland = {
     enable = true;
+    configType = "lua";
     extraConfig = ''
-      source = ~/.config/hypr/config/hyprland.conf
+      dofile(os.getenv("HOME") .. "/.config/hypr/config/hyprland.lua")
     '';
   };
 
@@ -32,8 +38,8 @@
     cliphist
     tree
     jq
-    socat 
-    pamixer 
+    socat
+    pamixer
     brightnessctl
     acpi
     iw
@@ -51,12 +57,12 @@
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
   home.file.".config/hypr/scripts".source = ./scripts;
-  home.activation.copyHyprConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      ${pkgs.rsync}/bin/rsync -a --update --no-owner --no-group ${./config}/ $HOME/.config/hypr/config/
-      chmod -R u+w $HOME/.config/hypr/config
+  home.activation.copyHyprConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${pkgs.rsync}/bin/rsync -a --update --no-owner --no-group ${./config}/ $HOME/.config/hypr/config/
+    chmod -R u+w $HOME/.config/hypr/config
   '';
-  home.activation.copyHyprTemplates = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      ${pkgs.rsync}/bin/rsync -a --update --no-owner --no-group ${./templates}/ $HOME/.config/hypr/templates/
-      chmod -R u+w $HOME/.config/hypr/templates
+  home.activation.copyHyprTemplates = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${pkgs.rsync}/bin/rsync -a --update --no-owner --no-group ${./templates}/ $HOME/.config/hypr/templates/
+    chmod -R u+w $HOME/.config/hypr/templates
   '';
 }
