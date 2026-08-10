@@ -91,9 +91,9 @@ for i = 0, 9 do
   local ws_num = (i == 0) and 10 or i
 
   -- Atajo para cambiar al espacio de trabajo
-  hl.bind(var.mainMod .. " + " .. key, hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manager.sh " .. ws_num))
+  hl.bind(var.mainMod .. " + " .. key, hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh " .. ws_num))
 
   -- Atajo para mover la ventana al espacio de trabajo
   hl.bind(var.mainMod .. " + SHIFT + " .. key,
-    hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manager.sh " .. ws_num .. " move"))
+    hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh " .. ws_num .. " move"))
 end
