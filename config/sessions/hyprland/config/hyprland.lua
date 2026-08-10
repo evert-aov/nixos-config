@@ -3,7 +3,7 @@
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- define submap passthru
 hl.define_submap("passthru", function()
-  hl.bind("SUPER + SHIFT + CTRL + ALT + F35", hl.dsp.exec_cmd(true))
+  hl.bind("SUPER + SHIFT + CTRL + ALT + F35", hl.dsp.exec_cmd("true"))
 end)
 
 -- --------------
