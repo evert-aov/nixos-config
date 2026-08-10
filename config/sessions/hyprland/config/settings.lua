@@ -61,11 +61,18 @@ hl.config({
     force_zero_scaling = true,
   },
 
-  -- Declaración obligatoria de la curva Bezier global
   animations = {
-    enabled = true,
-    bezier = { "myBezier", 0.05, 0.9, 0.1, 1.05 }
+    enabled = true
   }
+})
+
+-- Declaración de la curva Bezier (reemplaza a la sintaxis vieja)
+hl.curve("myBezier", {
+    type = "bezier",
+    points = {
+        { 0.05, 0.9 },
+        { 0.1, 1.05 }
+    }
 })
 
 -- 2. Procesamiento Dinámico de las Animaciones (FUERA de hl.config)
