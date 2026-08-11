@@ -10,10 +10,10 @@ hl.bind(var.mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(var.mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- ───────── Window Management ─────────
-hl.bind(var.mainMod .. " + SHIFT_L + left", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
-hl.bind(var.mainMod .. " + SHIFT_L + right", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true })
-hl.bind(var.mainMod .. " + SHIFT_L + up", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true })
-hl.bind(var.mainMod .. " + SHIFT_L + down", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT + left", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT + right", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT + up", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT + down", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true })
 
 
 hl.bind(var.mainMod .. " + CTRL + left", hl.dsp.window.move({ direction = "left" }))
@@ -29,7 +29,7 @@ hl.bind(var.mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
 hl.bind(var.mainMod .. " + Q", hl.dsp.window.kill())
 hl.bind("ALT + F4", hl.dsp.window.kill())
-hl.bind(var.mainMod .. " + SHIFT_L + F", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(var.mainMod .. " + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(var.mainMod .. " + F11", hl.dsp.window.fullscreen())
 
 -- ───────── System & Hardware ─────────
@@ -38,9 +38,9 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("swayosd-client --brightness lo
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("swayosd-client --brightness raise"), { locked = true })
 
 hl.bind("Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh"), { locked = true })
-hl.bind("SHIFT_L + Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh --edit"), { locked = true })
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh --edit"), { locked = true })
 hl.bind(var.mainMod .. " + Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh --full"), { locked = true })
-hl.bind(var.mainMod .. " + SHIFT_L + Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh --full --edit"),
+hl.bind(var.mainMod .. " + SHIFT + Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh --full --edit"),
   { locked = true })
 
 hl.bind("XF86PowerOff", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/lock.sh"), { locked = true })
@@ -65,7 +65,7 @@ hl.bind(var.mainMod .. " + E", hl.dsp.exec_cmd("kitty yazi"))
 hl.bind(var.mainMod .. " + T", hl.dsp.exec_cmd("kitty"))
 hl.bind(var.mainMod .. " + I", hl.dsp.exec_cmd("bash $HOME/.local/share/JetBrains/Toolbox/scripts/idea"))
 hl.bind(var.mainMod .. " + D", hl.dsp.exec_cmd("bash $HOME/.local/share/JetBrains/Toolbox/scripts/datagrip"))
-hl.bind(var.mainMod .. " + SHIFT_L + P", hl.dsp.exec_cmd("bash $HOME/.local/share/JetBrains/Toolbox/scripts/pycharm"))
+hl.bind(var.mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("bash $HOME/.local/share/JetBrains/Toolbox/scripts/pycharm"))
 hl.bind(var.mainMod .. " + O", hl.dsp.exec_cmd("obsidian"))
 hl.bind(var.mainMod .. " + RETURN", hl.dsp.exec_cmd(var.terminal))
 hl.bind(var.mainMod .. " + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manager.sh toggle applauncher"))
@@ -74,13 +74,13 @@ hl.bind(var.mainMod .. " + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manage
 hl.bind(var.mainMod .. " + M", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle monitors"))
 hl.bind(var.mainMod .. " + R", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/reload.sh"))
 hl.bind(var.mainMod .. " + C", hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manager.sh toggle clipboard"))
-hl.bind(var.mainMod .. " + SHIFT_L + S", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle settings"))
-hl.bind(var.mainMod .. " + SHIFT_L + Q", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle music"))
-hl.bind(var.mainMod .. " + SHIFT_L + B", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle battery"))
+hl.bind(var.mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle settings"))
+hl.bind(var.mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle music"))
+hl.bind(var.mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle battery"))
 hl.bind(var.mainMod .. " + W", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle wallpaper"))
 hl.bind(var.mainMod .. " + S", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle calendar"))
 hl.bind(var.mainMod .. " + N", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle network"))
-hl.bind(var.mainMod .. " + SHIFT_L + T", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle focustime"))
+hl.bind(var.mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle focustime"))
 hl.bind(var.mainMod .. " + V", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle volume"))
 hl.bind(var.mainMod .. " + H", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle guide"))
 
