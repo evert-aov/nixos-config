@@ -10,10 +10,10 @@ hl.bind(var.mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(var.mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- ───────── Window Management ─────────
-hl.bind(var.mainMod .. " + SHIFT_L + left", hl.dsp.window.resize({ x = -50, y = 0 }), { repeating = true })
-hl.bind(var.mainMod .. " + SHIFT_L + right", hl.dsp.window.resize({ x = 50, y = 0 }), { repeating = true })
-hl.bind(var.mainMod .. " + SHIFT_L + up", hl.dsp.window.resize({ x = 0, y = -50 }), { repeating = true })
-hl.bind(var.mainMod .. " + SHIFT_L + down", hl.dsp.window.resize({ x = 0, y = 50 }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT_L + left", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT_L + right", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT_L + up", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true })
+hl.bind(var.mainMod .. " + SHIFT_L + down", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true })
 
 
 hl.bind(var.mainMod .. " + CTRL + left", hl.dsp.window.move({ direction = "left" }))
@@ -29,7 +29,7 @@ hl.bind(var.mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
 hl.bind(var.mainMod .. " + Q", hl.dsp.window.kill())
 hl.bind("ALT + F4", hl.dsp.window.kill())
-hl.bind(var.mainMod .. " + SHIFT_L + F", hl.dsp.window.float())
+hl.bind(var.mainMod .. " + SHIFT_L + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(var.mainMod .. " + F11", hl.dsp.window.fullscreen())
 
 -- ───────── System & Hardware ─────────
