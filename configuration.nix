@@ -342,6 +342,7 @@ in
     mpv
     mission-center
     onlyoffice-desktopeditors
+    scrcpy
 
     # ---- Terminal & Apps ----
     kitty
