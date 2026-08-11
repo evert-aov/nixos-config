@@ -643,52 +643,7 @@ local function rename_current_file()
 end
 
 local function rename_nvimtree_node()
-  local tree = require("nvim-tree.api")
-  local node = tree.node.get_node_under_cursor()
-
-  if not node then
-    vim.notify("No node selected", vim.log.levels.ERROR)
-    return
-  end
-
-  local old_name = node.name
-  local old_path = node.absolute_path
-
-  vim.ui.input({
-    prompt = "New name: ",
-    default = old_name,
-  }, function(new_name)
-    if new_name == nil or new_name == "" then
-      vim.notify("Rename cancelled", vim.log.levels.INFO)
-      return
-    end
-
-    if new_name == old_name then
-      vim.notify("Name unchanged", vim.log.levels.INFO)
-      return
-    end
-
-    local new_path = old_path:gsub(old_name .. "$", new_name)
-
-    if vim.fn.filereadable(new_path) == 1 or vim.fn.isdirectory(new_path) == 1 then
-      vim.notify("File/Directory already exists: " .. new_name, vim.log.levels.ERROR)
-      return
-    end
-
-    local success = os.rename(old_path, new_path)
-    if success then
-      tree.tree.reload()
-      vim.notify("Renamed to: " .. new_name, vim.log.levels.INFO)
-
-      local buf = vim.fn.bufnr(old_path)
-      if buf ~= -1 then
-        vim.cmd("bdelete! " .. buf)
-        vim.cmd("edit " .. new_path)
-      end
-    else
-      vim.notify("Failed to rename", vim.log.levels.ERROR)
-    end
-  end)
+  require("nvim-tree.api").fs.rename()
 end
 
 -- Keymaps para F2
@@ -764,12 +719,12 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "l", "NvimTreeOpen", { buffer = true, desc = "Open file/folder" })
 
     vim.keymap.set("n", "a", function()
-      require("nvim-tree.api").fs.create_file()
-    end, { buffer = true, desc = "Create file" })
+      require("nvim-tree.api").fs.create()
+    end, { buffer = true, desc = "Create file or directory" })
 
     vim.keymap.set("n", "A", function()
-      require("nvim-tree.api").fs.create_directory()
-    end, { buffer = true, desc = "Create directory" })
+      require("nvim-tree.api").fs.create()
+    end, { buffer = true, desc = "Create file or directory" })
 
     vim.keymap.set("n", "d", function()
       require("nvim-tree.api").fs.trash()
