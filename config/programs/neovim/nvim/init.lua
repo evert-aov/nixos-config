@@ -382,7 +382,7 @@ setup_server("ts_ls", {
 
 -- HTML (para Angular templates)
 setup_server("html", {
-  filetypes = { "html" },
+  filetypes = { "html", "markdown" },
   init_options = {
     provideFormatter = true,
     embeddedLanguages = {
