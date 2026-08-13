@@ -74,7 +74,7 @@ hl.bind(var.mainMod .. "+ C", hl.dsp.exec_cmd("nvim"))
 -- ───────── Quickshell Controls ─────────
 hl.bind(var.mainMod .. " + M", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle monitors"))
 hl.bind(var.mainMod .. " + R", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/reload.sh"))
-hl.bind(var.mainMod .. " + SHIFT C", hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manager.sh toggle clipboard"))
+hl.bind(var.mainMod .. " + SHIFT  + C", hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manager.sh toggle clipboard"))
 hl.bind(var.mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle settings"))
 hl.bind(var.mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle music"))
 hl.bind(var.mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle battery"))
