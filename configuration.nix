@@ -217,7 +217,7 @@ in
     ];
   };
 
-   users.defaultUserShell = pkgs.zsh;
+  users.defaultUserShell = pkgs.zsh;
   system.userActivationScripts.zshrc = "touch .zshrc";
 
   security.sudo.extraRules = [
