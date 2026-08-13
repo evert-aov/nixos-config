@@ -316,7 +316,7 @@ in
     git
     killall
     fastfetch
-     jq
+    jq
     yq-go
     p7zip
     unrar
