@@ -96,17 +96,6 @@ in
   # ============================================================================
   time.timeZone = "America/La_Paz";
   i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
 
   # ============================================================================
   # GRAPHICS & DISPLAY
@@ -228,7 +217,7 @@ in
     ];
   };
 
-  users.defaultUserShell = pkgs.zsh;
+   users.defaultUserShell = pkgs.zsh;
   system.userActivationScripts.zshrc = "touch .zshrc";
 
   security.sudo.extraRules = [
@@ -327,7 +316,7 @@ in
     git
     killall
     fastfetch
-    jq
+     jq
     yq-go
     p7zip
     unrar
@@ -353,7 +342,6 @@ in
       inherit vivaldi-ffmpeg-codecs;
     })
     obsidian
-    qbittorrent
     (bottles.override { removeWarningPopup = true; })
 
     # ---- Development ----
@@ -370,7 +358,7 @@ in
     typescript-language-server
     eslint
     prettier
-    jdk25
+    jdk_latest
     maven
     gradle_9
     (flutter.overrideAttrs (old: {
@@ -385,7 +373,6 @@ in
     android-tools
     dotnet-sdk
     jetbrains-toolbox
-    jetbrains.idea
     vscode
     postgresql
     postman
