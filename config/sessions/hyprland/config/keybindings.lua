@@ -69,7 +69,7 @@ hl.bind(var.mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("bash $HOME/.local/share/
 hl.bind(var.mainMod .. " + O", hl.dsp.exec_cmd("onlyoffice-desktopeditors"))
 hl.bind(var.mainMod .. " + RETURN", hl.dsp.exec_cmd(var.terminal))
 hl.bind(var.mainMod .. " + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manager.sh toggle applauncher"))
-hl.bind(var.mainMod.. "+ C", hl.exec_cmd("nvim"))
+hl.bind(var.mainMod .. "+ C", hl.dsp.exec_cmd("nvim"))
 
 -- ───────── Quickshell Controls ─────────
 hl.bind(var.mainMod .. " + M", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle monitors"))
