@@ -58,11 +58,11 @@
 
   home.file.".config/hypr/scripts".source = ./scripts;
   home.activation.copyHyprConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${pkgs.rsync}/bin/rsync -a --update --no-owner --no-group ${./config}/ $HOME/.config/hypr/config/
+    ${pkgs.rsync}/bin/rsync -a --no-owner --no-group ${./config}/ $HOME/.config/hypr/config/
     chmod -R u+w $HOME/.config/hypr/config
   '';
   home.activation.copyHyprTemplates = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${pkgs.rsync}/bin/rsync -a --update --no-owner --no-group ${./templates}/ $HOME/.config/hypr/templates/
+    ${pkgs.rsync}/bin/rsync -a --no-owner --no-group ${./templates}/ $HOME/.config/hypr/templates/
     chmod -R u+w $HOME/.config/hypr/templates
   '';
 }
