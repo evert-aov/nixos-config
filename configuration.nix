@@ -358,7 +358,7 @@ in
     typescript-language-server
     eslint
     prettier
-    jdk_latest
+    jdk
     maven
     gradle_9
     (flutter.overrideAttrs (old: {
