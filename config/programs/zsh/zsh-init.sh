@@ -120,22 +120,42 @@ function fetch() {
             palette_str+="\\\\e[38;2;${r};${g};${b}m● \\\\e[0m"
         done
 
+        # Check if the images directory exists and is not empty
+        local image_dir="$HOME/.config/fastfetch/images"
+        local logo_json=""
+        
+        if [ -d "$image_dir" ] && [ "$(ls -A "$image_dir" 2>/dev/null)" ]; then
+            logo_json="\"logo\": {
+    \"type\": \"kitty\",
+    \"source\": \"$image_dir/\",
+    \"width\": 16,
+    \"height\": 8,
+    \"padding\": {
+      \"top\": 1,
+      \"left\": 2,
+      \"right\": 3
+    }
+  },"
+        else
+            logo_json="\"logo\": {
+    \"source\": \"nixos_small\",
+    \"color\": {
+      \"1\": \"$c_blue\",
+      \"2\": \"$c_sapphire\"
+    },
+    \"padding\": {
+      \"top\": 1,
+      \"left\": 2,
+      \"right\": 3
+    }
+  },"
+        fi
+
         # Generate the dynamic Fastfetch configuration (Logo colors are now natively inside)
         cat > "$config_path" <<EOF
 {
   "\$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
-  "logo": {
-    "source": "nixos_small",
-    "color": {
-      "1": "$c_blue",
-      "2": "$c_sapphire"
-    },
-    "padding": {
-      "top": 1,
-      "left": 2,
-      "right": 3
-    }
-  },
+  $logo_json
   "display": {
     "separator": "  ",
     "color": {
