@@ -260,6 +260,25 @@ cmp.setup {
   },
 }
 
+-- Realtado de {[()]}
+require('rainbow-delimiters.setup').setup {
+  strategy = {
+    [''] = require('rainbow-delimiters.strategy').global,
+  },
+  query = {
+    [''] = 'rainbow-delimiters',
+  },
+  highlight = {
+    'RainbowDelimiterRed',
+    'RainbowDelimiterYellow',
+    'RainbowDelimiterBlue',
+    'RainbowDelimiterOrange',
+    'RainbowDelimiterGreen',
+    'RainbowDelimiterViolet',
+    'RainbowDelimiterCyan',
+  },
+}
+
 -- ============================================
 -- LSP CONFIGURACIÓN (nvim 0.11+ / lspconfig 2.x)
 -- ============================================
@@ -849,4 +868,3 @@ vim.api.nvim_create_autocmd("FileType", {
 -- ============================================
 
 vim.notify("✅ Neovim configurado para desarrollo completo!", vim.log.levels.INFO)
-
