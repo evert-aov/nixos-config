@@ -260,10 +260,11 @@ cmp.setup {
   },
 }
 
--- Realtado de {[()]}
-require('rainbow-delimiters.setup').setup {
+local rainbow_delimiters = require('rainbow-delimiters')
+
+vim.g.rainbow_delimiters = {
   strategy = {
-    [''] = require('rainbow-delimiters.strategy').global,
+    [''] = rainbow_delimiters.strategy['global'],
   },
   query = {
     [''] = 'rainbow-delimiters',
