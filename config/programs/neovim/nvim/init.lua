@@ -264,10 +264,16 @@ local rainbow_delimiters = require('rainbow-delimiters')
 
 vim.g.rainbow_delimiters = {
   strategy = {
-    [''] = rainbow_delimiters.strategy['global'],
+    [''] = 'rainbow-delimiters.strategy.global',
+    vim = 'rainbow-delimiters.strategy.local',
   },
   query = {
     [''] = 'rainbow-delimiters',
+    lua = 'rainbow-blocks',
+  },
+  priority = {
+    [''] = 110,
+    lua = 210,
   },
   highlight = {
     'RainbowDelimiterRed',
