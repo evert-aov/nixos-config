@@ -223,13 +223,11 @@ stsetup() {
 
     cd "$proj_dir" || return 1
 
-    kitty --directory "$proj_dir" nix develop --command zsh -ic "alias run='python main.py'; exec zsh" &
+    # Open a new kitty window for running the project
+    kitty --directory "$proj_dir" zsh -ic "alias run='python main.py'; exec zsh" &
     
-    sleep 0.5
-    
-    hyprctl dispatch splitratio -0.5
-
-    nix develop --command zsh -ic "edit; exec zsh"
+    # Open the editor in the current terminal
+    zsh -ic "edit; exec zsh"
 }
 
 fetch
