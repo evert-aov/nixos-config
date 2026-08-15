@@ -129,7 +129,7 @@ function fetch() {
             \"type\": \"kitty-direct\",
             \"source\": \"$random_img\",
             \"width\": 20,
-            \"height\": 25,
+            \"height\": 20,
             \"padding\": {
                 \"top\": 1,
                 \"left\": 2,
