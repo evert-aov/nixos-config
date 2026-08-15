@@ -151,54 +151,184 @@ function fetch() {
             },"
         fi
 
-        # Generate the dynamic Fastfetch configuration (Logo colors are now natively inside)
+        # Generate the dynamic Fastfetch configuration
         cat > "$config_path" <<EOF
 {
-  "\$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "\$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   $logo_json
   "display": {
     "separator": "  ",
-    "color": {
-      "separator": "$c_text"
-    }
   },
   "modules": [
     "break",
     {
-      "type": "title",
-      "format": "{1}",
-      "color": {
-        "user": "$c_blue"
-      }
+      "type": "custom",
+      "format": "╭─➤  HARDWARE ⮜─────────────────────────────────────────────╮",
+      "outputColor": "$c_blue",
     },
-    "break",
     {
-      "type": "os",
-      "key": "󱄅 os ",
-      "keyColor": "$c_blue"
+      "type": "custom",
+      "format": "╰─┬──────────────────────────────────────────────────────────╯",
+      "outputColor": "$c_blue",
+    },
+    {
+      "type": "chassis",
+      "outputColor": "$c_sapphire",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
     },
     {
       "type": "cpu",
-      "key": " cpu",
-      "keyColor": "$c_sapphire"
+      "outputColor": "$c_sapphire",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
+    },
+    {
+      "type": "gpu",
+      "outputColor": "$c_sapphire",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
     },
     {
       "type": "memory",
-      "key": "󰘚 ram",
-      "keyColor": "$c_teal"
+      "outputColor": "$c_sapphire",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
     },
     {
-      "type": "shell",
-      "key": " sh ",
-      "keyColor": "$c_mauve"
+      "type": "disk",
+      "outputColor": "$c_sapphire",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
+    },
+    {
+      "type": "display",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
+      "outputColor": "$c_sapphire",
+    },
+    {
+      "type": "battery",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
+      "outputColor": "$c_sapphire",
+    },
+    {
+      "type": "custom",
+      "format": "  ╰──────────────────────────────────────────────────────────╯",
+      "outputColor": "$c_blue",
     },
     "break",
     {
-      "type": "command",
-      "key": " ",
-      "text": "echo -e '$palette_str'"
-    }
-  ]
+      "type": "custom",
+      "format": "╭─➤  SOFTWARE ⮜─────────────────────────────────────────────╮",
+      "outputColor": "$c_sapphire",
+    },
+    {
+      "type": "custom",
+      "format": "╰─┬──────────────────────────────────────────────────────────╯",
+      "outputColor": "$c_sapphire",
+    },
+    {
+      "type": "os",
+      "key": "  ├ ",
+      "keyColor": "$c_sapphire",
+      "outputColor": "$c_blue",
+    },
+    {
+      "type": "kernel",
+      "key": "  ├ ",
+      "keyColor": "$c_sapphire",
+      "outputColor": "$c_blue",
+    },
+    {
+      "type": "shell",
+      "key": "  ├ ",
+      "keyColor": "$c_sapphire",
+      "outputColor": "$c_blue",
+    },
+    {
+      "type": "packages",
+      "key": "  ├ ",
+      "keyColor": "$c_sapphire",
+      "outputColor": "$c_blue",
+    },
+    {
+      "type": "terminal",
+      "key": "  ├ ",
+      "keyColor": "$c_sapphire",
+      "outputColor": "$c_blue",
+    },
+    {
+      "type": "wm",
+      "key": "  ├ ",
+      "keyColor": "$c_sapphire",
+      "outputColor": "$c_blue",
+    },
+    {
+      "type": "de",
+      "key": "  ├ ",
+      "keyColor": "$c_sapphire",
+      "outputColor": "$c_blue",
+    },
+    {
+      "type": "custom",
+      "format": "  ╰──────────────────────────────────────────────────────────╯",
+      "outputColor": "$c_sapphire",
+    },
+    "break",
+    {
+      "type": "custom",
+      "format": "╭─➤  CUSTOMIZATION ⮜─────────────────────────────────────────╮",
+      "outputColor": "$c_blue",
+    },
+    {
+      "type": "custom",
+      "format": "╰─┬───────────────────────────────────────────────────────────╯",
+      "outputColor": "$c_blue",
+    },
+    {
+      "type": "theme",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
+      "outputColor": "$c_sapphire",
+    },
+    {
+      "type": "icons",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
+      "outputColor": "$c_sapphire",
+    },
+    {
+      "type": "wmtheme",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
+      "outputColor": "$c_sapphire",
+    },
+    {
+      "type": "font",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
+      "outputColor": "$c_sapphire",
+    },
+    {
+      "type": "terminalfont",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
+      "outputColor": "$c_sapphire",
+    },
+    {
+      "type": "cursor",
+      "key": "  ├ ",
+      "keyColor": "$c_blue",
+      "outputColor": "$c_sapphire",
+    },
+    {
+      "type": "custom",
+      "format": "  ╰──────────────────────────────────────────────────────────╯",
+      "outputColor": "$c_blue",
+    },
+  ],
 }
 EOF
     fi
