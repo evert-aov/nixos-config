@@ -118,7 +118,7 @@ function fetch() {
     done
 
     # Check if the images directory exists and is not empty
-    local image_dir="$HOME/.config/fastfetch/images"
+    local image_dir="$HOME/Pictures/fastfetch"
     local logo_json=""
     
     if [ -d "$image_dir" ] && [ "$(ls -A "$image_dir" 2>/dev/null)" ]; then
@@ -128,8 +128,8 @@ function fetch() {
         logo_json="\"logo\": {
             \"type\": \"kitty-direct\",
             \"source\": \"$random_img\",
-            \"width\": 30,
-            \"height\": 30,
+            \"width\": 20,
+            \"height\": 15,
             \"padding\": {
                 \"top\": 1,
                 \"left\": 2,
