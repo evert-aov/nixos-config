@@ -151,186 +151,34 @@ function fetch() {
         },"
     fi
 
-    # Generate the dynamic Fastfetch configuration
-    cat > "$config_path" <<EOF
-{
-  "\$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-  $logo_json
-  "display": {
-    "separator": "  ",
-  },
-  "modules": [
-    "break",
-    {
-      "type": "custom",
-      "format": "╭─➤  HARDWARE ⮜─────────────────────────────────────────────╮",
-      "outputColor": "$c_blue",
-    },
-    {
-      "type": "custom",
-      "format": "╰─┬──────────────────────────────────────────────────────────╯",
-      "outputColor": "$c_blue",
-    },
-    {
-      "type": "chassis",
-      "outputColor": "$c_sapphire",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-    },
-    {
-      "type": "cpu",
-      "outputColor": "$c_sapphire",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-    },
-    {
-      "type": "gpu",
-      "outputColor": "$c_sapphire",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-    },
-    {
-      "type": "memory",
-      "outputColor": "$c_sapphire",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-    },
-    {
-      "type": "disk",
-      "outputColor": "$c_sapphire",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-    },
-    {
-      "type": "display",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-      "outputColor": "$c_sapphire",
-    },
-    {
-      "type": "battery",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-      "outputColor": "$c_sapphire",
-    },
-    {
-      "type": "custom",
-      "format": "  ╰──────────────────────────────────────────────────────────╯",
-      "outputColor": "$c_blue",
-    },
-    "break",
-    {
-      "type": "custom",
-      "format": "╭─➤  SOFTWARE ⮜─────────────────────────────────────────────╮",
-      "outputColor": "$c_sapphire",
-    },
-    {
-      "type": "custom",
-      "format": "╰─┬──────────────────────────────────────────────────────────╯",
-      "outputColor": "$c_sapphire",
-    },
-    {
-      "type": "os",
-      "key": "  ├ ",
-      "keyColor": "$c_sapphire",
-      "outputColor": "$c_blue",
-    },
-    {
-      "type": "kernel",
-      "key": "  ├ ",
-      "keyColor": "$c_sapphire",
-      "outputColor": "$c_blue",
-    },
-    {
-      "type": "shell",
-      "key": "  ├ ",
-      "keyColor": "$c_sapphire",
-      "outputColor": "$c_blue",
-    },
-    {
-      "type": "packages",
-      "key": "  ├ ",
-      "keyColor": "$c_sapphire",
-      "outputColor": "$c_blue",
-    },
-    {
-      "type": "terminal",
-      "key": "  ├ ",
-      "keyColor": "$c_sapphire",
-      "outputColor": "$c_blue",
-    },
-    {
-      "type": "wm",
-      "key": "  ├ ",
-      "keyColor": "$c_sapphire",
-      "outputColor": "$c_blue",
-    },
-    {
-      "type": "de",
-      "key": "  ├ ",
-      "keyColor": "$c_sapphire",
-      "outputColor": "$c_blue",
-    },
-    {
-      "type": "custom",
-      "format": "  ╰──────────────────────────────────────────────────────────╯",
-      "outputColor": "$c_sapphire",
-    },
-    "break",
-    {
-      "type": "custom",
-      "format": "╭─➤  CUSTOMIZATION ⮜─────────────────────────────────────────╮",
-      "outputColor": "$c_blue",
-    },
-    {
-      "type": "custom",
-      "format": "╰─┬───────────────────────────────────────────────────────────╯",
-      "outputColor": "$c_blue",
-    },
-    {
-      "type": "theme",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-      "outputColor": "$c_sapphire",
-    },
-    {
-      "type": "icons",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-      "outputColor": "$c_sapphire",
-    },
-    {
-      "type": "wmtheme",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-      "outputColor": "$c_sapphire",
-    },
-    {
-      "type": "font",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-      "outputColor": "$c_sapphire",
-    },
-    {
-      "type": "terminalfont",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-      "outputColor": "$c_sapphire",
-    },
-    {
-      "type": "cursor",
-      "key": "  ├ ",
-      "keyColor": "$c_blue",
-      "outputColor": "$c_sapphire",
-    },
-    {
-      "type": "custom",
-      "format": "  ╰──────────────────────────────────────────────────────────╯",
-      "outputColor": "$c_blue",
-    },
-  ],
-}
-EOF
+    # Generate the dynamic Fastfetch configuration by reading the user's template
+    local template_file="$HOME/.config/fastfetch/config.jsonc"
+    if [ ! -f "$template_file" ]; then
+        echo "Error: Fastfetch template not found at $template_file"
+        return
+    fi
+
+    export TEMPLATE_FILE="$template_file"
+    export OUT_FILE="$config_path"
+    export c_blue c_sapphire c_teal c_mauve c_text logo_json
+    python3 -c '
+import os
+with open(os.environ["TEMPLATE_FILE"], "r") as f:
+    text = f.read()
+
+# Replace variables if they are present in the template
+text = text.replace("$c_blue", os.environ.get("c_blue", ""))
+text = text.replace("$c_sapphire", os.environ.get("c_sapphire", ""))
+text = text.replace("$c_teal", os.environ.get("c_teal", ""))
+text = text.replace("$c_mauve", os.environ.get("c_mauve", ""))
+text = text.replace("$c_text", os.environ.get("c_text", ""))
+
+# Replace the logo placeholder
+text = text.replace("\"logo_placeholder\": \"$logo_json\",", os.environ.get("logo_json", ""))
+
+with open(os.environ["OUT_FILE"], "w") as f:
+    f.write(text)
+'
 
     # Run Fastfetch instantly using the generated config
     fastfetch -c "$config_path"
