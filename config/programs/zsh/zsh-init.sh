@@ -75,84 +75,84 @@ function fetch() {
     local color_file="/tmp/qs_colors.json"
     local config_path="/tmp/qs_fastfetch.jsonc"
     
-    # Only rebuild the config if the Matugen colors changed or the config is missing
-    if [ "$color_file" -nt "$config_path" ] || [ ! -f "$config_path" ]; then
-        
-        # Extract analogous cool tones
-        local c_blue=$(grep -E '"blue"\s*:\s*"[^"]+"' "$color_file" 2>/dev/null | cut -d '"' -f 4)
-        c_blue=${c_blue:-"#89b4fa"}
-        
-        local c_sapphire=$(grep -E '"sapphire"\s*:\s*"[^"]+"' "$color_file" 2>/dev/null | cut -d '"' -f 4)
-        c_sapphire=${c_sapphire:-"#74c7ec"}
-        
-        local c_teal=$(grep -E '"teal"\s*:\s*"[^"]+"' "$color_file" 2>/dev/null | cut -d '"' -f 4)
-        c_teal=${c_teal:-"#94e2d5"}
-        
-        local c_mauve=$(grep -E '"mauve"\s*:\s*"[^"]+"' "$color_file" 2>/dev/null | cut -d '"' -f 4)
-        c_mauve=${c_mauve:-"#cba6f7"}
-        
-        local c_text=$(grep -E '"text"\s*:\s*"[^"]+"' "$color_file" 2>/dev/null | cut -d '"' -f 4)
-        c_text=${c_text:-"#cdd6f4"}
+    # Extract analogous cool tones
+    local c_blue=$(grep -E '"blue"\s*:\s*"[^"]+"' "$color_file" 2>/dev/null | cut -d '"' -f 4)
+    c_blue=${c_blue:-"#89b4fa"}
+    
+    local c_sapphire=$(grep -E '"sapphire"\s*:\s*"[^"]+"' "$color_file" 2>/dev/null | cut -d '"' -f 4)
+    c_sapphire=${c_sapphire:-"#74c7ec"}
+    
+    local c_teal=$(grep -E '"teal"\s*:\s*"[^"]+"' "$color_file" 2>/dev/null | cut -d '"' -f 4)
+    c_teal=${c_teal:-"#94e2d5"}
+    
+    local c_mauve=$(grep -E '"mauve"\s*:\s*"[^"]+"' "$color_file" 2>/dev/null | cut -d '"' -f 4)
+    c_mauve=${c_mauve:-"#cba6f7"}
+    
+    local c_text=$(grep -E '"text"\s*:\s*"[^"]+"' "$color_file" 2>/dev/null | cut -d '"' -f 4)
+    c_text=${c_text:-"#cdd6f4"}
 
-        # Extract a full rainbow palette
-        local palette_hexes=()
-        for col in red peach yellow green sapphire mauve pink; do
-            local val=$(grep -E "\"$col\"\s*:\s*\"[^\"]+\"" "$color_file" 2>/dev/null | cut -d '"' -f 4)
-            case $col in
-                red) val=${val:-"#f38ba8"} ;;
-                peach) val=${val:-"#fab387"} ;;
-                yellow) val=${val:-"#f9e2af"} ;;
-                green) val=${val:-"#a6e3a1"} ;;
-                sapphire) val=${val:-"#74c7ec"} ;;
-                mauve) val=${val:-"#cba6f7"} ;;
-                pink) val=${val:-"#f5c2e7"} ;;
-            esac
-            palette_hexes+=("$val")
-        done
+    # Extract a full rainbow palette
+    local palette_hexes=()
+    for col in red peach yellow green sapphire mauve pink; do
+        local val=$(grep -E "\"$col\"\s*:\s*\"[^\"]+\"" "$color_file" 2>/dev/null | cut -d '"' -f 4)
+        case $col in
+            red) val=${val:-"#f38ba8"} ;;
+            peach) val=${val:-"#fab387"} ;;
+            yellow) val=${val:-"#f9e2af"} ;;
+            green) val=${val:-"#a6e3a1"} ;;
+            sapphire) val=${val:-"#74c7ec"} ;;
+            mauve) val=${val:-"#cba6f7"} ;;
+            pink) val=${val:-"#f5c2e7"} ;;
+        esac
+        palette_hexes+=("$val")
+    done
 
-        # Convert the hex codes into a printable string of ANSI truecolor circles
-        local palette_str=""
-        for hex in "${palette_hexes[@]}"; do
-            hex="${hex//\#/}" # Strip the hash
-            local r=$((16#${hex:0:2}))
-            local g=$((16#${hex:2:2}))
-            local b=$((16#${hex:4:2}))
-            palette_str+="\\\\e[38;2;${r};${g};${b}m● \\\\e[0m"
-        done
+    # Convert the hex codes into a printable string of ANSI truecolor circles
+    local palette_str=""
+    for hex in "${palette_hexes[@]}"; do
+        hex="${hex//\#/}" # Strip the hash
+        local r=$((16#${hex:0:2}))
+        local g=$((16#${hex:2:2}))
+        local b=$((16#${hex:4:2}))
+        palette_str+="\\\\e[38;2;${r};${g};${b}m● \\\\e[0m"
+    done
 
-        # Check if the images directory exists and is not empty
-        local image_dir="$HOME/.config/fastfetch/images"
-        local logo_json=""
+    # Check if the images directory exists and is not empty
+    local image_dir="$HOME/.config/fastfetch/images"
+    local logo_json=""
+    
+    if [ -d "$image_dir" ] && [ "$(ls -A "$image_dir" 2>/dev/null)" ]; then
+        # Pick a random file from the directory
+        local random_img=$(find "$image_dir" -type f | shuf -n 1)
         
-        if [ -d "$image_dir" ] && [ "$(ls -A "$image_dir" 2>/dev/null)" ]; then
-            logo_json="\"logo\": {
-                \"type\": \"kitty\",
-                \"source\": \"$image_dir/\",
-                \"width\": 16,
-                \"height\": 8,
-                \"padding\": {
-                    \"top\": 1,
-                    \"left\": 2,
-                    \"right\": 3
-                }
-            },"
-        else
-            logo_json="\"logo\": {
-                \"source\": \"nixos_small\",
-                \"color\": {
-                    \"1\": \"$c_blue\",
-                    \"2\": \"$c_sapphire\"
-            },
-                \"padding\": {
-                    \"top\": 1,
-                    \"left\": 2,
-                    \"right\": 3
-                }
-            },"
-        fi
+        logo_json="\"logo\": {
+            \"type\": \"kitty-direct\",
+            \"source\": \"$random_img\",
+            \"width\": 30,
+            \"height\": 30,
+            \"padding\": {
+                \"top\": 1,
+                \"left\": 2,
+                \"right\": 3
+            }
+        },"
+    else
+        logo_json="\"logo\": {
+            \"source\": \"nixos_small\",
+            \"color\": {
+                \"1\": \"$c_blue\",
+                \"2\": \"$c_sapphire\"
+        },
+            \"padding\": {
+                \"top\": 1,
+                \"left\": 2,
+                \"right\": 3
+            }
+        },"
+    fi
 
-        # Generate the dynamic Fastfetch configuration
-        cat > "$config_path" <<EOF
+    # Generate the dynamic Fastfetch configuration
+    cat > "$config_path" <<EOF
 {
   "\$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   $logo_json
@@ -331,9 +331,8 @@ function fetch() {
   ],
 }
 EOF
-    fi
 
-    # Run Fastfetch instantly using the cached config
+    # Run Fastfetch instantly using the generated config
     fastfetch -c "$config_path"
 }
  
