@@ -13,11 +13,11 @@
     },
     {
       "type": "os",
-      "key": "\u001b[31m│\u001b[0m \u001b[37m󰧨 \u001b[0m",
+      "key": "\u001b[31m│\u001b[0m \u001b[37m \u001b[0m",
     },
     {
       "type": "kernel",
-      "key": "\u001b[31m│\u001b[0m \u001b[33m󰻀 \u001b[0m",
+      "key": "\u001b[31m│\u001b[0m \u001b[33m \u001b[0m",
       "keyColor": "yellow",
     },
     {
