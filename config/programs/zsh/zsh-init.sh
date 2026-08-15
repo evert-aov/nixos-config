@@ -126,29 +126,29 @@ function fetch() {
         
         if [ -d "$image_dir" ] && [ "$(ls -A "$image_dir" 2>/dev/null)" ]; then
             logo_json="\"logo\": {
-    \"type\": \"kitty\",
-    \"source\": \"$image_dir/\",
-    \"width\": 16,
-    \"height\": 8,
-    \"padding\": {
-      \"top\": 1,
-      \"left\": 2,
-      \"right\": 3
-    }
-  },"
+                \"type\": \"kitty\",
+                \"source\": \"$image_dir/\",
+                \"width\": 16,
+                \"height\": 8,
+                \"padding\": {
+                    \"top\": 1,
+                    \"left\": 2,
+                    \"right\": 3
+                }
+            },"
         else
             logo_json="\"logo\": {
-    \"source\": \"nixos_small\",
-    \"color\": {
-      \"1\": \"$c_blue\",
-      \"2\": \"$c_sapphire\"
-    },
-    \"padding\": {
-      \"top\": 1,
-      \"left\": 2,
-      \"right\": 3
-    }
-  },"
+                \"source\": \"nixos_small\",
+                \"color\": {
+                    \"1\": \"$c_blue\",
+                    \"2\": \"$c_sapphire\"
+            },
+                \"padding\": {
+                    \"top\": 1,
+                    \"left\": 2,
+                    \"right\": 3
+                }
+            },"
         fi
 
         # Generate the dynamic Fastfetch configuration (Logo colors are now natively inside)

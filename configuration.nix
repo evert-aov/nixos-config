@@ -320,6 +320,9 @@ in
     yq-go
     p7zip
     unrar
+    unzip
+    zip
+    rar
     neovim
     fzf
     fd
