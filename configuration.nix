@@ -364,6 +364,8 @@ in
     jdk25
     maven
     gradle_9
+    gcc
+    gnumake
     (flutter.overrideAttrs (old: {
       postInstall = (old.postInstall or "") + ''
         # Eliminamos la versión KTS del archivo interno de gradle de flutter 
