@@ -129,6 +129,12 @@ in
 
   services.easyeffects.enable = true;
 
+  services.udiskie = {
+    enable = true;
+    automount = true;
+    notify = true;
+    tray = "auto";
+  };
   gtk = {
     enable = true;
 
