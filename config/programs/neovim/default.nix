@@ -19,6 +19,10 @@
       nil # Nix
       nixpkgs-fmt
 
+      # C/C++ (clangd) y QML (qmlls)
+      clang-tools
+      qt6.qtdeclarative
+
       # Java/Kotlin (Spring Boot)
       jdt-language-server
       kotlin-language-server

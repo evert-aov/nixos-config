@@ -312,7 +312,10 @@ setup_server("lua_ls", {
     Lua = {
       runtime = { version = 'LuaJIT' },
       globals = { 'vim' },
-      workspace = { checkThirdParty = false },
+      workspace = {
+        checkThirdParty = false,
+        ignoreDir = { "result", ".git", ".direnv" },
+      },
       telemetry = { enable = false },
     },
   }
@@ -320,6 +323,11 @@ setup_server("lua_ls", {
 
 setup_server("nil_ls", {}) -- Nix
 
+-- C/C++
+setup_server("clangd", {})
+
+-- QML (Qt)
+setup_server("qmlls", {})
 -- Java (Spring Boot)
 setup_server("jdtls", {
   settings = {
