@@ -69,7 +69,10 @@ in
         '';
       };
       extraPkgs = _: [ pkgs.libpng pkgs.libxkbfile ];
-      extraBwrapArgs = [ "--setenv QT_QPA_PLATFORM xcb" ];
+      extraBwrapArgs = [ 
+        "--setenv QT_QPA_PLATFORM xcb" 
+        "--unshare-net" 
+      ];
       extraInstallCommands = let
         contents = pkgs.appimageTools.extract { inherit pname version src; };
       in ''
