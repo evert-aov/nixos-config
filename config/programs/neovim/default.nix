@@ -42,6 +42,7 @@
 
       # Formateadores adicionales
       black # Python
+      isort # Python
       pylint # Python linter
       google-java-format # Java
       prettierd # JS/TS/HTML/CSS
