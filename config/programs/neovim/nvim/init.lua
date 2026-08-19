@@ -770,6 +770,9 @@ vim.api.nvim_create_autocmd("FileType", {
 -- KEYMAPS ADICIONALES PARA PRODUCTIVIDAD
 -- ============================================
 
+-- Select all
+vim.keymap.set("n", "<C-a>", "ggVG", { desc = "Select all" })
+
 -- Navegación rápida entre errores
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous Diagnostic" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
