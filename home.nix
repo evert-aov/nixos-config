@@ -54,8 +54,33 @@ in
     libsForQt5.qtstyleplugin-kvantum
     kdePackages.qtstyleplugin-kvantum
     glow # preview de markdown en la terminal (yazi)
-    (ciscoPacketTracer9.override {
-      packetTracerSource = /home/evert/Downloads/CiscoPacketTracer_901_Ubuntu_64bit.deb;
+    (pkgs.appimageTools.wrapType2 rec {
+      pname = "cisco-packet-tracer";
+      version = "9.0.1";
+      src = pkgs.stdenvNoCC.mkDerivation {
+        pname = "cisco-packet-tracer-appimage";
+        version = "9.0.1";
+        src = /home/evert/Downloads/CiscoPacketTracer_901_Ubuntu_64bit.deb;
+        nativeBuildInputs = [ pkgs.dpkg ];
+        installPhase = ''
+          runHook preInstall
+          cp opt/pt/packettracer.AppImage $out
+          runHook postInstall
+        '';
+      };
+      extraPkgs = _: [ pkgs.libpng pkgs.libxkbfile ];
+      extraBwrapArgs = [ "--setenv QT_QPA_PLATFORM xcb" ];
+      extraInstallCommands = let
+        contents = pkgs.appimageTools.extract { inherit pname version src; };
+      in ''
+        mv $out/bin/${pname} $out/bin/packettracer9
+        install -Dm444 ${contents}/CiscoPacketTracer-9.0.1.desktop $out/share/applications/cisco-packet-tracer-9.desktop
+        substituteInPlace $out/share/applications/* \
+          --replace-fail "Exec=@EXEC_PATH@" "Exec=packettracer9" \
+          --replace-fail "Icon=app" "Icon=cisco-packet-tracer-9"
+        install -Dm444 ${contents}/usr/share/icons/hicolor/48x48/apps/app.png $out/share/icons/hicolor/48x48/apps/cisco-packet-tracer-9.png
+        cp -r ${contents}/usr/share/icons/gnome/48x48/mimetypes $out/share/icons/hicolor/48x48/
+      '';
     })
   ];
 
