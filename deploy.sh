@@ -22,7 +22,7 @@ fi
 echo "OK: árbol limpio y completo"
 
 echo "=== [2/5] Construyendo y verificando home-manager-files ==="
-HMF=$(NIXPKGS_ALLOW_UNFREE=1 nix build --no-link --print-out-paths \
+HMF=$(NIXPKGS_ALLOW_UNFREE=1 nix build --impure --no-link --print-out-paths \
     .#nixosConfigurations.nixos.config.home-manager.users.evert.home-files 2>/dev/null)
 SCRIPTS=$(readlink "$HMF/.config/hypr/scripts")
 echo "scripts -> $SCRIPTS"
@@ -40,7 +40,7 @@ fi
 echo "OK: build contiene sysmon y sin rutas stale"
 
 echo "=== [3/5] Desplegando (sudo nixos-rebuild switch) ==="
-NIXPKGS_ALLOW_UNFREE=1 sudo nixos-rebuild switch --flake .#nixos
+NIXPKGS_ALLOW_UNFREE=1 sudo nixos-rebuild switch --impure --flake .#nixos
 
 echo "=== [4/5] Verificando el despliegue en vivo ==="
 LIVE="$HOME/.config/hypr/scripts/quickshell"
