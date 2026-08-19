@@ -54,7 +54,7 @@ in
     libsForQt5.qtstyleplugin-kvantum
     kdePackages.qtstyleplugin-kvantum
     glow # preview de markdown en la terminal (yazi)
-    (ciscoPacketTracer8.override {
+    (ciscoPacketTracer9.override {
       packetTracerSource = /home/evert/Downloads/CiscoPacketTracer_901_Ubuntu_64bit.deb;
     })
   ];
