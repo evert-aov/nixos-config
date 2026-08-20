@@ -270,6 +270,7 @@ in
     zlib
     alsa-lib
     mesa
+    unixODBC
     stdenv.cc.cc.lib
   ];
 
