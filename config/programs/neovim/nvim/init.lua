@@ -334,16 +334,6 @@ setup_server("jdtls", {
     java = {
       configuration = {
         updateBuildConfiguration = "automatic",
-        runtimes = {
-          {
-            name = "JavaSE-25",           -- just a label, can be anything
-            path = "/nix/store/1254iig4qqwznfv14wc5q2h3q5mkh7dd-openjdk-25.0.4+7/lib/openjdk",
-          },
-          -- {
-          --  name = "JavaSE-17",
-          --  path = "/usr/lib/jvm/java-17-openjdk",
-          -- },
-        },
       },
       format = {
         enabled = true,
