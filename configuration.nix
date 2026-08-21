@@ -271,6 +271,8 @@ in
     alsa-lib
     mesa
     unixODBC
+    icu
+    openssl
     stdenv.cc.cc.lib
   ];
 
