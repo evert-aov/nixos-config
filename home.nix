@@ -187,7 +187,8 @@ in
       "text/x-nix" = "code.desktop";
       "text/xml" = "code.desktop";
       "application/json" = "code.desktop";
-      "inode/directory" = "dolphin.desktop";
+      "application/pdf" = "vivaldi-stable.desktop";
+      "inode/directory" = "org.gnome.Nautilus.desktop";
     };
   };
 
