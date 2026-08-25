@@ -156,7 +156,7 @@ Configuraciones incluidas: Java/Spring Boot, Python/FastAPI, Dart/Flutter.
 
 | Builtin                    | Lenguaje       |
 | -------------------------- | -------------- |
-| `black`, `isort`, `pylint` | Python         |
+| `black`, `ruff`            | Python         |
 | `google_java_format`       | Java           |
 | `prettierd`                | JS/TS/HTML/CSS |
 | `dart_format`              | Dart           |
@@ -187,15 +187,16 @@ Configuraciones incluidas: Java/Spring Boot, Python/FastAPI, Dart/Flutter.
 
 | Lenguaje / Framework | Paquetes instalados (LSP + extras)                                            |
 | -------------------- | ----------------------------------------------------------------------------- |
-| Python               | `pyright`, `black`, `pylint`                                                  |
+| Python               | `pyright`, `black`, `ruff`                                                    |
 | Nix                  | `nil`, `nixpkgs-fmt`                                                          |
-| Java / Spring Boot   | `jdt-language-server`, `google-java-format`                                   |
+| Java / Spring Boot   | `jdt-language-server`, `google-java-format`, `yaml-language-server`           |
+| C++ / Qt             | `clangd` (vía `clang-tools`), `qmlls` (vía `qt6.qtdeclarative`)               |
 | Kotlin               | `kotlin-language-server`                                                      |
 | Dart / Flutter       | `flutter`, `dart-sass`                                                        |
-| JS / TS / Angular    | `typescript-language-server`, `angular-language-server`, `eslint`, `prettier` |
+| JS / TS / Angular    | `ts_ls`, `angularls`, `vscode-langservers-extracted` (html/css/json), `eslint`|
 | PostgreSQL / SQL     | `sqls`                                                                        |
-| Markdown             | `markdown-preview-nvim` (+ `nodejs`)                                          |
-| General              | `ripgrep`, `fd`, `shellcheck`, `markdownlint-cli`                             |
+| Markdown             | `markdown-preview-nvim` (+ `nodejs`), `markdownlint-cli`                      |
+| General              | `ripgrep`, `fd`, `shellcheck`                                                 |
 
 > Para preview de markdown fuera de nvim (p.ej. en yazi): `glow` (en `home.packages`).
 > yazi usa glow automáticamente para `.md`.
