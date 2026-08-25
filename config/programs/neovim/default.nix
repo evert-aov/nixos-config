@@ -37,6 +37,7 @@
       eslint
       prettier
       vscode-langservers-extracted # HTML, CSS, JSON LSPs
+      yaml-language-server
 
       # PostgreSQL
       sqls # SQL LSP
