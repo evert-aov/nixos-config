@@ -36,6 +36,7 @@
       angular-language-server
       eslint
       prettier
+      vscode-langservers-extracted # HTML, CSS, JSON LSPs
 
       # PostgreSQL
       sqls # SQL LSP

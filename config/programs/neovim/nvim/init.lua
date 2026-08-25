@@ -384,17 +384,9 @@ setup_server("dartls", {
 })
 
 -- JavaScript/TypeScript (Angular)
+setup_server("angularls", {})
 setup_server("ts_ls", {
   filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
-  init_options = {
-    plugins = {
-      {
-        name = "@angular/language-server",
-        location = "/usr/lib/node_modules/@angular/language-server",
-        languages = { "angular", "typescript", "html" },
-      },
-    },
-  },
   settings = {
     typescript = {
       inlayHints = {
