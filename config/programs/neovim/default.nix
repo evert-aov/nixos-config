@@ -43,7 +43,7 @@
       # Formateadores adicionales
       black # Python
       isort # Python
-      pylint # Python linter
+      ruff # Python linter/formatter (reemplaza a pylint)
       google-java-format # Java
       prettierd # JS/TS/HTML/CSS
 
