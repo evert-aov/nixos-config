@@ -2,6 +2,9 @@
 --  ◈ AUTOSTART
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 hl.on("hyprland.start", function()
+  -- Matar procesos residuales de Wine de sesiones anteriores (evita que ArcMap reaparezca)
+  hl.exec_cmd("wineserver -k")
+
   -- Daemons y herramientas de portapapeles/multimedia
   hl.exec_cmd("awww-daemon")
   hl.exec_cmd("hypridle")
