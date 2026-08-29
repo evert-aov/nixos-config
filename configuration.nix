@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 
 let
@@ -385,6 +386,7 @@ in
     postgresql
     postman
     insomnia
+    google-cloud-sdk
 
     # ---- Desktop ----
     quickshell
