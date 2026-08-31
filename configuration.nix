@@ -339,6 +339,7 @@ in
     mission-center
     onlyoffice-desktopeditors
     scrcpy
+    kdenlive
 
     # ---- Terminal & Apps ----
     kitty
