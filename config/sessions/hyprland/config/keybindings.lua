@@ -62,14 +62,15 @@ hl.bind("xf86audioraisevolume", hl.dsp.exec_cmd("swayosd-client --output-volume 
 -- ───────── Applications & Launchers ─────────
 hl.bind(var.mainMod .. " + B", hl.dsp.exec_cmd("vivaldi"))
 hl.bind(var.mainMod .. " + E", hl.dsp.exec_cmd("kitty yazi"))
-hl.bind(var.mainMod .. " + T", hl.dsp.exec_cmd("kitty"))
+-- hl.bind(var.mainMod .. " + T", hl.dsp.exec_cmd("kitty"))
 hl.bind(var.mainMod .. " + I", hl.dsp.exec_cmd("bash $HOME/.local/share/JetBrains/Toolbox/scripts/idea"))
 hl.bind(var.mainMod .. " + D", hl.dsp.exec_cmd("bash $HOME/.local/share/JetBrains/Toolbox/scripts/datagrip"))
 hl.bind(var.mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("bash $HOME/.local/share/JetBrains/Toolbox/scripts/pycharm"))
 hl.bind(var.mainMod .. " + O", hl.dsp.exec_cmd("onlyoffice-desktopeditors"))
 hl.bind(var.mainMod .. " + RETURN", hl.dsp.exec_cmd(var.terminal))
 hl.bind(var.mainMod .. " + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manager.sh toggle applauncher"))
-hl.bind(var.mainMod .. "+ C", hl.dsp.exec_cmd("nvim"))
+hl.bind(var.mainMod .. "+ C", hl.dsp.exec_cmd("code"))
+hl.bind(var.mainMod .. "+ T", hl.dsp.exec_cmd("TRILIUM_PORT=8080 nix run"))
 
 -- ───────── Quickshell Controls ─────────
 hl.bind(var.mainMod .. " + M", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle monitors"))
