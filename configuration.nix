@@ -178,7 +178,10 @@ in
     package = pkgs.ollama;
   };
 
-  services.open-webui.enable = true;
+  services.open-webui = {
+    enable = true;
+    port = 8088; # Cambiado de 8080 a 8088 porque Docker usa el 8080
+  };
 
   # ============================================================================
   # SERVICES
