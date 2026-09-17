@@ -168,6 +168,17 @@ in
     options = "grp:alt_shift_toggle";
   };
 
+  #
+  # IA LOCALE
+  #
+  services.ollama = {
+    enable = true;
+    # Opciones de aceleración: "cuda" (NVIDIA), "rocm" (AMD) o null (solo CPU)
+    acceleration = null;
+  };
+
+  services.open-webui.enable = true;
+
   # ============================================================================
   # SERVICES
   # ============================================================================
