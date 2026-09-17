@@ -169,12 +169,13 @@ in
   };
 
   #
-  # IA LOCALE
+  # IA LOCAL (Ollama + Open-WebUI)
   #
   services.ollama = {
     enable = true;
-    # Opciones de aceleración: "cuda" (NVIDIA), "rocm" (AMD) o null (solo CPU)
-    acceleration = null;
+    # En nixpkgs moderno se define 'package'.
+    # Para Ryzen 7 4700U (iGPU Vega) usamos pkgs.ollama (CPU) o pkgs.ollama-vulkan (aceleración Vulkan)
+    package = pkgs.ollama;
   };
 
   services.open-webui.enable = true;
