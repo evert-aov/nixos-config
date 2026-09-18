@@ -403,6 +403,7 @@ in
     postman
     insomnia
     google-cloud-sdk
+    awscli2
 
     # ---- Desktop ----
     quickshell
