@@ -31,6 +31,7 @@ hl.bind(var.mainMod .. " + Q", hl.dsp.window.kill())
 hl.bind("ALT + F4", hl.dsp.window.kill())
 hl.bind(var.mainMod .. " + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(var.mainMod .. " + F11", hl.dsp.window.fullscreen())
+hl.bind(var.mainMod .. " + Escape", hl.dsp.submap("passthru"))
 
 -- ───────── System & Hardware ─────────
 hl.bind("Caps_Lock", hl.dsp.exec_cmd("sleep 0.1 && swayosd-client --caps-lock"), { locked = true })

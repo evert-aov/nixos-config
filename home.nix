@@ -47,6 +47,7 @@ in
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
+    freerdp
     adwaita-icon-theme
     adw-gtk3
     libsForQt5.qt5ct
