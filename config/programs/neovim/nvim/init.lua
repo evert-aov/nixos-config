@@ -820,8 +820,12 @@ vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<CR>", { desc = "To
 -- Crear nuevas ventanas
 vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Split vertical" })
 vim.keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Split horizontal" })
-vim.keymap.set("n", "<leader>sc", ":close<CR>", { desc = "Close window" })
 vim.keymap.set("n", "<leader>so", ":only<CR>", { desc = "Close others" })
+
+-- Cerrar archivo (buffer) y guardar
+vim.keymap.set("n", "<leader>q", ":bdelete<CR>", { desc = "Close file (normal)" })
+vim.keymap.set("n", "<leader>c", ":bdelete!<CR>", { desc = "Close file (discard changes)" })
+vim.keymap.set({ "n", "i" }, "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 
 -- Proyectos
 vim.keymap.set("n", "<leader>rs", function()

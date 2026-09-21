@@ -21,8 +21,10 @@ Configuración en `config/programs/neovim/default.nix` (plugins/paquetes) y
 | `<C-Up>` / `<C-Down>`    | Aumentar / reducir alto                  |
 | `<leader>sv`             | Split vertical                           |
 | `<leader>sh`             | Split horizontal                         |
-| `<leader>sc`             | Cerrar ventana                           |
 | `<leader>so`             | Cerrar las demás ventanas                |
+| `<leader>q`              | Cerrar archivo actual (buffer)           |
+| `<leader>c`              | Cerrar archivo descartando cambios (`:bd!`) |
+| `<C-s>`                  | Guardar archivo (`:w`)                   |
 
 ## 2. Búsqueda (Telescope)
 
@@ -37,10 +39,12 @@ Configuración en `config/programs/neovim/default.nix` (plugins/paquetes) y
 
 | Atajo       | Acción                            |
 | ----------- | --------------------------------- |
-| `gd`        | Ir a definición                   |
+| `gd`        | Ir a definición (como Ctrl+Clic)  |
+| `<C-o>`     | Volver atrás (regresar al punto anterior) |
+| `<C-i>`     | Avanzar en el historial de saltos |
 | `gD`        | Ir a declaración                  |
-| `gr`        | Referencias                       |
-| `gi`        | Implementaciones                  |
+| `gr`        | Referencias (dónde se usa el método) |
+| `gi`        | Implementaciones (e.g. ServiceImpl de interfaz) |
 | `<leader>h` | Hover / documentación             |
 | `<leader>a` | Acciones de código (code actions) |
 | `<leader>r` | Renombrar símbolo                 |
