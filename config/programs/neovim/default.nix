@@ -26,6 +26,7 @@
       # Java/Kotlin (Spring Boot)
       jdt-language-server
       kotlin-language-server
+      lombok
 
       # Dart/Flutter
       dart-sass
@@ -105,4 +106,5 @@
   };
 
   xdg.configFile."nvim/init.lua".source = ./nvim/init.lua;
+  home.file.".local/share/java/lombok.jar".source = "${pkgs.lombok}/share/java/lombok.jar";
 }

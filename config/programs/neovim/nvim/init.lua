@@ -329,7 +329,24 @@ setup_server("clangd", {})
 -- QML (Qt)
 setup_server("qmlls", {})
 -- Java (Spring Boot)
+local lombok_path = vim.fn.expand("~/.local/share/java/lombok.jar")
+if vim.fn.filereadable(lombok_path) == 0 then
+  local gradle_lombok = vim.fn.glob("~/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/*/*/lombok-*.jar", true, true)
+  for _, jar in ipairs(gradle_lombok) do
+    if not jar:match("%-sources%.jar$") and not jar:match("%-javadoc%.jar$") then
+      lombok_path = jar
+      break
+    end
+  end
+end
+
+local jdtls_cmd = { "jdtls" }
+if vim.fn.filereadable(lombok_path) == 1 then
+  table.insert(jdtls_cmd, string.format("--jvm-arg=-javaagent:%s", lombok_path))
+end
+
 setup_server("jdtls", {
+  cmd = jdtls_cmd,
   settings = {
     java = {
       configuration = {
