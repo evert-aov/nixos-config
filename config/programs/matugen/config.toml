@@ -65,4 +65,6 @@ output_path = "~/.config/yazi/theme.toml"
 input_path = '~/.config/matugen/templates/hyprland.conf.template'
 output_path = '~/.config/hypr/colors.conf'
 
-
+[templates.zed]
+input_path = "~/.config/matugen/templates/zed-colors.json.template"
+output_path = "~/.config/zed/themes/matugen.json"
