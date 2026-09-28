@@ -404,6 +404,7 @@ in
     insomnia
     google-cloud-sdk
     awscli2
+    zed-editor
 
     # ---- Desktop ----
     quickshell
