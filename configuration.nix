@@ -230,6 +230,7 @@ in
       "adbusers"
       "libvirtd"
       "docker"
+      "vboxusers"
     ];
   };
 
@@ -298,6 +299,10 @@ in
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
   virtualisation.docker.enable = true;
+  virtualisation.virtualbox.host = {
+    enable = true;
+    enableExtensionPack = true;
+  };
 
   # ============================================================================
   # FONTS
