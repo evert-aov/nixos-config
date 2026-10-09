@@ -42,11 +42,11 @@ hl.bind("Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh"), { lock
 hl.bind("SHIFT + Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh --edit"), { locked = true })
 hl.bind(var.mainMod .. " + Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh --full"), { locked = true })
 hl.bind(var.mainMod .. " + SHIFT + Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh --full --edit"),
-  { locked = true })
+    { locked = true })
 
 hl.bind("XF86PowerOff", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/lock.sh"), { locked = true })
 hl.bind(var.mainMod .. " + L", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/lock.sh"),
-  { repeating = true, locked = true })
+    { repeating = true, locked = true })
 
 -- ───────── Media & Audio ─────────
 hl.bind(var.mainMod .. " + SPACE", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
@@ -56,9 +56,9 @@ hl.bind("xf86AudioMicMute", hl.dsp.exec_cmd("swayosd-client --input-volume mute-
 hl.bind("xf86audiomute", hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"), { locked = true })
 
 hl.bind("xf86audiolowervolume", hl.dsp.exec_cmd("swayosd-client --output-volume lower"),
-  { repeating = true, locked = true })
+    { repeating = true, locked = true })
 hl.bind("xf86audioraisevolume", hl.dsp.exec_cmd("swayosd-client --output-volume raise"),
-  { repeating = true, locked = true })
+    { repeating = true, locked = true })
 
 -- ───────── Applications & Launchers ─────────
 hl.bind(var.mainMod .. " + B", hl.dsp.exec_cmd("vivaldi"))
@@ -70,7 +70,7 @@ hl.bind(var.mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("bash $HOME/.local/share/
 hl.bind(var.mainMod .. " + O", hl.dsp.exec_cmd("onlyoffice-desktopeditors"))
 hl.bind(var.mainMod .. " + RETURN", hl.dsp.exec_cmd(var.terminal))
 hl.bind(var.mainMod .. " + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manager.sh toggle applauncher"))
-hl.bind(var.mainMod .. "+ C", hl.dsp.exec_cmd("code"))
+hl.bind(var.mainMod .. "+ C", hl.dsp.exec_cmd("zeditor"))
 -- hl.bind(var.mainMod .. "+ T", hl.dsp.exec_cmd("TRILIUM_PORT=8080 nix run ~/OpenSource/Trilium"))
 
 -- ───────── Quickshell Controls ─────────
@@ -90,13 +90,13 @@ hl.bind(var.mainMod .. " + H", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_m
 -- ───────── Workspaces (Optimizado con Bucle) ─────────
 -- Mapea del 1 al 9, y luego el 0 como el espacio 10
 for i = 0, 9 do
-  local key = tostring(i)
-  local ws_num = (i == 0) and 10 or i
+    local key = tostring(i)
+    local ws_num = (i == 0) and 10 or i
 
-  -- Atajo para cambiar al espacio de trabajo
-  hl.bind(var.mainMod .. " + " .. key, hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh " .. ws_num))
+    -- Atajo para cambiar al espacio de trabajo
+    hl.bind(var.mainMod .. " + " .. key, hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh " .. ws_num))
 
-  -- Atajo para mover la ventana al espacio de trabajo
-  hl.bind(var.mainMod .. " + SHIFT + " .. key,
-    hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh " .. ws_num .. " move"))
+    -- Atajo para mover la ventana al espacio de trabajo
+    hl.bind(var.mainMod .. " + SHIFT + " .. key,
+        hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh " .. ws_num .. " move"))
 end
