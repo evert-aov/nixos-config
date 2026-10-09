@@ -25,6 +25,9 @@
         "language_server": {
           "name": "ruff"
         }
+      },
+      "code_actions_on_format": {
+        "source.organizeImports": true
       }
     }
   },
