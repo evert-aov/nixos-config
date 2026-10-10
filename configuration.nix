@@ -291,6 +291,8 @@ in
     icu
     openssl
     stdenv.cc.cc.lib
+    libice
+    libsm
   ];
 
   # ============================================================================
@@ -393,7 +395,7 @@ in
     gnumake
     (flutter.overrideAttrs (old: {
       postInstall = (old.postInstall or "") + ''
-        # Eliminamos la versión KTS del archivo interno de gradle de flutter 
+        # Eliminamos la versión KTS del archivo interno de gradle de flutter
         # para obligarlo a usar settings.gradle (que tiene el parche de Nixpkgs).
         rm -f $out/packages/flutter_tools/gradle/settings.gradle.kts
       '';
