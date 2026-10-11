@@ -200,6 +200,12 @@ in
   };
   programs.thunderbird.enable = true;
 
+  # mongodb
+  services.mongodb = {
+    enable = true;
+    package = pkgs.mongodb-ce;
+  };
+
   # ============================================================================
   # GAMING
   # ============================================================================
@@ -412,6 +418,9 @@ in
     google-cloud-sdk
     awscli2
     zed-editor
+    mongosh
+    mongodb-tools
+    mongodb-compass
 
     # ---- Desktop ----
     quickshell
