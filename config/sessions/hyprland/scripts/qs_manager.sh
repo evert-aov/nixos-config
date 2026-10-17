@@ -156,6 +156,11 @@ handle_network_prep() {
 # IPC ROUTING
 # -----------------------------------------------------------------------------
 if [[ "$ACTION" == "close" ]]; then
+    if [[ "$TARGET" == "coffee" ]]; then
+        "$(dirname "${BASH_SOURCE[0]}")/coffee.sh" --disable
+        exit 0
+    fi
+
     quickshell -p "$SHELL_QML_PATH" ipc call main handleCommand "close" "" "" >/dev/null 2>&1
     if [[ "$TARGET" == "network" || "$TARGET" == "all" || -z "$TARGET" ]]; then
         if [ -f "$BT_PID_FILE" ]; then
@@ -168,6 +173,11 @@ if [[ "$ACTION" == "close" ]]; then
 fi
 
 if [[ "$ACTION" == "open" || "$ACTION" == "toggle" ]]; then
+    if [[ "$TARGET" == "coffee" ]]; then
+        "$(dirname "${BASH_SOURCE[0]}")/coffee.sh" --toggle
+        exit 0
+    fi
+
     if [[ "$TARGET" == "network" ]]; then
         handle_network_prep
         [[ -n "$SUBTARGET" ]] && echo "$SUBTARGET" > "$NETWORK_MODE_FILE"

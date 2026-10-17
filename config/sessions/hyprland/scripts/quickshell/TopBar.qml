@@ -156,6 +156,29 @@ Variants {
 	            running = true;
 	        }
 	    }
+
+            Process {
+                id: coffeePoller
+                running: true
+                command: ["bash", "-c", "if [ -f " + paths.getRunDir("coffee") + "/active ]; then echo '1'; else echo '0'; fi"]
+                stdout: StdioCollector {
+                    onStreamFinished: {
+                        barWindow.isCoffeeActive = (this.text.trim() === "1");
+                    }
+                }
+            }
+
+            Process {
+                id: coffeeWatcher
+                running: true
+                command: ["bash", "-c", "mkdir -p " + paths.getRunDir("coffee") + " && inotifywait -qq -e create,delete,modify,close_write " + paths.getRunDir("coffee") + "/ 2>/dev/null || sleep 2"]
+                onExited: {
+                    coffeePoller.running = false;
+                    coffeePoller.running = true;
+                    running = false;
+                    running = true;
+                }
+            }
 	                
             Process {
                 id: settingsReader
@@ -245,6 +268,8 @@ Variants {
             property string batPercent: "100%"
             property string batIcon: "󰁹"
             property string batStatus: "Unknown"
+            
+            property bool isCoffeeActive: false
             
             property string kbLayout: "us"
 
@@ -1067,7 +1092,7 @@ Variants {
 
                 Rectangle {
                     id: centerBox
-                    property bool isHovered: centerMouse.containsMouse
+                    property bool isHovered: centerMouse.containsMouse || coffeeMouse.containsMouse
                     color: isHovered ? Qt.rgba(mocha.surface1.r, mocha.surface1.g, mocha.surface1.b, 0.95) : Qt.rgba(mocha.base.r, mocha.base.g, mocha.base.b, 0.75)
                     radius: barWindow.s(14); border.width: 1; border.color: Qt.rgba(mocha.text.r, mocha.text.g, mocha.text.b, isHovered ? 0.15 : 0.05)
                     
@@ -1113,7 +1138,7 @@ Variants {
                     RowLayout {
                         id: centerLayout
                         anchors.centerIn: parent
-                        spacing: barWindow.s(24)
+                        spacing: barWindow.s(20)
 
                         ColumnLayout {
                             spacing: -2
@@ -1137,6 +1162,52 @@ Variants {
                                 font.pixelSize: barWindow.s(17); 
                                 font.weight: Font.Black; 
                                 color: mocha.peach 
+                            }
+                        }
+
+                        Rectangle {
+                            id: coffeeBtn
+                            Layout.alignment: Qt.AlignVCenter
+                            width: barWindow.s(30)
+                            height: barWindow.s(30)
+                            radius: barWindow.s(9)
+                            color: barWindow.isCoffeeActive 
+                                   ? Qt.rgba(mocha.peach.r, mocha.peach.g, mocha.peach.b, 0.25)
+                                   : (coffeeMouse.containsMouse 
+                                      ? Qt.rgba(mocha.surface2.r, mocha.surface2.g, mocha.surface2.b, 0.4) 
+                                      : Qt.rgba(mocha.surface0.r, mocha.surface0.g, mocha.surface0.b, 0.25))
+                            border.width: 1
+                            border.color: barWindow.isCoffeeActive 
+                                          ? Qt.rgba(mocha.peach.r, mocha.peach.g, mocha.peach.b, 0.6) 
+                                          : (coffeeMouse.containsMouse 
+                                             ? Qt.rgba(mocha.text.r, mocha.text.g, mocha.text.b, 0.18) 
+                                             : Qt.rgba(mocha.text.r, mocha.text.g, mocha.text.b, 0.06))
+
+                            scale: coffeeMouse.pressed ? 0.90 : (coffeeMouse.containsMouse ? 1.08 : 1.0)
+                            Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
+                            Behavior on color { ColorAnimation { duration: 200 } }
+                            Behavior on border.color { ColorAnimation { duration: 200 } }
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: barWindow.isCoffeeActive ? "󰅶" : "󰅷"
+                                font.family: "Iosevka Nerd Font"
+                                font.pixelSize: barWindow.s(18)
+                                color: barWindow.isCoffeeActive 
+                                       ? mocha.peach 
+                                       : (coffeeMouse.containsMouse ? mocha.text : mocha.subtext0)
+                                Behavior on color { ColorAnimation { duration: 200 } }
+                            }
+
+                            MouseArea {
+                                id: coffeeMouse
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    barWindow.isCoffeeActive = !barWindow.isCoffeeActive;
+                                    Quickshell.execDetached(["bash", "-c", "~/.config/hypr/scripts/coffee.sh --toggle"]);
+                                }
                             }
                         }
                     }
