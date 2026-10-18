@@ -4,6 +4,18 @@
       "type": "registry"
     }
   },
+  "agent": {
+    "always_allow_tool_actions": false,
+    "default_profile": "write",
+    "tool_permissions": {
+      "default": "confirm",
+      "tools": {
+        "terminal": {
+          "default": "confirm"
+        }
+      }
+    }
+  },
   "vim_mode": true,
   "base_keymap": "Zed",
   "ui_font_size": 16,
@@ -13,7 +25,6 @@
     "light": "Matugen Light",
     "dark": "Matugen Dark"
   },
-
   "format_on_save": "on",
   "languages": {
     "Python": {
@@ -34,7 +45,7 @@
   "lsp": {
     "pyright": {
       "settings": {
-        "python.analysts": {
+        "python.analysis": {
           "typeCheckingMode": "basic",
           "autoSearchPaths": true,
           "useLibraryCodeForTypes": true
@@ -43,3 +54,4 @@
     }
   }
 }
+
