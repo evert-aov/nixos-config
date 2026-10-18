@@ -191,7 +191,7 @@ in
   services.flatpak.enable = true;
   services.power-profiles-daemon.enable = true;
 
-  # programs.firefox.enable = true;
+  programs.firefox.enable = true;
   programs.vscode.enable = true;
   programs.dconf.enable = true;
 
