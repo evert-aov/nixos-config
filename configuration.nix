@@ -43,14 +43,46 @@ in
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
 
+  # Compresión de memoria en RAM (evita usar el SSD como Swap y estira tus 10GB)
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 50;
+  };
+
   boot.kernelModules = [ "tcp_bbr" ];
   boot.kernel.sysctl = {
+    # --------------------------------------------------------------------------
+    # 1. GESTIÓN DE MEMORIA Y SSD (Evitar que el kernel acapare RAM)
+    # --------------------------------------------------------------------------
+    # Recicla agresivamente los inodos y enlaces simbólicos de /nix/store (Slab)
+    "vm.vfs_cache_pressure" = 300;
+
+    # Prioriza mantener todo en RAM; solo usa Swap cuando sea estrictamente necesario
+    "vm.swappiness" = 10;
+
+    # Evita tirones (micro-freezes) al escribir archivos grandes en el SSD
+    "vm.dirty_background_ratio" = 5;
+    "vm.dirty_ratio" = 10;
+
+    # Aumenta el límite de mapeos de memoria (vital para navegadores, IDEs, Docker y juegos)
+    "vm.max_map_count" = 1048576;
+
+    # --------------------------------------------------------------------------
+    # 2. RED Y CONGESTIÓN TCP (BBR + Búferes de 16 MB)
+    # --------------------------------------------------------------------------
     "net.ipv4.tcp_congestion_control" = "bbr";
     "net.core.default_qdisc" = "fq";
-    "net.core.wmem_max" = 1073741824;
-    "net.core.rmem_max" = 1073741824;
-    "net.ipv4.tcp_rmem" = "4096 87380 1073741824";
-    "net.ipv4.tcp_wmem" = "4096 87380 1073741824";
+
+    # Límite de 16 MB por socket (Suficiente para saturar 1 Gbps sin comer tu RAM)
+    "net.core.wmem_max" = 16777216;
+    "net.core.rmem_max" = 16777216;
+    "net.ipv4.tcp_rmem" = "4096 87380 16777216";
+    "net.ipv4.tcp_wmem" = "4096 87380 16777216";
+
+    # Reutilización rápida de conexiones y apertura rápida de sockets TCP
+    "net.ipv4.tcp_fastopen" = 3;
+    "net.ipv4.tcp_tw_reuse" = 1;
   };
 
   boot.consoleLogLevel = 0;
