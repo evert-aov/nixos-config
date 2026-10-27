@@ -27,6 +27,10 @@
   ];
   boot.extraModulePackages = [ ];
 
+  services.udev.extraRules = ''
+    KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
+  '';
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/55449870-f61b-447f-bd50-d5ddbba3bd29";
     fsType = "ext4";
