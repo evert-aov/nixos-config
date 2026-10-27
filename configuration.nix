@@ -269,6 +269,7 @@ in
       "libvirtd"
       "docker"
       "vboxusers"
+      "input"
     ];
   };
 
