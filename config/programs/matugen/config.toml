@@ -5,6 +5,10 @@ reload_apps = false
 input_path = "~/.config/matugen/templates/qs_colors.json.template"
 output_path = "/tmp/qs_colors.json"
 
+[templates.gdm]
+input_path = "~/.config/matugen/templates/qs_colors.json.template"
+output_path = "~/.cache/matugen-gdm-colors.json"
+
 [templates.kitty]
 input_path = "~/.config/matugen/templates/kitty-colors.conf.template"
 output_path = "/tmp/kitty-matugen-colors.conf"

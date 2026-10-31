@@ -1,0 +1,105 @@
+/* Evert's greeter. Appended to the installed GNOME light/dark stylesheet. */
+#lockDialogGroup {
+  background-color: @crust@;
+  background-image: url("file://@wallpaper@");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* The veil gives the entire login flow contrast over the colorful wallpaper. */
+#lockDialogGroup .login-dialog {
+  background-color: @veil@;
+  color: @text@;
+}
+
+#panel.login-screen {
+  background-color: @mantle@;
+  color: @text@;
+  box-shadow: none;
+}
+
+#panel.login-screen .panel-button {
+  color: @text@;
+  border-radius: 12px;
+}
+
+#lockDialogGroup .login-dialog-banner-view {
+  max-width: 32em;
+}
+
+#lockDialogGroup .login-dialog-banner {
+  color: @primary_container@;
+  font-size: 15pt;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+#lockDialogGroup .login-dialog-user-list-item {
+  background-color: @surface@;
+  color: @text@;
+  border: 1px solid @border@;
+  border-radius: 22px;
+  padding: 16px;
+}
+
+#lockDialogGroup .login-dialog-user-list-item:hover {
+  background-color: @raised@;
+  color: @text@;
+}
+
+#lockDialogGroup .login-dialog-user-list-item:selected,
+#lockDialogGroup .login-dialog-user-list-item:focus,
+#lockDialogGroup .login-dialog-user-list-item:active {
+  background-color: @raised@;
+  color: @text@;
+  border-color: @primary@;
+  box-shadow: inset 0 0 0 2px @focus@ !important;
+}
+
+#lockDialogGroup .login-dialog-prompt-layout {
+  background-color: transparent;
+  border: none;
+  border-radius: 24px;
+  padding: 28px;
+  spacing: 14px;
+}
+
+#lockDialogGroup .login-dialog-prompt-entry {
+  background-color: @entry@;
+  color: @text@;
+  border: 1px solid @border@;
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+
+#lockDialogGroup .login-dialog-prompt-entry:focus {
+  background-color: @raised@;
+  border-color: @primary@;
+}
+
+#lockDialogGroup .login-dialog-prompt-entry StLabel.hint-text {
+  color: @subtext@;
+}
+
+#lockDialogGroup .login-dialog-not-listed-button,
+#lockDialogGroup .login-dialog-message,
+#lockDialogGroup .login-dialog-message-hint {
+  color: @subtext@;
+}
+
+#lockDialogGroup .login-dialog-button {
+  background-color: @surface@;
+  color: @text@;
+  border-radius: 14px;
+}
+
+#lockDialogGroup .login-dialog-button:hover,
+#lockDialogGroup .login-dialog-button:focus {
+  background-color: @primary@;
+  color: #ffffff;
+}
+
+#lockDialogGroup .login-dialog .user-widget .user-icon {
+  border: 2px solid @primary_container@;
+}

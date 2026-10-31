@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="64" viewBox="0 0 240 64">
+  <title>Evert</title>
+  <g fill="none" stroke="#c6a2fa" stroke-width="2">
+    <rect x="9" y="9" width="46" height="46" rx="15" fill="#171227" fill-opacity=".82"/>
+    <path d="M23 22h18M23 32h14M23 42h18M23 22v20" stroke-linecap="round"/>
+  </g>
+  <!-- Outlined lettering keeps the logo independent of installed fonts. -->
+  <g fill="none" stroke="#f3eefc" stroke-width="3" stroke-linecap="square" stroke-linejoin="round">
+    <path d="M79 22H65v20h14M65 32h11"/>
+    <path d="M89 22l8 20 8-20"/>
+    <path d="M129 22h-14v20h14M115 32h11"/>
+    <path d="M141 42V22h9a5 5 0 0 1 0 10h-9m8 0 8 10"/>
+    <path d="M168 22h18m-9 0v20"/>
+  </g>
+  <circle cx="216" cy="32" r="3" fill="#c6a2fa"/>
+</svg>
