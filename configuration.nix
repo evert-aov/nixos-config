@@ -301,7 +301,7 @@ in
     zlib
     alsa-lib
     mesa
-    unixODBC
+    unixodbc
     icu
     openssl
     stdenv.cc.cc.lib
@@ -371,6 +371,8 @@ in
     tree
     zenity
     file
+    glib
+    gsettings-desktop-schemas
     ffmpeg
     mpv
     mission-center
