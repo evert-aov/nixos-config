@@ -91,3 +91,160 @@ See the above repository for updates as well as full license text. */
 :is(#urlbar,.urlbar)[breakout][breakout-extend]:popover-open > .urlbar-input-container{
   padding-block: calc(min(4px,(var(--urlbar-container-height) - var(--urlbar-height)) / 2) + var(--urlbar-container-padding)) !important;
 }
+
+/* ==============================================================================
+ * WINDOWSWITCHER STYLE FOR FIREFOX (Ctrl + Tab)
+ * Replicates the Quickshell Super+Tab WindowSwitcher aesthetic
+ * ============================================================================== */
+
+#ctrlTab-panel {
+  --panel-background: transparent !important;
+  --panel-border-radius: 20px !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 24px !important;
+}
+
+/* Outer floating dialog container */
+#ctrlTab-panel::part(content) {
+  background-color: var(--bg-base) !important;
+  background: color-mix(in srgb, var(--bg-base) 88%, transparent) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 0 1px var(--border-color) !important;
+  padding: 20px 24px !important;
+}
+
+/* Header replicating WindowSwitcher top bar: ▦ Tabs */
+#ctrlTab-previews::before {
+  content: "▦  Tabs";
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-family: "JetBrains Mono", system-ui, sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  color: var(--text-main) !important;
+  background-color: var(--bg-surface) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 12px !important;
+  padding: 6px 18px !important;
+  margin: 0 auto 20px auto !important;
+  width: fit-content !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Horizontal card previews layout */
+#ctrlTab-previews {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+}
+
+/* Individual preview cards */
+.ctrlTab-preview {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 16px !important;
+  opacity: 0.65 !important;
+  transform: scale(0.96) !important;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Inner card styling */
+.ctrlTab-preview-inner {
+  background-color: var(--bg-surface) !important;
+  border: 1.5px solid var(--border-color) !important;
+  border-radius: 16px !important;
+  padding: 12px !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Hover and Selected / Focused Card (Matches WindowSwitcher carousel focus) */
+.ctrlTab-preview:hover {
+  opacity: 0.88 !important;
+  transform: scale(0.98) translateY(-2px) !important;
+}
+
+.ctrlTab-preview:focus,
+.ctrlTab-preview[selected="true"] {
+  opacity: 1 !important;
+  transform: scale(1.04) translateY(-4px) !important;
+  z-index: 10 !important;
+}
+
+.ctrlTab-preview:focus > .ctrlTab-preview-inner,
+.ctrlTab-preview[selected="true"] > .ctrlTab-preview-inner {
+  background-color: var(--bg-surface-hover) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4), 0 0 0 2px var(--accent) !important;
+}
+
+/* Thumbnail canvas */
+.ctrlTab-canvas {
+  border-radius: 10px !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+  margin-bottom: 12px !important;
+}
+
+/* Favicon */
+.ctrlTab-favicon {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 4px !important;
+  margin-right: 8px !important;
+}
+
+/* Tab label text */
+.ctrlTab-preview-label {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-shadow: none !important;
+}
+
+.ctrlTab-label {
+  font-family: "JetBrains Mono", system-ui, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: var(--text-main) !important;
+  text-shadow: none !important;
+  max-width: 180px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* "Show All Tabs" button styling matching the bottom caption */
+#ctrlTab-showAll {
+  background-color: var(--bg-surface) !important;
+  border: 1.5px solid var(--border-color) !important;
+  border-radius: 14px !important;
+  padding: 10px 16px !important;
+  font-family: "JetBrains Mono", system-ui, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: var(--text-main) !important;
+  text-shadow: none !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#ctrlTab-showAll:hover,
+#ctrlTab-showAll:focus,
+#ctrlTab-showAll[selected="true"] {
+  background-color: var(--accent) !important;
+  color: var(--bg-base) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+  transform: scale(1.03) !important;
+}
