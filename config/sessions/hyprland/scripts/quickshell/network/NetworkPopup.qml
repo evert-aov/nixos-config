@@ -187,7 +187,7 @@ Item {
 
     readonly property string scriptsDir: Quickshell.env("HOME") + "/.config/hypr/scripts/quickshell/network"
     
-    readonly property color sharedAccent: Qt.lighter(window.sapphire, 1.15) 
+    readonly property color sharedAccent: window.sapphire 
     readonly property color btAccent: window.mauve
 
     property string activeMode: "bt"
@@ -841,7 +841,7 @@ Item {
         Rectangle {
             anchors.fill: parent
             radius: window.s(20)
-            color: window.base
+            color: Theme.panelBackground
             border.color: window.surface0
             border.width: 1
             clip: true
@@ -1395,7 +1395,7 @@ Item {
                                     Text {
                                         Layout.alignment: Qt.AlignHCenter
                                         font.family: "JetBrains Mono"; font.weight: Font.Bold; font.pixelSize: window.s(11)
-                                        color: isMyDisconnecting ? window.overlay1 : (coreMa.containsMouse ? window.crust : "#99000000")
+                                        color: isMyDisconnecting ? window.overlay1 : (coreMa.containsMouse ? window.crust : Qt.alpha(window.crust, 0.75))
                                         text: isMyDisconnecting ? "Disconnecting..." : (centralCore.disconnectFill > 0.01 ? "Hold..." : "Connected")
                                         Behavior on color { ColorAnimation { duration: 200 } }
                                     }

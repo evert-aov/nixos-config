@@ -21,8 +21,8 @@ wayland_titlebar_color  system
 macos_titlebar_color    system
 
 # Tab bar colors
-active_tab_foreground   {{colors.on_primary_container.default.hex}}
-active_tab_background   {{colors.primary_container.default.hex}}
+active_tab_foreground   {{colors.on_primary.default.hex}}
+active_tab_background   {{colors.primary.default.hex}}
 inactive_tab_foreground {{colors.on_surface_variant.default.hex}}
 inactive_tab_background {{colors.surface_container.default.hex}}
 tab_bar_background      {{colors.surface.default.hex}}
@@ -37,32 +37,32 @@ mark3_background {{colors.tertiary.default.hex}}
 
 # The 16 terminal colors
 # black
-color0 {{colors.surface_variant.default.hex}}
-color8 {{colors.outline.default.hex}}
+color0 {{colors.outline.default.hex}}
+color8 {{colors.on_surface_variant.default.hex}}
 
 # red
 color1 {{colors.error.default.hex}}
-color9 {{colors.error_container.default.hex}}
+color9 {{colors.on_error_container.default.hex}}
 
 # green
-color2  {{colors.primary.default.hex}}
-color10 {{colors.primary_fixed.default.hex}}
+color2  {{colors.tertiary.default.hex}}
+color10 {{colors.on_tertiary_container.default.hex}}
 
 # yellow
-color3  {{colors.tertiary.default.hex}}
-color11 {{colors.tertiary_fixed.default.hex}}
+color3  {{colors.secondary.default.hex}}
+color11 {{colors.on_secondary_container.default.hex}}
 
 # blue
-color4  {{colors.secondary.default.hex}}
-color12 {{colors.secondary_fixed.default.hex}}
+color4  {{colors.primary.default.hex}}
+color12 {{colors.on_primary_container.default.hex}}
 
 # magenta
-color5  {{colors.primary_container.default.hex}}
-color13 {{colors.inverse_primary.default.hex}}
+color5  {{colors.primary.default.hex}}
+color13 {{colors.on_primary_container.default.hex}}
 
 # cyan
-color6  {{colors.secondary_container.default.hex}}
-color14 {{colors.tertiary_container.default.hex}}
+color6  {{colors.tertiary.default.hex}}
+color14 {{colors.on_tertiary_container.default.hex}}
 
 # white
 color7  {{colors.on_surface_variant.default.hex}}
