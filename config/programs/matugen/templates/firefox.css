@@ -1,3 +1,9 @@
+/* ==============================================================================
+ * MATUGEN THEME FOR FIREFOX
+ * Dynamic Material You color scheme with real-time light/dark mode support
+ * ============================================================================== */
+
+/* Base / Fallback */
 :root {
   --bg-base: {{ colors.surface.default.hex }};
   --bg-surface: {{ colors.surface_container.default.hex }};
@@ -36,41 +42,210 @@
   --sidebar-border-color: {{ colors.outline_variant.default.hex }} !important;
 }
 
+/* Dynamic Light Mode */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-base: {{ colors.surface.light.hex }};
+    --bg-surface: {{ colors.surface_container.light.hex }};
+    --bg-surface-hover: {{ colors.surface_container_high.light.hex }};
+    --bg-surface-active: {{ colors.surface_container_highest.light.hex }};
+    --accent: {{ colors.primary.light.hex }};
+    --accent-hover: {{ colors.primary_container.light.hex }};
+    --text-main: {{ colors.on_surface.light.hex }};
+    --text-muted: {{ colors.on_surface_variant.light.hex }};
+    --border-color: {{ colors.outline_variant.light.hex }};
+
+    --lwt-accent-color: {{ colors.surface.light.hex }} !important;
+    --lwt-text-color: {{ colors.on_surface.light.hex }} !important;
+    --toolbar-bgcolor: {{ colors.surface.light.hex }} !important;
+    --toolbar-color: {{ colors.on_surface.light.hex }} !important;
+    --toolbarbutton-icon-fill: {{ colors.on_surface.light.hex }} !important;
+    
+    --toolbar-field-background-color: {{ colors.surface_container.light.hex }} !important;
+    --toolbar-field-color: {{ colors.on_surface.light.hex }} !important;
+    --toolbar-field-border-color: {{ colors.outline_variant.light.hex }} !important;
+    --toolbar-field-focus-background-color: {{ colors.surface_container_high.light.hex }} !important;
+    --toolbar-field-focus-color: {{ colors.on_surface.light.hex }} !important;
+    --toolbar-field-focus-border-color: {{ colors.primary.light.hex }} !important;
+
+    --tab-selected-bgcolor: {{ colors.surface_container_high.light.hex }} !important;
+    --tab-selected-textcolor: {{ colors.on_surface.light.hex }} !important;
+    --tab-hover-background-color: {{ colors.surface_container.light.hex }} !important;
+    
+    --arrowpanel-background: {{ colors.surface_container.light.hex }} !important;
+    --arrowpanel-color: {{ colors.on_surface.light.hex }} !important;
+    --arrowpanel-border-color: {{ colors.outline_variant.light.hex }} !important;
+
+    --sidebar-background-color: {{ colors.surface.light.hex }} !important;
+    --sidebar-text-color: {{ colors.on_surface.light.hex }} !important;
+    --sidebar-border-color: {{ colors.outline_variant.light.hex }} !important;
+  }
+}
+
+/* Dynamic Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-base: {{ colors.surface.dark.hex }};
+    --bg-surface: {{ colors.surface_container.dark.hex }};
+    --bg-surface-hover: {{ colors.surface_container_high.dark.hex }};
+    --bg-surface-active: {{ colors.surface_container_highest.dark.hex }};
+    --accent: {{ colors.primary.dark.hex }};
+    --accent-hover: {{ colors.primary_container.dark.hex }};
+    --text-main: {{ colors.on_surface.dark.hex }};
+    --text-muted: {{ colors.on_surface_variant.dark.hex }};
+    --border-color: {{ colors.outline_variant.dark.hex }};
+
+    --lwt-accent-color: {{ colors.surface.dark.hex }} !important;
+    --lwt-text-color: {{ colors.on_surface.dark.hex }} !important;
+    --toolbar-bgcolor: {{ colors.surface.dark.hex }} !important;
+    --toolbar-color: {{ colors.on_surface.dark.hex }} !important;
+    --toolbarbutton-icon-fill: {{ colors.on_surface.dark.hex }} !important;
+    
+    --toolbar-field-background-color: {{ colors.surface_container.dark.hex }} !important;
+    --toolbar-field-color: {{ colors.on_surface.dark.hex }} !important;
+    --toolbar-field-border-color: {{ colors.outline_variant.dark.hex }} !important;
+    --toolbar-field-focus-background-color: {{ colors.surface_container_high.dark.hex }} !important;
+    --toolbar-field-focus-color: {{ colors.on_surface.dark.hex }} !important;
+    --toolbar-field-focus-border-color: {{ colors.primary.dark.hex }} !important;
+
+    --tab-selected-bgcolor: {{ colors.surface_container_high.dark.hex }} !important;
+    --tab-selected-textcolor: {{ colors.on_surface.dark.hex }} !important;
+    --tab-hover-background-color: {{ colors.surface_container.dark.hex }} !important;
+    
+    --arrowpanel-background: {{ colors.surface_container.dark.hex }} !important;
+    --arrowpanel-color: {{ colors.on_surface.dark.hex }} !important;
+    --arrowpanel-border-color: {{ colors.outline_variant.dark.hex }} !important;
+
+    --sidebar-background-color: {{ colors.surface.dark.hex }} !important;
+    --sidebar-text-color: {{ colors.on_surface.dark.hex }} !important;
+    --sidebar-border-color: {{ colors.outline_variant.dark.hex }} !important;
+  }
+}
+
+/* ==============================================================================
+ * UI COMPONENT STYLES
+ * ============================================================================== */
+
+/* Window & Foundation */
+:root,
+#main-window,
+#browser,
+#tabbrowser-tabpanels {
+  background-color: var(--bg-base) !important;
+  color: var(--text-main) !important;
+}
+
+/* Navigator Toolbox & Titlebar */
 #navigator-toolbox {
+  background-color: var(--bg-base) !important;
+  color: var(--text-main) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+#titlebar,
+#toolbar-menubar,
+#TabsToolbar {
   background-color: var(--bg-base) !important;
   color: var(--text-main) !important;
 }
 
 #nav-bar {
   background-color: var(--bg-base) !important;
+  border-top: none !important;
 }
 
+/* Tabs */
+.tabbrowser-tab {
+  color: var(--text-muted) !important;
+}
+
+.tabbrowser-tab[selected="true"] {
+  color: var(--text-main) !important;
+  font-weight: 600 !important;
+}
+
+.tabbrowser-tab .tab-label {
+  color: inherit !important;
+}
+
+.tab-background {
+  border-radius: 8px !important;
+}
+
+.tab-background[selected="true"] {
+  background-color: var(--bg-surface) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.tabbrowser-tab:hover > .tab-stack > .tab-background:not([selected="true"]) {
+  background-color: var(--bg-surface-hover) !important;
+}
+
+.tab-close-button {
+  fill: var(--text-muted) !important;
+  border-radius: 4px !important;
+}
+
+.tab-close-button:hover {
+  background-color: var(--bg-surface-active) !important;
+  fill: var(--text-main) !important;
+}
+
+/* URL bar */
 #urlbar-background {
   background-color: var(--bg-surface) !important;
-  border-color: var(--border-color) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 10px !important;
 }
 
 #urlbar[focused="true"] > #urlbar-background {
   background-color: var(--bg-surface-hover) !important;
   border-color: var(--accent) !important;
+  box-shadow: 0 0 0 1px var(--accent) !important;
 }
 
-.tab-background[selected="true"] {
+#urlbar-input {
+  color: var(--text-main) !important;
+}
+
+.urlbar-icon,
+.toolbarbutton-icon {
+  fill: var(--text-main) !important;
+  color: var(--text-main) !important;
+}
+
+/* Menus, Popups, and Panels */
+menupopup,
+panel {
+  --panel-background: var(--bg-surface) !important;
+  --panel-color: var(--text-main) !important;
+  --panel-border-color: var(--border-color) !important;
+}
+
+.panel-arrowcontent {
   background-color: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 12px !important;
 }
 
+/* Bookmarks Toolbar */
 #PersonalToolbar {
   background-color: var(--bg-base) !important;
   color: var(--text-main) !important;
 }
 
+/* Findbar */
 findbar {
   background-color: var(--bg-surface) !important;
   color: var(--text-main) !important;
   border-top: 1px solid var(--border-color) !important;
 }
 
+/* Sidebar */
 #sidebar-box, #sidebar-header {
   background-color: var(--bg-base) !important;
   color: var(--text-main) !important;
+  border-right: 1px solid var(--border-color) !important;
 }

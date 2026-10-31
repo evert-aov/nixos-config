@@ -1,2 +1,22 @@
+@import "matugen.css";
 @import "matugen-github.css";
 @import "matugen-youtube.css";
+
+/* Harmonize internal Firefox pages (about:preferences, about:addons, about:newtab) */
+@-moz-document url-prefix("about:") {
+  :root {
+    --in-content-page-background: var(--bg-base) !important;
+    --in-content-page-color: var(--text-main) !important;
+    --in-content-box-background: var(--bg-surface) !important;
+    --in-content-box-border-color: var(--border-color) !important;
+    --in-content-text-color: var(--text-main) !important;
+    --in-content-deemphasized-text: var(--text-muted) !important;
+    --in-content-primary-button-background: var(--accent) !important;
+    --in-content-primary-button-text-color: var(--bg-base) !important;
+    --in-content-button-background: var(--bg-surface-hover) !important;
+    --in-content-button-text-color: var(--text-main) !important;
+    --in-content-border-color: var(--border-color) !important;
+    background-color: var(--bg-base) !important;
+    color: var(--text-main) !important;
+  }
+}
