@@ -61,7 +61,7 @@ hl.bind("xf86audioraisevolume", hl.dsp.exec_cmd("swayosd-client --output-volume 
     { repeating = true, locked = true })
 
 -- ───────── Applications & Launchers ─────────
-hl.bind(var.mainMod .. " + B", hl.dsp.exec_cmd("vivaldi"))
+hl.bind(var.mainMod .. " + B", hl.dsp.exec_cmd("firefox"))
 hl.bind(var.mainMod .. " + E", hl.dsp.exec_cmd("kitty yazi"))
 -- hl.bind(var.mainMod .. " + T", hl.dsp.exec_cmd("kitty"))
 hl.bind(var.mainMod .. " + I", hl.dsp.exec_cmd("bash $HOME/.local/share/JetBrains/Toolbox/scripts/idea"))
@@ -75,7 +75,8 @@ hl.bind(var.mainMod .. "+ C", hl.dsp.exec_cmd("zeditor"))
 
 -- ───────── Quickshell Controls ─────────
 hl.bind(var.mainMod .. " + Tab", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh open windows next"))
-hl.bind(var.mainMod .. " + SHIFT + Tab", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh open windows previous"))
+hl.bind(var.mainMod .. " + SHIFT + Tab",
+    hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh open windows previous"))
 hl.bind(var.mainMod .. " + M", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle monitors"))
 hl.bind(var.mainMod .. " + R", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/reload.sh"))
 hl.bind(var.mainMod .. " + SHIFT  + C", hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manager.sh toggle clipboard"))

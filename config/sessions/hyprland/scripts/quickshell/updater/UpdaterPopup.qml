@@ -315,7 +315,7 @@ except Exception as e:
         anchors.centerIn: parent 
         
         radius: window.s(16)
-        color: window.base
+        color: Theme.panelBackground
         border.color: window.surface1
         border.width: 1
         clip: true

@@ -325,7 +325,7 @@ Item {
         Rectangle {
             anchors.fill: parent
             radius: root.s(16)
-            color: root.base
+            color: Theme.panelBackground
             border.color: root.surface0
             border.width: 1
             clip: true

@@ -2,6 +2,7 @@
 --  ◈ AUTOSTART
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 hl.on("hyprland.start", function()
+  hl.exec_cmd("bash ~/.config/hypr/scripts/quickshell/wallpaper/sync_theme_mode.sh")
   -- Matar procesos residuales de Wine de sesiones anteriores (evita que ArcMap reaparezca)
   hl.exec_cmd("wineserver -k")
 

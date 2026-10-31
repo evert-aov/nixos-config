@@ -26,4 +26,14 @@ Scope {
     readonly property color yellow: palette.value.yellow || "#f9e2af"
     readonly property color maroon: palette.value.maroon || "#eba0ac"
     readonly property color teal: palette.value.teal || "#94e2d5"
+
+    // Alpha belongs to surfaces, never to the container or foreground palette.
+    readonly property real panelOpacity: 0.72
+    readonly property real raisedOpacity: 0.82
+    readonly property real barOpacity: 0.62
+    readonly property real toolbarOpacity: 0.76
+    readonly property color panelBackground: Qt.alpha(base, panelOpacity)
+    readonly property color raisedBackground: Qt.alpha(base, raisedOpacity)
+    readonly property color barBackground: Qt.alpha(base, barOpacity)
+    readonly property color toolbarBackground: Qt.alpha(mantle, toolbarOpacity)
 }

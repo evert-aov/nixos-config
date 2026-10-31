@@ -450,7 +450,7 @@ Item {
             id: innerBg
             anchors.fill: parent
             anchors.margins: root.s(3)
-            color: root.base
+            color: Theme.panelBackground
             radius: root.s(10)
 
             // FIX: This forces the entire background to render as a single hardware texture,

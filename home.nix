@@ -112,14 +112,6 @@ in
     '';
   };
 
-  # Force the dark color scheme and explicitly set GTK3 theme in dconf
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-      gtk-theme = "adw-gtk3-dark";
-    };
-  };
-
   home.sessionPath = [
     "$HOME/.local/bin"
     "$HOME/.opencode/bin"
@@ -144,16 +136,8 @@ in
     gtk3.extraCss = ''@import url("file:///home/evert/.cache/matugen/colors-gtk.css");'';
     gtk4.extraCss = ''@import url("file:///home/evert/.cache/matugen/colors-gtk.css");'';
 
-    # Target GTK3 specifically
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-      gtk-theme-name = "adw-gtk3-dark";
-    };
+    # Matugen selects the GTK preference dynamically through GSettings.
 
-    # Keep GTK4 native but ensure it requests the dark preference
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
   };
 
   qt = {

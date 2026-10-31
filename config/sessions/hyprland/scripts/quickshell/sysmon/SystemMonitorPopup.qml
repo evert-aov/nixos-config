@@ -83,7 +83,7 @@ Item {
         Rectangle {
             anchors.fill: parent
             radius: s(20)
-            color: base
+            color: Theme.panelBackground
             border.color: surface0
             border.width: 1
             clip: true

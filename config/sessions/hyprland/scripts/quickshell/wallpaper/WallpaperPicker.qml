@@ -185,7 +185,7 @@ Item {
                         awww img -o "$TARGET_MONITORS" "$DEST_FILE" --transition-type ${randomTransition} --transition-pos 0.5,0.5 --transition-fps 144 --transition-duration 1 >> ${logFile} 2>&1 &
                     fi
                     
-                    ( matugen image --source-color-index 0 "$FINAL_THUMB" || true; bash "$RELOAD_SCRIPT" || true ) &
+                    ( bash "$(dirname "$RELOAD_SCRIPT")/apply_palette.sh" "$DEST_FILE" && bash "$RELOAD_SCRIPT" || true ) &
                 `;
                 Quickshell.execDetached(["bash", "-c", applyScript]);
             } else {
@@ -227,7 +227,7 @@ Item {
                             awww img -o "$TARGET_MONITORS" "$DEST_FILE" --transition-type ${randomTransition} --transition-pos 0.5,0.5 --transition-fps 144 --transition-duration 1 >> ${logFile} 2>&1 &
                         fi
                         
-                        ( matugen image --source-color-index 0 "$FINAL_THUMB" || true; bash "$RELOAD_SCRIPT" || true ) &
+                        ( bash "$(dirname "$RELOAD_SCRIPT")/apply_palette.sh" "$DEST_FILE" && bash "$RELOAD_SCRIPT" || true ) &
                     fi
                 `;
                 Quickshell.execDetached(["bash", "-c", downloadScript]);
@@ -276,7 +276,7 @@ Item {
             pkill mpvpaper || true
             
             ${wallpaperCmd}
-            ( matugen image --source-color-index 0 "${escThumb}" || true; bash "${escReload}" || true ) &
+            ( bash "${escapeBash(decodeURIComponent(Qt.resolvedUrl("apply_palette.sh").toString().replace("file://", "")))}" "${isVideo ? escThumb : escOriginal}" && bash "${escReload}" || true ) &
         `;
         Quickshell.execDetached(["bash", "-c", fullScript]);
     }
@@ -1282,7 +1282,7 @@ Item {
         width: filterRow.width + window.s(24)
         radius: window.s(14)
         
-        color: Qt.rgba(_theme.mantle.r, _theme.mantle.g, _theme.mantle.b, 0.90)
+        color: Theme.toolbarBackground
         border.color: _theme.surface2
         border.width: 1
 

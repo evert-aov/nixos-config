@@ -2829,7 +2829,7 @@ Item {
     Rectangle {
         id: sidebarPanel
         anchors.fill: parent
-        color: Qt.rgba(root.base.r, root.base.g, root.base.b, 0.97)
+        color: Theme.panelBackground
         radius: root.s(16)
         border.width: 1
         border.color: Qt.rgba(root.surface1.r, root.surface1.g, root.surface1.b, 0.9)
@@ -2837,7 +2837,7 @@ Item {
 
         Rectangle {
             anchors.left: parent.left; anchors.top: parent.top; anchors.bottom: parent.bottom; width: root.s(16)
-            color: sidebarPanel.color
+            color: "transparent"
             Rectangle { anchors.top: parent.top; width: parent.width; height: 1; color: sidebarPanel.border.color }
             Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 1; color: sidebarPanel.border.color }
             Rectangle { anchors.left: parent.left; width: 1; height: parent.height; color: sidebarPanel.border.color }

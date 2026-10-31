@@ -1102,7 +1102,7 @@ Item {
         width: parent.width; height: parent.height
         anchors.bottom: parent.bottom; anchors.horizontalCenter: parent.horizontalCenter
         radius: window.s(14)
-        color: Qt.rgba(window.base.r, window.base.g, window.base.b, 0.95)
+        color: Theme.panelBackground
         border.color: Qt.rgba(window.text.r, window.text.g, window.text.b, 0.08)
         border.width: 1
         clip: true
@@ -1225,7 +1225,7 @@ Item {
                 Layout.fillWidth: true; Layout.fillHeight: true
                 Rectangle {
                     anchors.fill: parent
-                    color: Qt.rgba(window.base.r, window.base.g, window.base.b, 0.8)
+                    color: Theme.toolbarBackground
                     visible: window.isSearchingNetwork || (!window.isSearchMode && window.isLoadingPopular)
                     z: 10
                     ColumnLayout {

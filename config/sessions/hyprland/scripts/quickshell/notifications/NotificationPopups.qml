@@ -185,7 +185,7 @@ PanelWindow {
                     id: popupCard
                     anchors.fill: parent
                     radius: popupWindow.layoutConfig.radius
-                    color: _theme.base
+                    color: Theme.raisedBackground
                     border.color: _theme.surface1
                     border.width: 1
                     clip: true

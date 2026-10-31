@@ -256,12 +256,12 @@ Item {
             width: emptyLabel.implicitWidth + root.s(48)
             height: root.s(72)
             radius: root.s(14)
-            color: Qt.alpha(theme.mantle, 0.9)
+            color: Theme.toolbarBackground
             visible: root.windows.length === 0
             Text {
                 id: emptyLabel
                 anchors.centerIn: parent
-                text: "No hay ventanas abiertas"
+                text: "There are no open windows"
                 color: theme.text
                 font.pixelSize: root.s(18)
             }
@@ -275,7 +275,7 @@ Item {
         width: Math.min(parent.width - root.s(24), toolbarRow.implicitWidth + root.s(24))
         height: root.s(56)
         radius: root.s(14)
-        color: Qt.alpha(theme.mantle, 0.9)
+        color: Theme.toolbarBackground
         border.color: Qt.alpha(theme.surface2, 0.6)
         z: 20
 
@@ -289,7 +289,7 @@ Item {
                 font.pixelSize: root.s(28)
             }
             Text {
-                text: "Ventanas"
+                text: "Windows"
                 color: theme.text
                 font.pixelSize: root.s(16)
                 font.bold: true
@@ -340,7 +340,7 @@ Item {
         width: Math.min(root.width - root.s(32), root.s(740))
         height: root.s(66)
         radius: root.s(14)
-        color: Qt.alpha(theme.mantle, 0.9)
+        color: Theme.toolbarBackground
         visible: root.windows.length > 0
         RowLayout {
             anchors.fill: parent

@@ -511,7 +511,7 @@ Item {
         Rectangle {
             anchors.fill: parent
             radius: Math.round(20 * window.sf)
-            color: window.base
+            color: Theme.panelBackground
             border.color: window.surface0
             border.width: 1
             clip: true

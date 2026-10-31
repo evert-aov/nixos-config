@@ -88,7 +88,7 @@ Item {
     property color themeBaseColor: (typeof mochaColors !== "undefined" && mochaColors && mochaColors.base) ? mochaColors.base : "#1e1e2e"
     
     // Universal Panel Styling
-    property color panelBgColor: Qt.rgba(themeBaseColor.r, themeBaseColor.g, themeBaseColor.b, 0.85)
+    property color panelBgColor: Qt.alpha(themeBaseColor, Theme.toolbarOpacity)
     property color panelBorderColor: Qt.rgba(baseTextColor.r, baseTextColor.g, baseTextColor.b, 0.15)
 
 
@@ -577,7 +577,7 @@ Item {
             width: s(260)
             height: s(64)
             radius: s(14)
-            color: (typeof mochaColors !== "undefined" && mochaColors && mochaColors.base) ? Qt.rgba(mochaColors.base.r, mochaColors.base.g, mochaColors.base.b, 0.98) : root.solidBgColor
+            color: (typeof mochaColors !== "undefined" && mochaColors && mochaColors.base) ? Qt.alpha(mochaColors.base, Theme.raisedOpacity) : root.solidBgColor
             border.width: 1
             border.color: root.panelBorderColor
             
@@ -685,7 +685,7 @@ Item {
             width: s(320)
             height: s(340)
             radius: s(14)
-            color: (typeof mochaColors !== "undefined" && mochaColors && mochaColors.base) ? Qt.rgba(mochaColors.base.r, mochaColors.base.g, mochaColors.base.b, 0.98) : root.solidBgColor
+            color: (typeof mochaColors !== "undefined" && mochaColors && mochaColors.base) ? Qt.alpha(mochaColors.base, Theme.raisedOpacity) : root.solidBgColor
             border.width: 1
             border.color: root.panelBorderColor
             

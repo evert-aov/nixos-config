@@ -24,21 +24,7 @@ if systemctl --user is-active --quiet swayosd.service; then
     systemctl --user restart swayosd.service &
 fi
 
-# ==============================================================================
-# GTK Live-Reload Hack
-# Rapidly toggles the global theme to force GTK3 and GTK4 apps to flush 
-# their caches and read the newly generated Matugen CSS.
-# ==============================================================================
-if command -v gsettings &> /dev/null; then
-    # GTK3 apps
-    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
-    sleep 0.05
-    gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
-    
-    # GTK4 / Libadwaita apps
-    gsettings set org.gnome.desktop.interface color-scheme 'default'
-    sleep 0.05
-    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-fi
+# Restore the mode selected for this wallpaper after refreshing GTK CSS.
+bash "$(dirname "${BASH_SOURCE[0]}")/sync_theme_mode.sh"
 
 wait

@@ -512,7 +512,7 @@ Item {
         Rectangle {
             anchors.fill: parent
             radius: window.s(20)
-            color: window.crust
+            color: Qt.alpha(window.crust, Theme.panelOpacity)
             border.color: Qt.alpha(window.surface1, 0.2)
             border.width: 1
             clip: true
