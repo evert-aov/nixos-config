@@ -52,7 +52,7 @@ Item {
     property real globalOrbitAngle: 0
 
     NumberAnimation on globalOrbitAngle {
-        from: 0; to: Math.PI * 2; duration: 90000; loops: Animation.Infinite; running: true
+        from: 0; to: Math.PI * 2; duration: 90000; loops: Animation.Infinite; running: window.visible
     }
 
     ParallelAnimation {
@@ -60,8 +60,16 @@ Item {
         NumberAnimation { target: window; property: "introMain"; from: 0; to: 1.0; duration: 800; easing.type: Easing.OutExpo }
     }
 
-    Component.onCompleted: SysData.subscribe()
-    Component.onDestruction: SysData.unsubscribe()
+    property bool metricsSubscribed: false
+    function updateMetricsSubscription() {
+        if (visible === metricsSubscribed) return;
+        metricsSubscribed = visible;
+        if (metricsSubscribed) SysData.subscribe();
+        else SysData.unsubscribe();
+    }
+    onVisibleChanged: updateMetricsSubscription()
+    Component.onCompleted: updateMetricsSubscription()
+    Component.onDestruction: { if (metricsSubscribed) SysData.unsubscribe(); }
 
     readonly property real cpuAngle: SysData.cpu / 100.0 * 2 * Math.PI
     readonly property real ramAngle: SysData.ramPercent / 100.0 * 2 * Math.PI

@@ -12,27 +12,10 @@ Variants {
     delegate: Component {
         PanelWindow {
             id: barWindow
-            property bool pendingReload: false
+            readonly property bool pendingReload: BarData.pendingReload
             
 	    Caching { id: paths }
         
-            IpcHandler {
-                target: "topbar"
-                function forceReload() {
-                    Quickshell.reload(true) 
-                }
-                function queueReload() {
-                    if (!barWindow.isSettingsOpen) {
-                        Quickshell.reload(true)
-                    } else {
-                        barWindow.pendingReload = true
-                    }
-                }
-                function toggleUpdate() {
-                    barWindow.forceUpdateShow = !barWindow.forceUpdateShow
-                }
-            }
-
             required property var modelData
             screen: modelData
 
@@ -64,16 +47,16 @@ Variants {
                 id: mocha
             }
 
-            property bool showHelpIcon: true
-            property bool isRecording: false
+            readonly property bool showHelpIcon: BarData.showHelpIcon
+            readonly property bool isRecording: BarData.isRecording
             
-            property bool updateAvailable: false
-            property bool forceUpdateShow: false
+            readonly property bool updateAvailable: BarData.updateAvailable
+            readonly property bool forceUpdateShow: BarData.forceUpdateShow
             property bool isUpdateVisible: updateAvailable || forceUpdateShow
             
-            property int workspaceCount: 8
+            readonly property int workspaceCount: BarData.workspaceCount
             
-            property string activeWidget: "" 
+            readonly property string activeWidget: BarData.activeWidget
             property bool isSettingsOpen: activeWidget === "settings"
 
             property real settingsSlideProgress: isSettingsOpen ? 1.0 : 0.0
@@ -82,157 +65,8 @@ Variants {
                 NumberAnimation { duration: 600; easing.type: Easing.OutExpo } 
             }
 
-            onIsSettingsOpenChanged: {
-                if (!barWindow.isSettingsOpen && barWindow.pendingReload) {
-                    barWindow.pendingReload = false;
-                    Quickshell.reload(true);
-                }
-            }
-
-            Process {
-                id: widgetPoller
-                command: ["bash", "-c", "cat " + paths.runDir + "/current_widget 2>/dev/null || echo ''"]
-                running: true
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        let txt = this.text.trim();
-                        if (barWindow.activeWidget !== txt) barWindow.activeWidget = txt;
-                    }
-                }
-            }
-
-            Process {
-                id: widgetWatcher
-                command: ["bash", "-c", "while [ ! -f " + paths.runDir + "/current_widget ]; do sleep 1; done; inotifywait -qq -e modify,close_write " + paths.runDir + "/current_widget"]
-                running: true
-                onExited: {
-                    widgetPoller.running = false;
-                    widgetPoller.running = true;
-                    running = false;
-                    running = true;
-                }
-            }
-            
-            Process {
-                id: recPoller
-                command: ["bash", "-c", "if [ -s " + paths.getCacheDir("recording") + "/rec_pid ] && kill -0 $(cat " + paths.getCacheDir("recording") + "/rec_pid) 2>/dev/null; then echo '1'; else echo '0'; fi"]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        barWindow.isRecording = (this.text.trim() === "1");
-                    }
-                }
-            }
-
-            Process {
- 	    	id: recWatcher
- 		running: true
- 		command: ["bash", "-c", "inotifywait -qq -e create,delete,modify,close_write " + paths.getCacheDir("recording") + "/ 2>/dev/null || sleep 2"]
- 	        onExited: {
- 	        	recPoller.running = false;
- 	         	recPoller.running = true;
- 	         	running = false;
- 	         	running = true;
- 	        }
-	    }	  
-            Process {
-	        id: updatePoller
-	        command: ["bash", "-c", "if [ -f " + paths.getCacheDir("updater") + "/update_pending ]; then echo '1'; else echo '0'; fi"]
-	        running: true
-	        stdout: StdioCollector {
-	            onStreamFinished: {
-	                barWindow.updateAvailable = (this.text.trim() === "1");
-	            }
-	        }
-	    }
-	    
-	    Process {
-	        id: updateWatcher
-	        running: true
-	        command: ["bash", "-c", "inotifywait -qq -e create,delete,close_write " + paths.getCacheDir("updater") + "/ 2>/dev/null || sleep 5"]
-	        onExited: {
-	            updatePoller.running = false;
-	            updatePoller.running = true;
-	            running = false;
-	            running = true;
-	        }
-	    }
-
-            Process {
-                id: coffeePoller
-                running: true
-                command: ["bash", "-c", "if [ -f " + paths.getRunDir("coffee") + "/active ]; then echo '1'; else echo '0'; fi"]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        barWindow.isCoffeeActive = (this.text.trim() === "1");
-                    }
-                }
-            }
-
-            Process {
-                id: coffeeWatcher
-                running: true
-                command: ["bash", "-c", "mkdir -p " + paths.getRunDir("coffee") + " && inotifywait -qq -e create,delete,modify,close_write " + paths.getRunDir("coffee") + "/ 2>/dev/null || sleep 2"]
-                onExited: {
-                    coffeePoller.running = false;
-                    coffeePoller.running = true;
-                    running = false;
-                    running = true;
-                }
-            }
-	                
-            Process {
-                id: settingsReader
-                command: ["bash", "-c", "cat ~/.config/hypr/settings.json 2>/dev/null || echo '{}'"]
-                running: true
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        try {
-                            if (this.text && this.text.trim().length > 0 && this.text.trim() !== "{}") {
-                                let parsed = JSON.parse(this.text);
-                                
-                                if (parsed.topbarHelpIcon !== undefined && barWindow.showHelpIcon !== parsed.topbarHelpIcon) {
-                                    barWindow.showHelpIcon = parsed.topbarHelpIcon;
-                                }
-                                
-                                if (parsed.workspaceCount !== undefined && barWindow.workspaceCount !== parsed.workspaceCount) {
-                                    barWindow.workspaceCount = parsed.workspaceCount;
-                                    wsDaemon.running = false;
-                                    wsDaemon.running = true;
-                                }
-                            }
-                        } catch (e) {}
-                    }
-                }
-            }
-
-            Process {
-                id: settingsWatcher
-                command: ["bash", "-c", "while [ ! -f ~/.config/hypr/settings.json ]; do sleep 1; done; inotifywait -qq -e modify,close_write ~/.config/hypr/settings.json"]
-                running: true
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        settingsReader.running = false;
-                        settingsReader.running = true;
-                        
-                        settingsWatcher.running = false;
-                        settingsWatcher.running = true;
-                    }
-                }
-            }
-            
-            property bool isDesktop: false
-            property string ethStatus: "Ethernet"
-
-            Process {
-                id: chassisDetector
-                running: true
-                command: ["bash", "-c", "if ls /sys/class/power_supply/BAT* 1> /dev/null 2>&1; then echo 'laptop'; else echo 'desktop'; fi"]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        barWindow.isDesktop = (this.text.trim() === "desktop");
-                    }
-                }
-            }
+            readonly property bool isDesktop: BarData.isDesktop
+            readonly property string ethStatus: BarData.ethStatus
 
             property bool isStartupReady: false
             Timer { interval: 10; running: true; onTriggered: barWindow.isStartupReady = true }
@@ -240,48 +74,45 @@ Variants {
             property bool startupCascadeFinished: false
             Timer { interval: 1000; running: true; onTriggered: barWindow.startupCascadeFinished = true }
             
-            property bool fastPollerLoaded: false
+            readonly property bool fastPollerLoaded: BarData.fastPollerLoaded
             property bool isDataReady: fastPollerLoaded
             Timer { interval: 600; running: true; onTriggered: barWindow.isDataReady = true }
             
-            property string timeStr: ""
-            property string fullDateStr: ""
+            readonly property string timeStr: BarData.timeStr
+            readonly property string fullDateStr: BarData.fullDateStr
             property int typeInIndex: 0
             property string dateStr: fullDateStr.substring(0, typeInIndex)
 
-            property string weatherIcon: ""
-            property string weatherTemp: "--°"
-            property string weatherHex: mocha.yellow
+            readonly property string weatherIcon: BarData.weatherIcon
+            readonly property string weatherTemp: BarData.weatherTemp
+            readonly property string weatherHex: BarData.weatherHex
             
-            property string wifiStatus: "Off"
-            property string wifiIcon: "󰤮"
-            property string wifiSsid: ""
+            readonly property string wifiStatus: BarData.wifiStatus
+            readonly property string wifiIcon: BarData.wifiIcon
+            readonly property string wifiSsid: BarData.wifiSsid
             
-            property string btStatus: "Off"
-            property string btIcon: "󰂲"
-            property string btDevice: ""
+            readonly property string btStatus: BarData.btStatus
+            readonly property string btIcon: BarData.btIcon
+            readonly property string btDevice: BarData.btDevice
             
-            property string volPercent: "0%"
-            property string volIcon: "󰕾"
-            property bool isMuted: false
+            readonly property string volPercent: BarData.volPercent
+            readonly property string volIcon: BarData.volIcon
+            readonly property bool isMuted: BarData.isMuted
             
-            property string batPercent: "100%"
-            property string batIcon: "󰁹"
-            property string batStatus: "Unknown"
+            readonly property string batPercent: BarData.batPercent
+            readonly property string batIcon: BarData.batIcon
+            readonly property string batStatus: BarData.batStatus
             
-            property bool isCoffeeActive: false
+            readonly property bool isCoffeeActive: BarData.isCoffeeActive
             
-            property string kbLayout: "us"
+            readonly property string kbLayout: BarData.kbLayout
 
-            property string cpuPercent: "0%"
-            property string ramPercent: "0%"
+            readonly property string cpuPercent: BarData.cpuPercent
+            readonly property string ramPercent: BarData.ramPercent
 
-            ListModel {
-                id: workspacesModel 
-                property int activeIndex: 0
-            }
-            
-            property var musicData: { "status": "Stopped", "title": "", "artUrl": "", "timeStr": "" }
+            readonly property var workspacesModel: BarData.workspaces
+
+            readonly property var musicData: BarData.musicData
 
             property string displayTitle: ""
             property string displayTime: ""
@@ -308,307 +139,6 @@ Variants {
                 if (isCharging) return mocha.green;
                 if (batCap <= 20) return mocha.red;
                 return mocha.text; 
-            }
-
-            Process {
-                id: wsDaemon
-                command: ["bash", "-c", "~/.config/hypr/scripts/workspaces.sh"]
-                running: true
-            }
-
-            Process {
-		id: wsReader
-		running: true
-                command: ["cat", paths.getRunDir("workspaces") + "/workspaces.json"]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        let txt = this.text.trim();
-                        if (txt !== "") {
-                            try { 
-                                let newData = JSON.parse(txt);
-                                
-                                while (workspacesModel.count < newData.length) {
-                                    workspacesModel.append({ "wsId": "", "wsState": "" });
-                                }
-                                
-                                while (workspacesModel.count > newData.length) {
-                                    workspacesModel.remove(workspacesModel.count - 1);
-                                }
-                                
-                                let newActive = -1;
-
-                                for (let i = 0; i < newData.length; i++) {
-                                    if (newData[i].state === "active") newActive = i;
-
-                                    if (workspacesModel.get(i).wsState !== newData[i].state) {
-                                        workspacesModel.setProperty(i, "wsState", newData[i].state);
-                                    }
-                                    if (workspacesModel.get(i).wsId !== newData[i].id.toString()) {
-                                        workspacesModel.setProperty(i, "wsId", newData[i].id.toString());
-                                    }
-                                }
-
-                                if (newActive !== -1 && workspacesModel.activeIndex !== newActive) {
-                                    workspacesModel.activeIndex = newActive;
-                                }
-
-                            } catch(e) {}
-                        }
-                    }
-                }
-            }
-
-            Process {
-                id: wsWatcher
-                running: true
-                command: ["bash", "-c", "inotifywait -qq -e close_write,modify " + paths.getRunDir("workspaces") + "/workspaces.json"]
-                onExited: {
-                    wsReader.running = false;
-                    wsReader.running = true;
-                    running = false;
-                    running = true;
-                }
-            }
-
-            Process {
-                id: musicForceRefresh
-                running: true
-                command: ["bash", "-c", "bash ~/.config/hypr/scripts/quickshell/music/music_info.sh | tee " + paths.getRunDir("music") + "/music_info.json"]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        let txt = this.text.trim();
-                        if (txt !== "") {
-                            try { barWindow.musicData = JSON.parse(txt); } catch(e) {}
-                        }
-                    }
-                }
-            }
-
-            Timer {
-                interval: 1000
-                running: barWindow.musicData !== null && barWindow.musicData.status === "Playing"
-                repeat: true
-                onTriggered: {
-                    if (!barWindow.musicData || barWindow.musicData.status !== "Playing") return;
-                    if (!barWindow.musicData.timeStr || barWindow.musicData.timeStr === "") return;
-
-                    let parts = barWindow.musicData.timeStr.split(" / ");
-                    if (parts.length !== 2) return;
-
-                    let posParts = parts[0].split(":").map(Number);
-                    let lenParts = parts[1].split(":").map(Number);
-
-                    let posSecs = (posParts.length === 3) 
-                        ? (posParts[0] * 3600 + posParts[1] * 60 + posParts[2]) 
-                        : (posParts[0] * 60 + posParts[1]);
-
-                    let lenSecs = (lenParts.length === 3) 
-                        ? (lenParts[0] * 3600 + lenParts[1] * 60 + lenParts[2]) 
-                        : (lenParts[0] * 60 + lenParts[1]);
-
-                    if (isNaN(posSecs) || isNaN(lenSecs)) return;
-
-                    posSecs++;
-                    if (posSecs > lenSecs) posSecs = lenSecs;
-
-                    let newPosStr = "";
-                    if (posParts.length === 3) {
-                        let h = Math.floor(posSecs / 3600);
-                        let m = Math.floor((posSecs % 3600) / 60);
-                        let s = posSecs % 60;
-                        newPosStr = h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
-                    } else {
-                        let m = Math.floor(posSecs / 60);
-                        let s = posSecs % 60;
-                        newPosStr = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
-                    }
-
-                    let newData = Object.assign({}, barWindow.musicData);
-                    newData.timeStr = newPosStr + " / " + parts[1];
-                    newData.positionStr = newPosStr;
-                    if (lenSecs > 0) newData.percent = (posSecs / lenSecs) * 100;
-                    
-                    barWindow.musicData = newData;
-                }
-            }
-
-            Process {
-                id: mprisWatcher
-                running: true
-                command: ["bash", "-c", "dbus-monitor --session \"type='signal',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged',arg0='org.mpris.MediaPlayer2.Player'\" \"type='signal',interface='org.mpris.MediaPlayer2.Player',member='Seeked'\" 2>/dev/null | grep -m 1 'member=' > /dev/null || sleep 2"]
-                onExited: {
-                    musicForceRefresh.running = false;
-                    musicForceRefresh.running = true;
-                    running = false;
-                    running = true;
-                }
-            }
-
-            Timer {
-                id: artRetryTimer
-                interval: 500
-                repeat: true
-                running: barWindow.displayArtUrl && barWindow.displayArtUrl.indexOf("placeholder_blank.png") !== -1
-                onTriggered: {
-                    musicForceRefresh.running = false;
-                    musicForceRefresh.running = true;
-                }
-            }
-
-            Process {
-                id: kbPoller; running: true
-                command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/kb_fetch.sh"]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        let txt = this.text.trim();
-                        if (txt !== "" && barWindow.kbLayout !== txt) barWindow.kbLayout = txt;
-                        kbWaiter.running = false;
-                        kbWaiter.running = true;
-                        barWindow.fastPollerLoaded = true; 
-                    }
-                }
-            }
-            Process { id: kbWaiter; command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/kb_wait.sh"]; onExited: { kbPoller.running = false; kbPoller.running = true; } }
-
-            Process {
-                id: audioPoller; running: true
-                command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/audio_fetch.sh"]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        let txt = this.text.trim();
-                        if (txt !== "") {
-                            try {
-                                let data = JSON.parse(txt);
-                                let newVol = data.volume.toString() + "%";
-                                if (barWindow.volPercent !== newVol) barWindow.volPercent = newVol;
-                                if (barWindow.volIcon !== data.icon) barWindow.volIcon = data.icon;
-                                let newMuted = (data.is_muted === "true");
-                                if (barWindow.isMuted !== newMuted) barWindow.isMuted = newMuted;
-                            } catch(e) {}
-                        }
-                        audioWaiter.running = false;
-                        audioWaiter.running = true;
-                    }
-                }
-            }
-            Process { id: audioWaiter; command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/audio_wait.sh"]; onExited: { audioPoller.running = false; audioPoller.running = true; } }
-
-            Process {
-                id: networkPoller; running: true
-                command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/network_fetch.sh"]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        let txt = this.text.trim();
-                        if (txt !== "") {
-                            try {
-                                let data = JSON.parse(txt);
-                                if (barWindow.wifiStatus !== data.status) barWindow.wifiStatus = data.status;
-                                if (barWindow.wifiIcon !== data.icon) barWindow.wifiIcon = data.icon;
-                                if (barWindow.wifiSsid !== data.ssid) barWindow.wifiSsid = data.ssid;
-                                if (barWindow.ethStatus !== data.eth_status) barWindow.ethStatus = data.eth_status;
-                            } catch(e) {}
-                        }
-                        networkWaiter.running = false;
-                        networkWaiter.running = true;
-                    }
-                }
-            }
-            Process { id: networkWaiter; command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/network_wait.sh"]; onExited: { networkPoller.running = false; networkPoller.running = true; } }
-
-            Process {
-                id: btPoller; running: true
-                command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/bt_fetch.sh"]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        let txt = this.text.trim();
-                        if (txt !== "") {
-                            try {
-                                let data = JSON.parse(txt);
-                                if (barWindow.btStatus !== data.status) barWindow.btStatus = data.status;
-                                if (barWindow.btIcon !== data.icon) barWindow.btIcon = data.icon;
-                                if (barWindow.btDevice !== data.connected) barWindow.btDevice = data.connected;
-                            } catch(e) {}
-                        }
-                        btWaiter.running = false;
-                        btWaiter.running = true;
-                    }
-                }
-            }
-            Process { id: btWaiter; command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/bt_wait.sh"]; onExited: { btPoller.running = false; btPoller.running = true; } }
-
-            Process {
-                id: batteryPoller; running: true
-                command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/battery_fetch.sh"]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        let txt = this.text.trim();
-                        if (txt !== "") {
-                            try {
-                                let data = JSON.parse(txt);
-                                let newBat = data.percent.toString() + "%";
-                                if (barWindow.batPercent !== newBat) barWindow.batPercent = newBat;
-                                if (barWindow.batIcon !== data.icon) barWindow.batIcon = data.icon;
-                                if (barWindow.batStatus !== data.status) barWindow.batStatus = data.status;
-                            } catch(e) {}
-                        }
-                        batteryWaiter.running = false;
-                        batteryWaiter.running = true;
-                    }
-                }
-            }
-            Process { id: batteryWaiter; command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/battery_wait.sh"]; onExited: { batteryPoller.running = false; batteryPoller.running = true; } }
-
-            Process {
-                id: sysPoller; running: true
-                command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/sys_fetcher.sh"]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        let txt = this.text.trim();
-                        if (txt !== "") {
-                            let parts = txt.split("|");
-                            if (parts.length >= 3) {
-                                barWindow.cpuPercent = parts[0] + "%";
-                                barWindow.ramPercent = parts[1] + "%";
-                            }
-                        }
-                        sysWaiter.running = false;
-                        sysWaiter.running = true;
-                    }
-                }
-            }
-            Process { id: sysWaiter; command: ["bash", "-c", "~/.config/hypr/scripts/quickshell/watchers/sys_wait.sh"]; onExited: { sysPoller.running = false; sysPoller.running = true; } }
-
-            Process {
-                id: weatherPoller
-                command: ["bash", "-c", `
-                    echo "$(~/.config/hypr/scripts/quickshell/calendar/weather.sh --current-icon)"
-                    echo "$(~/.config/hypr/scripts/quickshell/calendar/weather.sh --current-temp)"
-                    echo "$(~/.config/hypr/scripts/quickshell/calendar/weather.sh --current-hex)"
-                `]
-                stdout: StdioCollector {
-                    onStreamFinished: {
-                        let lines = this.text.trim().split("\n");
-                        if (lines.length >= 3) {
-                            barWindow.weatherIcon = lines[0];
-                            barWindow.weatherTemp = lines[1];
-                            barWindow.weatherHex = lines[2] || mocha.yellow;
-                        }
-                    }
-                }
-            }
-            Timer { interval: 150000; running: true; repeat: true; triggeredOnStart: true; onTriggered: { weatherPoller.running = false; weatherPoller.running = true; } }
-
-
-            Timer {
-                interval: 1000; running: true; repeat: true; triggeredOnStart: true
-                onTriggered: {
-                    let d = new Date();
-                    barWindow.timeStr = Qt.formatDateTime(d, "HH:mm:ss");
-                    barWindow.fullDateStr = Qt.formatDateTime(d, "dddd, MMMM dd");
-                    if (barWindow.typeInIndex >= barWindow.fullDateStr.length) {
-                        barWindow.typeInIndex = barWindow.fullDateStr.length;
-                    }
-                }
             }
 
             Timer {
@@ -804,8 +334,8 @@ Variants {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-                                    barWindow.updateAvailable = false;
-                                    barWindow.forceUpdateShow = false;
+                                    BarData.updateAvailable = false;
+                                    BarData.forceUpdateShow = false;
                                     Quickshell.execDetached(["bash", "-c", "~/.config/hypr/scripts/qs_manager.sh toggle updater"]);
                                 }
                             }
@@ -1059,7 +589,7 @@ Variants {
                                         scale: prevMouse.containsMouse ? 1.1 : 1.0
                                         Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
                                     }
-                                    MouseArea { id: prevMouse; hoverEnabled: true; anchors.fill: parent; onClicked: { Quickshell.execDetached(["playerctl", "previous"]); musicForceRefresh.running = true; } } 
+                                    MouseArea { id: prevMouse; hoverEnabled: true; anchors.fill: parent; onClicked: { Quickshell.execDetached(["playerctl", "previous"]); BarData.refreshMusic(); } }
                                 }
                                 Item { 
                                     width: barWindow.s(28); height: barWindow.s(28); 
@@ -1071,7 +601,7 @@ Variants {
                                         scale: playMouse.containsMouse ? 1.15 : 1.0
                                         Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
                                     }
-                                    MouseArea { id: playMouse; hoverEnabled: true; anchors.fill: parent; onClicked: { Quickshell.execDetached(["playerctl", "play-pause"]); musicForceRefresh.running = true; } } 
+                                    MouseArea { id: playMouse; hoverEnabled: true; anchors.fill: parent; onClicked: { Quickshell.execDetached(["playerctl", "play-pause"]); BarData.refreshMusic(); } }
                                 }
                                 Item { 
                                     width: barWindow.s(24); height: barWindow.s(24); 
@@ -1083,7 +613,7 @@ Variants {
                                         scale: nextMouse.containsMouse ? 1.1 : 1.0
                                         Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
                                     }
-                                    MouseArea { id: nextMouse; hoverEnabled: true; anchors.fill: parent; onClicked: { Quickshell.execDetached(["playerctl", "next"]); musicForceRefresh.running = true; } } 
+                                    MouseArea { id: nextMouse; hoverEnabled: true; anchors.fill: parent; onClicked: { Quickshell.execDetached(["playerctl", "next"]); BarData.refreshMusic(); } }
                                 }
                             }
                         }
@@ -1205,7 +735,7 @@ Variants {
                                 hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: {
-                                    barWindow.isCoffeeActive = !barWindow.isCoffeeActive;
+                                    BarData.isCoffeeActive = !barWindow.isCoffeeActive;
                                     Quickshell.execDetached(["bash", "-c", "~/.config/hypr/scripts/coffee.sh --toggle"]);
                                 }
                             }

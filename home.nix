@@ -61,7 +61,16 @@ in
       src = pkgs.stdenvNoCC.mkDerivation {
         pname = "cisco-packet-tracer-appimage";
         version = "9.0.1";
-        src = /home/evert/Downloads/CiscoPacketTracer_901_Ubuntu_64bit.deb;
+        src = pkgs.requireFile {
+          name = "CiscoPacketTracer_901_Ubuntu_64bit.deb";
+          hashMode = "recursive";
+          hash = "sha256-biYiu0gukHHLRvwXiOSK3jblrslvwqwXMCHG7og6JpY=";
+          message = ''
+            Se necesita el instalador original de Cisco Packet Tracer 9.0.1.
+            Ejecuta ./deploy.sh para registrar la copia local o importa el archivo:
+            nix-store --add-fixed --recursive sha256 /ruta/CiscoPacketTracer_901_Ubuntu_64bit.deb
+          '';
+        };
         nativeBuildInputs = [ pkgs.dpkg ];
         installPhase = ''
           runHook preInstall
@@ -89,27 +98,19 @@ in
   ];
 
   # set cursor
-  home.pointerCursor =
-    let
-      getFrom = url: hash: name: {
-        gtk.enable = true;
-        x11.enable = true;
-        name = name;
-        size = 24;
-        package = pkgs.runCommand "moveUp" { } ''
-          mkdir -p $out/share/icons
-          ln -s ${
-            pkgs.fetchzip {
-              url = url;
-              hash = hash;
-            }
-          }/dist $out/share/icons/${name}
-        '';
-      };
-    in
-    getFrom "https://github.com/yeyushengfan258/ArcMidnight-Cursors/archive/refs/heads/main.zip"
-      "sha256-VgOpt0rukW0+rSkLFoF9O0xO/qgwieAchAev1vjaqPE="
-      "ArcMidnight-Cursors";
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    name = "ArcMidnight-Cursors";
+    size = 24;
+    # Copia exacta del tema actual, con fuentes y licencia; no depende de main.zip.
+    package = pkgs.runCommand "arcmidnight-cursors" { } ''
+      mkdir -p $out/share/icons/ArcMidnight-Cursors $out/share/doc/arcmidnight-cursors
+      tar -xzf ${./assets/arcmidnight-cursors.tar.gz}
+      cp -a source/dist/. $out/share/icons/ArcMidnight-Cursors/
+      cp source/LICENSE $out/share/doc/arcmidnight-cursors/
+    '';
+  };
 
   # Force the dark color scheme and explicitly set GTK3 theme in dconf
   dconf.settings = {

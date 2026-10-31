@@ -31,6 +31,7 @@ in
   # ============================================================================
   imports = [
     ./hardware-configuration.nix
+    ./config/services/database-backups.nix
   ];
 
   # ============================================================================
@@ -53,13 +54,13 @@ in
   boot.kernelModules = [ "tcp_bbr" ];
   boot.kernel.sysctl = {
     # --------------------------------------------------------------------------
-    # 1. GESTIÓN DE MEMORIA Y SSD (Evitar que el kernel acapare RAM)
+    # 1. GESTIÓN DE MEMORIA Y SSD
     # --------------------------------------------------------------------------
-    # Recicla agresivamente los inodos y enlaces simbólicos de /nix/store (Slab)
-    "vm.vfs_cache_pressure" = 300;
-
-    # Prioriza mantener todo en RAM; solo usa Swap cuando sea estrictamente necesario
-    "vm.swappiness" = 10;
+    # Mantener los valores predeterminados de swappiness y vfs_cache_pressure:
+    # la caché de /nix/store es útil y el swap combina zram con almacenamiento.
+    # Explícitos para restablecerlos también al hacer switch, sin reiniciar.
+    "vm.vfs_cache_pressure" = 100;
+    "vm.swappiness" = 60;
 
     # Evita tirones (micro-freezes) al escribir archivos grandes en el SSD
     "vm.dirty_background_ratio" = 5;
@@ -200,21 +201,6 @@ in
     options = "grp:alt_shift_toggle";
   };
 
-  #
-  # IA LOCAL (Ollama + Open-WebUI)
-  #
-  services.ollama = {
-    enable = true;
-    # En nixpkgs moderno se define 'package'.
-    # Para Ryzen 7 4700U (iGPU Vega) usamos pkgs.ollama (CPU) o pkgs.ollama-vulkan (aceleración Vulkan)
-    package = pkgs.ollama;
-  };
-
-  services.open-webui = {
-    enable = true;
-    port = 8088; # Cambiado de 8080 a 8088 porque Docker usa el 8080
-  };
-
   # ============================================================================
   # SERVICES
   # ============================================================================
@@ -304,6 +290,15 @@ in
     options = "--delete-older-than 14d";
   };
 
+  nix.optimise = {
+    automatic = true;
+    dates = [ "Sun 05:30" ];
+  };
+  services.fstrim = {
+    enable = true;
+    interval = "weekly";
+  };
+
   # ============================================================================
   # NIX-LD (For running generic Linux binaries)
   # ============================================================================
@@ -369,7 +364,8 @@ in
   # ============================================================================
   # POWER MANAGEMENT
   # ============================================================================
-  powerManagement.cpuFreqGovernor = "performance";
+  # Disponible con acpi-cpufreq en este equipo; adapta frecuencia a la carga.
+  powerManagement.cpuFreqGovernor = "schedutil";
 
   # ============================================================================
   # SYSTEM PACKAGES

@@ -29,6 +29,7 @@ function s(val, scale) {
 
 function getLayout(name, mx, my, mw, mh, userScale) {
     let scale = getScale(mw, mh, userScale);
+    let windowHeight = Math.min(mh - s(100, scale), s(650, scale));
 
     let base = {
         // --- Top Right Popups ---
@@ -40,12 +41,12 @@ function getLayout(name, mx, my, mw, mh, userScale) {
         "applauncher": { w: s(800, scale), h: s(700, scale), rx: Math.floor((mw/2)-(s(800, scale)/2)), ry: Math.floor((mh/2)-(s(700, scale)/2)), comp: "applauncher/appLauncher.qml" },
         "clipboard": { w: s(800, scale), h: s(700, scale), rx: Math.floor((mw/2)-(s(800, scale)/2)), ry: Math.floor((mh/2)-(s(700, scale)/2)), comp: "clipboard/ClipboardManager.qml" },
         "monitors":  { w: s(800, scale), h: s(650, scale), rx: Math.floor((mw/2)-(s(800, scale)/2)), ry: Math.floor((mh/2)-(s(650, scale)/2)), comp: "monitors/MonitorPopup.qml" },
-        "stewart":   { w: s(800, scale), h: s(650, scale), rx: Math.floor((mw/2)-(s(800, scale)/2)), ry: Math.floor((mh/2)-(s(650, scale)/2)), comp: "stewart/stewart.qml" },
 
         // --- Central Large Tools ---
         "focustime": { w: s(900, scale), h: s(700, scale), rx: Math.floor((mw/2)-(s(900, scale)/2)), ry: Math.floor((mh/2)-(s(700, scale)/2)), comp: "focustime/FocusTimePopup.qml" },
 
         // --- Extralarge / Custom Centered ---
+        "windows":   { w: mw, h: windowHeight, rx: 0, ry: Math.floor((mh - windowHeight) / 2), comp: "windows/WindowSwitcher.qml" },
         "guide":     { w: s(1200, scale), h: s(750, scale), rx: Math.floor((mw/2)-(s(1200, scale)/2)), ry: Math.floor((mh/2)-(s(750, scale)/2)), comp: "guide/GuidePopup.qml" },
         "calendar":  { w: s(1450, scale), h: s(750, scale), rx: Math.floor((mw/2)-(s(1450, scale)/2)), ry: s(60, scale), comp: "calendar/CalendarPopup.qml" },
 	"updater": { w: s(950, scale), h: s(850, scale), rx: Math.floor((mw/2)-(s(950, scale)/2)), ry: Math.floor((mh/2)-(s(850, scale)/2)), comp: "updater/UpdaterPopup.qml" },

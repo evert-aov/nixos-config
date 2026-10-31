@@ -38,7 +38,9 @@ PanelWindow {
                 if (targetWidget === effectivelyActive) {
                     let currentItem = widgetStack.currentItem;
 
-                    if (arg !== "" && currentItem && currentItem.activeMode !== undefined && currentItem.activeMode !== arg) {
+                    if (targetWidget === "windows" && currentItem && (arg === "next" || arg === "previous")) {
+                        currentItem.cycle(arg === "previous" ? -1 : 1);
+                    } else if (arg !== "" && currentItem && currentItem.activeMode !== undefined && currentItem.activeMode !== arg) {
                         currentItem.activeMode = arg;
                     } else if (cmd === "toggle") {
                         switchWidget("hidden", "");
@@ -170,7 +172,7 @@ PanelWindow {
     property real targetW: 1
     property real targetH: 1
 
-    property real globalUiScale: 1.0
+    property real globalUiScale: ShellSettings.uiScale
 
     // =========================================================
     // --- DAEMON: NOTIFICATION HANDLING
@@ -254,40 +256,6 @@ PanelWindow {
     }
     onGlobalUiScaleChanged: { handleNativeScreenChange(); }
 
-    Process {
-        id: settingsReader
-        command: ["bash", "-c", "cat ~/.config/hypr/settings.json 2>/dev/null || echo '{}'"]
-        running: true
-        stdout: StdioCollector {
-            onStreamFinished: {
-                try {
-                    if (this.text && this.text.trim().length > 0 && this.text.trim() !== "{}") {
-                        let parsed = JSON.parse(this.text);
-                        if (parsed.uiScale !== undefined && masterWindow.globalUiScale !== parsed.uiScale) {
-                            masterWindow.globalUiScale = parsed.uiScale;
-                        }
-                    }
-                } catch (e) {
-                    console.log("Error parsing settings.json in main.qml:", e);
-                }
-            }
-        }
-    }
-
-    Process {
-        id: settingsWatcher
-        command: ["bash", "-c", "while [ ! -f ~/.config/hypr/settings.json ]; do sleep 1; done; inotifywait -qq -e modify,close_write ~/.config/hypr/settings.json"]
-        running: true
-        stdout: StdioCollector {
-            onStreamFinished: {
-                settingsReader.running = false;
-                settingsReader.running = true;
-                settingsWatcher.running = false;
-                settingsWatcher.running = true;
-            }
-        }
-    }
-
     // =========================================================
     // --- LAYOUT CACHE
     // =========================================================
@@ -334,6 +302,12 @@ PanelWindow {
 
     onIsVisibleChanged: {
         if (isVisible) widgetStack.forceActiveFocus();
+    }
+
+    Connections {
+        target: widgetStack.currentItem
+        ignoreUnknownSignals: true
+        function onCloseRequested() { masterWindow.switchWidget("hidden", ""); }
     }
 
     // =========================================================
@@ -482,7 +456,7 @@ PanelWindow {
         props["liveNotifs"]   = masterWindow.liveNotifs;
         props["layoutWidth"]  = t.w;
         props["layoutHeight"] = t.h;
-        if (newWidget === "wallpaper") props["widgetArg"] = arg;
+        if (newWidget === "wallpaper" || newWidget === "windows") props["widgetArg"] = arg;
 
         let cached = widgetCache[newWidget];
         if (cached) {

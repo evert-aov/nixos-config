@@ -73,7 +73,7 @@ qcopy() {
 
 function fetch() {
     local color_file="/tmp/qs_colors.json"
-    local config_path="/tmp/qs_fastfetch.jsonc"
+    local config_path
     
     # Extract analogous cool tones
     local c_blue=$(grep -E '"blue"\s*:\s*"[^"]+"' "$color_file" 2>/dev/null | cut -d '"' -f 4)
@@ -155,8 +155,10 @@ function fetch() {
     local template_file="$HOME/.config/fastfetch/config.jsonc"
     if [ ! -f "$template_file" ]; then
         echo "Error: Fastfetch template not found at $template_file"
-        return
+        return 1
     fi
+
+    config_path=$(mktemp "${XDG_RUNTIME_DIR:-/tmp}/qs-fastfetch.XXXXXX.jsonc") || return 1
 
     export TEMPLATE_FILE="$template_file"
     export OUT_FILE="$config_path"
@@ -182,6 +184,9 @@ with open(os.environ["OUT_FILE"], "w") as f:
 
     # Run Fastfetch instantly using the generated config
     fastfetch -c "$config_path"
+    local fetch_result=$?
+    rm -f -- "$config_path"
+    return "$fetch_result"
 }
  
 pasteimg() {
@@ -190,21 +195,13 @@ pasteimg() {
     wl-paste --type image/png | sudo tee "$name" > /dev/null
 }
 
-stsetup() {
-    local proj_dir="$HOME/Projects/stewart-new"
-    
-    if [[ ! -d "$proj_dir" ]]; then
-        echo "Directory $proj_dir does not exist."
-        return 1
+
+# Mostrar automáticamente solo en la primera terminal de cada sesión Hyprland.
+# `fetch` sigue disponible manualmente en cualquier terminal.
+if [[ -o interactive && -t 1 && -n "$XDG_RUNTIME_DIR" && -n "$HYPRLAND_INSTANCE_SIGNATURE" ]]; then
+    _qs_fetch_marker="$XDG_RUNTIME_DIR/qs-fastfetch-${HYPRLAND_INSTANCE_SIGNATURE//[^[:alnum:]_-]/_}"
+    if mkdir -m 700 -- "$_qs_fetch_marker" 2>/dev/null; then
+        fetch || rmdir -- "$_qs_fetch_marker"
     fi
-
-    cd "$proj_dir" || return 1
-
-    # Open a new kitty window for running the project
-    kitty --directory "$proj_dir" zsh -ic "alias run='python main.py'; exec zsh" &
-    
-    # Open the editor in the current terminal
-    zsh -ic "edit; exec zsh"
-}
-
-fetch
+    unset _qs_fetch_marker
+fi

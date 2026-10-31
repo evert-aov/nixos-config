@@ -14,6 +14,14 @@ ACTION="$1"
 TARGET="$2"
 SUBTARGET="$3"
 
+# Window navigation needs only IPC when the shell is already running.
+# Fall through to the existing startup path if the instance is unavailable.
+if [[ "$TARGET" == "windows" && ( "$ACTION" == "open" || "$ACTION" == "toggle" ) ]]; then
+    if quickshell -p "$SHELL_QML_PATH" ipc call main handleCommand "$ACTION" "$TARGET" "$SUBTARGET" >/dev/null 2>&1; then
+        exit 0
+    fi
+fi
+
 if [[ "$ACTION" =~ ^[0-9]+$ ]]; then
     # Send IPC command directly to Main.qml via Quickshell's native IPC handler
     quickshell -p "$SHELL_QML_PATH" ipc call main handleCommand "close" "" "" >/dev/null 2>&1

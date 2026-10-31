@@ -20,8 +20,7 @@ status() {
 
 enable_coffee() {
     # 1. Detener el servicio hypridle para cancelar los timeouts de bloqueo y suspensión
-    systemctl --user stop hypridle 2>/dev/null || true
-    killall -9 hypridle 2>/dev/null || true
+    systemctl --user stop hypridle || return 1
 
     # 2. Iniciar systemd-inhibit para prevenir idle y sleep a nivel logind/systemd
     if [ -f "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
@@ -32,7 +31,7 @@ enable_coffee() {
     fi
 
     # 3. Asegurar que la pantalla esté encendida
-    hyprctl dispatch dpms on >/dev/null 2>&1 || true
+    hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })' >/dev/null 2>&1 || true
 
     # 4. Crear archivo de estado
     touch "$STATE_FILE"

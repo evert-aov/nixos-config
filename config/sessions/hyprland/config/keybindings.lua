@@ -74,6 +74,8 @@ hl.bind(var.mainMod .. "+ C", hl.dsp.exec_cmd("zeditor"))
 -- hl.bind(var.mainMod .. "+ T", hl.dsp.exec_cmd("TRILIUM_PORT=8080 nix run ~/OpenSource/Trilium"))
 
 -- ───────── Quickshell Controls ─────────
+hl.bind(var.mainMod .. " + Tab", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh open windows next"))
+hl.bind(var.mainMod .. " + SHIFT + Tab", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh open windows previous"))
 hl.bind(var.mainMod .. " + M", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/qs_manager.sh toggle monitors"))
 hl.bind(var.mainMod .. " + R", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/reload.sh"))
 hl.bind(var.mainMod .. " + SHIFT  + C", hl.dsp.exec_cmd("~/.config/hypr/scripts/qs_manager.sh toggle clipboard"))

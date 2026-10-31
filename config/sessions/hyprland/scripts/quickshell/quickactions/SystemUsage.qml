@@ -74,8 +74,16 @@ Item {
         from: 0; to: Math.PI * 2; duration: 1800; loops: Animation.Infinite; running: root.widgetVisible
     }
 
-    Component.onCompleted: SysData.subscribe()
-    Component.onDestruction: SysData.unsubscribe()
+    property bool metricsSubscribed: false
+    function updateMetricsSubscription() {
+        if (visible === metricsSubscribed) return;
+        metricsSubscribed = visible;
+        if (metricsSubscribed) SysData.subscribe();
+        else SysData.unsubscribe();
+    }
+    onVisibleChanged: updateMetricsSubscription()
+    Component.onCompleted: updateMetricsSubscription()
+    Component.onDestruction: { if (metricsSubscribed) SysData.unsubscribe(); }
 
     // --- ANIMATED DATA STATE BINDINGS ---
     // Smooths out raw SysData to drive both the visual wave and the dynamic text counters in constant 800ms time
